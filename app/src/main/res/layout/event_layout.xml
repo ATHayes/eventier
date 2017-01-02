@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:layout_marginTop="80dp">
+
+        <TextView
+            android:text="Events Tonight"
+            android:layout_width="151dp"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:id="@+id/text_date"
+            android:layout_gravity="center"
+            android:layout_weight="0.84" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_calendar"
+            android:id="@+id/button_select_date"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+    <!-- Include the event list sub-layout -->
+    <include layout="@layout/event_list"
+        android:layout_height="366dp"
+        android:layout_width="361dp" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/label" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="98dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/facebook_event" />
+</LinearLayout>

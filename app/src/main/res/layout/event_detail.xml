@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!--Event Title-->
+    <LinearLayout
+        android:layout_width="412dp"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/titleValueLabel"
+            style="?android:attr/textAppearanceLarge"
+            android:layout_width="368dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="none"
+            android:maxLines="100"
+            android:padding="16dp"
+            android:scrollHorizontally="false"
+            android:text="--title--"
+
+            tools:context="com.eventier.EventDetailFragment" />
+
+    </LinearLayout>
+
+    <!--Event pitch-->
+    <LinearLayout
+        android:layout_width="412dp"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/pitchValueLabel"
+            style="?android:attr/textAppearanceMedium"
+            android:layout_width="368dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="none"
+            android:maxLines="100"
+            android:padding="16dp"
+            android:scrollHorizontally="false"
+            android:text="--pitch--"
+
+            tools:context="com.eventier.EventDetailFragment" />
+
+    </LinearLayout>
+
+    <!--Host-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/hostLabel"
+            style="?android:attr/textAppearanceMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="Host: "
+            android:textIsSelectable="true"
+            tools:context="com.eventier.EventDetailFragment" />
+
+        <TextView
+            android:id="@+id/hostValueLabel"
+            style="?android:attr/textAppearanceMedium"
+            android:layout_width="102dp"
+            android:layout_height="match_parent"
+            android:width="0dip"
+            android:layout_weight="1"
+            android:padding="16dp"
+            android:textIsSelectable="true"
+            tools:context="com.eventier.EventDetailFragment" />
+
+    </LinearLayout>
+
+    <!--Time-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/timeLabel"
+            style="?android:attr/textAppearanceMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="Time: "
+            android:textIsSelectable="true"
+            tools:context="com.eventier.EventDetailFragment" />
+
+        <TextView
+            android:id="@+id/timeValueLabel"
+            style="?android:attr/textAppearanceMedium"
+            android:layout_width="102dp"
+            android:layout_height="match_parent"
+            android:width="0dip"
+            android:layout_weight="1"
+            android:padding="16dp"
+            android:textIsSelectable="true"
+            tools:context="com.eventier.EventDetailFragment" />
+
+    </LinearLayout>
+
+    <!--Location-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/locationLabel"
+            style="?android:attr/textAppearanceMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="Location: "
+            android:textIsSelectable="true"
+            tools:context="com.eventier.EventDetailFragment" />
+
+        <TextView
+            android:id="@+id/locationValueLabel"
+            style="?android:attr/textAppearanceMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:width="@dimen/item_width"
+            android:layout_weight="1"
+            android:padding="16dp"
+            android:textIsSelectable="true"
+            tools:context="com.eventier.EventDetailFragment" />
+    </LinearLayout>
+
+    <!--Date -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/dateLabel"
+            style="?android:attr/textAppearanceMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="Date: "
+            android:textIsSelectable="true"
+            tools:context="com.eventier.EventDetailFragment" />
+
+        <TextView
+            android:id="@+id/dateValueLabel"
+            style="?android:attr/textAppearanceMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:width="@dimen/item_width"
+            android:layout_weight="1"
+            android:padding="16dp"
+            android:textIsSelectable="true"
+            tools:context="com.eventier.EventDetailFragment" />
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>
