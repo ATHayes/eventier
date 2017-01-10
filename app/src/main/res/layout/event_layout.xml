@@ -34,18 +34,7 @@
     </LinearLayout>
     <!-- Include the event list sub-layout -->
     <include layout="@layout/event_list"
-        android:layout_height="366dp"
-        android:layout_width="361dp" />
+        android:layout_height="match_parent"
+        android:layout_width="match_parent" />
 
-    <TextView
-        android:text="TextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/label" />
-
-    <TextView
-        android:text="TextView"
-        android:layout_width="98dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/facebook_event" />
 </LinearLayout>

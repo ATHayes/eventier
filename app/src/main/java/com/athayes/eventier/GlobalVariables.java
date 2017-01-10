@@ -3,6 +3,7 @@ package com.athayes.eventier;
 import android.app.Application;
 
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -30,6 +31,7 @@ public class GlobalVariables extends Application {
     }
 
     private List<Event> ITEMS;
+    private ArrayList<FacebookPage> facebookPages;
 
     private Map<String, Event> ITEM_MAP;
     String myFormat = "dd/MM/yy"; // from strings
@@ -83,6 +85,24 @@ public class GlobalVariables extends Application {
                 "Our Comm Cup finals will be kicking off at 1pm as the 'Renford Rejects' will play head to head against 'Scouting for Boys' for the title of the Women's Comm Cup Champions. The highly anticipated Men’s final of 'Magellas lads 69 vs Lads on Touré/Tweets as bad as Niall Anglin' will follow at 2pm. Both games promise showcases of professional and fast paced soccer. " +
                         "Be sure to join all of us here at the Commerce Society for the Comm Cup celebrations in Barberella at 8 P.M. ",
                 "Comm Soc", "Boole 4", "8pm", sdf.format(today)));
+
+
+        facebookPages = new ArrayList<>();
+        facebookPages.add(new FacebookPage("uccscifi", "Sci-Fi Society"));
+        facebookPages.add(new FacebookPage("uccphilosoph", "Philosophical Society"));
+        facebookPages.add(new FacebookPage("NetsocUCC", "Networking, Gaming and Technology"));
+
+        facebookPages.add(new FacebookPage("Accounting And Finance", "uccaccfin"));
+        facebookPages.add(new FacebookPage("Africa", "uccafrica"));
+        facebookPages.add(new FacebookPage("Amnesty", "UCCAmnesty"));
+        facebookPages.add(new FacebookPage("An Chuallact", "anchuallachtucc"));
+        facebookPages.add(new FacebookPage("Animal Welfare", "AniWelUCC"));
+        facebookPages.add(new FacebookPage("Archaeological", "UCCArchSoc"));
+        facebookPages.add(new FacebookPage("An Chuallact", "anchuallachtucc"));
+        facebookPages.add(new FacebookPage("Art", "uccart.soc"));
+        facebookPages.add(new FacebookPage("Barnardos", "UCCBarnardos"));
+        facebookPages.add(new FacebookPage("Biology", "uccbiosoc"));
+
     }
 
     private static GlobalVariables instance;
@@ -135,5 +155,10 @@ public class GlobalVariables extends Application {
 
     public void setITEM_MAP(Map<String, Event> ITEM_MAP) {
         this.ITEM_MAP = ITEM_MAP;
+    }
+
+
+    public ArrayList<FacebookPage> getFacebookPages() {
+        return facebookPages;
     }
 }

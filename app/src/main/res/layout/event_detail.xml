@@ -20,7 +20,7 @@
             android:maxLines="100"
             android:padding="16dp"
             android:scrollHorizontally="false"
-            android:text="--title--"
+            android:text=""
 
             tools:context="com.eventier.EventDetailFragment" />
 
@@ -41,7 +41,7 @@
             android:maxLines="100"
             android:padding="16dp"
             android:scrollHorizontally="false"
-            android:text="--pitch--"
+            android:text=""
 
             tools:context="com.eventier.EventDetailFragment" />
 
@@ -61,6 +61,7 @@
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:text="Host: "
+            android:visibility="invisible"
             android:textIsSelectable="true"
             tools:context="com.eventier.EventDetailFragment" />
 
@@ -72,6 +73,7 @@
             android:width="0dip"
             android:layout_weight="1"
             android:padding="16dp"
+            android:text=""
             android:textIsSelectable="true"
             tools:context="com.eventier.EventDetailFragment" />
 
@@ -91,6 +93,7 @@
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:text="Time: "
+            android:visibility="invisible"
             android:textIsSelectable="true"
             tools:context="com.eventier.EventDetailFragment" />
 
@@ -102,6 +105,7 @@
             android:width="0dip"
             android:layout_weight="1"
             android:padding="16dp"
+            android:text=""
             android:textIsSelectable="true"
             tools:context="com.eventier.EventDetailFragment" />
 
@@ -121,6 +125,7 @@
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:text="Location: "
+            android:visibility="invisible"
             android:textIsSelectable="true"
             tools:context="com.eventier.EventDetailFragment" />
 
@@ -150,6 +155,7 @@
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:text="Date: "
+            android:visibility="invisible"
             android:textIsSelectable="true"
             tools:context="com.eventier.EventDetailFragment" />
 

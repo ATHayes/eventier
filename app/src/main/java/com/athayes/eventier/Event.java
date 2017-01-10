@@ -1,6 +1,13 @@
 package com.athayes.eventier;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -16,7 +23,7 @@ public class Event {
     public final String location;
     public final String time;
 
-    // Firebase doesn't support the date class in Java - we'll store the date as a string
+    // FireBase doesn't support the date class in Java - we'll store the date as a string
     public final String date;
 
 
@@ -34,5 +41,6 @@ public class Event {
     public String toString() {
         return title;
     }
+
 
 }
