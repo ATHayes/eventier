@@ -33,6 +33,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.athayes.eventier.EventListActivity" />
         </activity>
+
+        <activity
+            android:name="com.athayes.eventier.OverviewActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+
         <activity
             android:name="com.athayes.eventier.CreateEventActivity"
             android:label="@string/title_activity_create_event"

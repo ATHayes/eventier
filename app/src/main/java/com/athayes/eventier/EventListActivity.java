@@ -91,7 +91,7 @@ public class EventListActivity extends AppCompatActivity
 //    private FirebaseRecyclerAdapter<FriendlyMessage, MessageViewHolder>
 //            mFirebaseAdapter;
 
-    //List for all the events
+    //List of events, used for temporary storage - async methods
     List<Event> allEvents = new ArrayList<>();
 
     @Override
@@ -133,7 +133,6 @@ public class EventListActivity extends AppCompatActivity
 
         // Check if user is signed in
         if (mFirebaseUser == null) {
-            // Not signed in, launch the Sign In activity
             startActivity(new Intent(this, SignInActivity.class));
             finish();
             return;
@@ -160,8 +159,7 @@ public class EventListActivity extends AppCompatActivity
             mTwoPane = true;
         }
 
-        // Calendar
-        // Not a singleton - it's an abstract class.
+        // Calendar - Not a singleton - an abstract class.
         // The getInstance method is a FACTORY METHOD that returns a concrete implementation of the Calendar class.
         final Calendar selectCalendar = Calendar.getInstance();
         final Calendar todayCalendar = Calendar.getInstance();
@@ -180,41 +178,18 @@ public class EventListActivity extends AppCompatActivity
                 selectCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
                 SimpleDateFormat displayFormat = new SimpleDateFormat("EEEE, MMM d, yyyy");
-                SimpleDateFormat databaseFormat = new SimpleDateFormat("dd/MM/yy");
-
                 if (todayCalendar.get(Calendar.DATE) == selectCalendar.get(Calendar.DATE)) {
                     text_date.setText("Events tonight");
                 } else {
                     text_date.setText(displayFormat.format(selectCalendar.getTime()));
                 }
-
-                // Get list of all items TODO change to api call
-//                List<Event> ITEMS = GlobalVariables.getInstance().getITEMS();
-
-                // Make a new list from that list
-                List<Event> FILTEREDITEMS = new ArrayList<Event>();
-
-                // Get selected date as a string
-                String selectedDate = databaseFormat.format(selectCalendar.getTime());
-
-                // Filter out items based on their dates
-                for (Event e : allEvents) {
-                    if (e.date.equals(selectedDate)) {
-                        FILTEREDITEMS.add(e);
-                    } else {
-                        System.out.println(e.title + " Event date: " + e.date + "Selected date: " + today);
-                    }
-                }
-
-                //Reset recyclerview with new items
-                View recyclerView = findViewById(R.id.event_list);
-                assert recyclerView != null;
-                setupRecyclerView((RecyclerView) recyclerView, FILTEREDITEMS);
+                //get Facebook events for this day - the list will be updated automatically
+                getEventsFromFacebook(selectCalendar);
             }
         };
 
+        // Select Date Button
         ImageButton button_select_date = (ImageButton) findViewById(R.id.button_select_date);
-        // Event handler for event date text field - opens up the calendar dialog
         button_select_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -224,10 +199,8 @@ public class EventListActivity extends AppCompatActivity
             }
         });
 
-        // Get events from Facebook - update our list with the new events
-        getEventsFromFacebook();
-
-        //getEventsFromFacebook(Calendar dateCalendar);
+        //getEventsFromFacebook();
+        getEventsFromFacebook(todayCalendar);
     }
 
     // Event handler for back button
@@ -275,13 +248,14 @@ public class EventListActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
             // Stay here
 
-        } else if (id == R.id.nav_myEvents) {
-            // Got to My Events
+        } else if (id == R.id.nav_upcoming) {
+            startActivity(new Intent(this, OverviewActivity.class));
 
-        } else if (id == R.id.nav_createEvent) {
-            Intent intent = new Intent(this, CreateEventActivity.class);
-            // Activity For Result, source: http://stackoverflow.com/questions/13643940/refresh-listview-after-updating-in-another-activity
-            startActivityForResult(intent, CREATE_EVENT_REQUEST);
+            // No Create Event at the moment
+//        } else if (id == R.id.nav_createEvent) {
+//            Intent intent = new Intent(this, CreateEventActivity.class);
+//            // Activity For Result, source: http://stackoverflow.com/questions/13643940/refresh-listview-after-updating-in-another-activity
+//            startActivityForResult(intent, CREATE_EVENT_REQUEST);
 
         } else if (id == R.id.nav_settings) {
             // Go to Settings
@@ -290,7 +264,6 @@ public class EventListActivity extends AppCompatActivity
             mFirebaseAuth.signOut();
             mUsername = ANONYMOUS;
             startActivity(new Intent(this, SignInActivity.class));
-
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -307,12 +280,12 @@ public class EventListActivity extends AppCompatActivity
         // Get selected date as a string
         String selectedDate = databaseFormat.format(todayCalendar.getTime());
 
-        // Filter out items based on their dates
-        for (Event e : allEvents) {
-            if (e.date.equals(selectedDate)) {
-                FILTEREDITEMS.add(e);
-            }
-        }
+//        // Filter out items based on their dates
+//        for (Event e : allEvents) {
+//            if (e.date.equals(selectedDate)) {
+//                FILTEREDITEMS.add(e);
+//            }
+//        }
         // Set the adaptor with the items
         recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(FILTEREDITEMS));
     }
@@ -425,91 +398,58 @@ public class EventListActivity extends AppCompatActivity
     }
 
 
-    //Todo replace with two methods - which allow for a range or a fixed date
-    public void getEventsFromFacebook() {
-        final ProgressDialog progress = new ProgressDialog(this);
-        progress.setTitle("Loading");
-        progress.setMessage("Please wait...");
-        //progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
-        progress.show();
-
-        //Todo replace with api call
-        ArrayList<FacebookPage> facebookPages = GlobalVariables.getInstance().getFacebookPages();
-        GraphRequestBatch requestBatch = facebookPageRequestBatch(facebookPages);
-        requestBatch.addCallback(new GraphRequestBatch.Callback() {
-                                     @Override
-                                     public void onBatchCompleted(GraphRequestBatch batch) {
-                                         //Sort our list
-                                         // Reset RecyclerView with new items
-                                         View recyclerView = findViewById(R.id.event_list);
-                                         assert recyclerView != null;
-                                         setupRecyclerView((RecyclerView) recyclerView, allEvents);
-                                         progress.dismiss();
-                                     }
-                                 }
-        );
-        requestBatch.executeAsync();
-    }
-
     public void getEventsFromFacebook(Calendar dateCalendar) {
-        final ProgressDialog progress = new ProgressDialog(this);
-        progress.setTitle("Loading");
-        progress.setMessage("Please wait...");
-        //progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
-        progress.show();
+        getEventsFromFacebook(dateCalendar, dateCalendar);
+    }
+
+    public void getEventsFromFacebook(Calendar sinceCalendar, Calendar untilCalendar) {
+//        final ProgressDialog progress = new ProgressDialog(this);
+//        progress.setTitle("Loading");
+//        progress.setMessage("Please wait...");
+//        progress.show();
+
+        allEvents.clear();
+
         //Todo replace with api call
         ArrayList<FacebookPage> facebookPages = GlobalVariables.getInstance().getFacebookPages();
-        GraphRequestBatch requestBatch = facebookPageRequestBatch(facebookPages);
+        GraphRequestBatch requestBatch = facebookPageRequestBatch(facebookPages, sinceCalendar, untilCalendar);
+
         requestBatch.addCallback(new GraphRequestBatch.Callback() {
                                      @Override
                                      public void onBatchCompleted(GraphRequestBatch batch) {
-                                         //Sort our list
+                                         //TODO Sort our list
                                          // Reset RecyclerView with new items
                                          View recyclerView = findViewById(R.id.event_list);
                                          assert recyclerView != null;
                                          setupRecyclerView((RecyclerView) recyclerView, allEvents);
-                                         progress.dismiss();
+                                         //progress.dismiss();
                                      }
                                  }
         );
         requestBatch.executeAsync();
     }
 
-    // Todo get rid of this - get events each time, rather than bulk
+
     public void addToList(List<Event> ITEMS) {
         allEvents.addAll(ITEMS);
     }
 
-    public GraphRequest getEvents(String facebookID, final String hostName) {
-        GraphRequest request = new GraphRequest(
-                AccessToken.getCurrentAccessToken(),
-                "/" + facebookID + "/events?since=2016-10-29T00:00:00&until=2016-11-29T23:59:59",
-                null,
-                HttpMethod.GET,
-                new GraphRequest.Callback() {
-                    public void onCompleted(GraphResponse response) {
-                        // Async call, manage data here, rather than returning a value
-                        //TODO check if response is null
-                        try {
-                            JSONArray events = response.getJSONObject().getJSONArray("data");
-                            List<Event> ITEMS = EventService.getFromJSONArray(events, hostName);
-                            addToList(ITEMS);
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
-                    }
-                }
-        );
-        return request;
+    public GraphRequestBatch facebookPageRequestBatch(ArrayList<FacebookPage> facebookPages, Calendar since, Calendar until) {
+        GraphRequestBatch requestBatch = new GraphRequestBatch();
+        for (FacebookPage page : facebookPages) {
+            requestBatch.add(getEvents(page.getFacebookID(), page.getName(), since, until));
+        }
+        return requestBatch;
     }
 
-
-    public GraphRequest getEvents(String facebookID, final String hostName, Calendar dateCalendar) {
+    // Get events since x until y
+    public GraphRequest getEvents(String facebookID, final String hostName, Calendar sinceCalendar, Calendar untilCalendar) {
         SimpleDateFormat apiFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String date = apiFormat.format(dateCalendar.getTime());
+        String sinceAPIString = apiFormat.format(sinceCalendar.getTime());
+        String untilAPIString = apiFormat.format(untilCalendar.getTime());
         GraphRequest request = new GraphRequest(
                 AccessToken.getCurrentAccessToken(),
-                "/" + facebookID + "/events?since=" + date + "T00:00:00&until=" + date + "T23:59:59",
+                "/" + facebookID + "/events?since=" + sinceAPIString + "T00:00:00&until=" + untilAPIString + "T23:59:59",
                 null,
                 HttpMethod.GET,
                 new GraphRequest.Callback() {
@@ -527,26 +467,6 @@ public class EventListActivity extends AppCompatActivity
                 }
         );
         return request;
-    }
-
-    //Todo replace with two calendar (single date and range) methods
-    public GraphRequestBatch facebookPageRequestBatch(ArrayList<FacebookPage> facebookPages) {
-        GraphRequestBatch requestBatch = new GraphRequestBatch();
-        // Loop through our list, add a graph request for each and add it to the requestBatch
-        for (FacebookPage page : facebookPages) {
-            requestBatch.add(getEvents(page.getFacebookID(), page.getName()));
-        }
-        return requestBatch;
-    }
-
-
-    public GraphRequestBatch facebookPageRequestBatch(ArrayList<FacebookPage> facebookPages, Calendar dateCalendar) {
-        GraphRequestBatch requestBatch = new GraphRequestBatch();
-        // Loop through our list, add a graph request for each and add it to the requestBatch
-        for (FacebookPage page : facebookPages) {
-            requestBatch.add(getEvents(page.getFacebookID(), page.getName(), dateCalendar));
-        }
-        return requestBatch;
     }
 }
 
