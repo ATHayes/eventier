@@ -1,10 +1,9 @@
 package com.athayes.eventier;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +11,10 @@ import android.widget.TextView;
 
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
-import com.facebook.GraphRequestBatch;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.util.List;
 
 /**
  * A fragment representing a single Event detail screen.
@@ -82,14 +77,9 @@ public class EventDetailFragment extends Fragment {
     }
 
     public void getEventFromFacebook(String eventID, final View rootView) {
-        final ProgressDialog progress = new ProgressDialog(getActivity());
-        progress.setTitle("Loading");
-        progress.setMessage("Please wait...");
-        //progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
-        progress.show();
 
-        // TODO Facebook Access
         /* make the API call */
+
         new GraphRequest(
                 AccessToken.getCurrentAccessToken(),
                 eventID,
@@ -103,10 +93,34 @@ public class EventDetailFragment extends Fragment {
 
                             Event thisEvent = EventService.getFromJSONObject(JSONEvent);
                             System.out.println("----TEST----");
-                            System.out.println(thisEvent.title);
                             setUpTextViews(rootView, thisEvent);
-                            progress.dismiss();
 
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                }
+        ).executeAsync();
+
+        new GraphRequest(
+                AccessToken.getCurrentAccessToken(),
+                eventID + "/?fields=cover",
+                null,
+                HttpMethod.GET,
+                new GraphRequest.Callback() {
+                    public void onCompleted(GraphResponse response) {
+                        // Async call, manage data here, rather than returning a value
+                        try {
+                            JSONObject JSONCover = response.getJSONObject();
+                            String uri = "";
+                            try {
+                                JSONObject cover = JSONCover.getJSONObject("cover");
+                                uri = cover.getString("source");
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
+                            //TODO better name
+                            mCallback.onCoverRetrieved(uri);
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
@@ -130,4 +144,31 @@ public class EventDetailFragment extends Fragment {
         ((TextView) rootView.findViewById(R.id.locationLabel)).setVisibility(View.VISIBLE);
         ((TextView) rootView.findViewById(R.id.dateLabel)).setVisibility(View.VISIBLE);
     }
+
+    OnCoverRetrievedListener mCallback;
+
+    // Container Activity must implement this interface
+    public interface OnCoverRetrievedListener {
+        public void onCoverRetrieved(String uri);
+    }
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        Activity a;
+        if (context instanceof Activity) {
+            a = (Activity) context;
+        }
+
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            mCallback = (OnCoverRetrievedListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnHeadlineSelectedListener");
+        }
+    }
+
 }

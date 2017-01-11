@@ -1,12 +1,9 @@
 package com.athayes.eventier;
 
 import android.app.DatePickerDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.hardware.ConsumerIrManager;
-import android.hardware.camera2.params.Face;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -25,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,26 +31,18 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphRequestBatch;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
-import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
-import java.sql.SQLOutput;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.TimeZone;
 
 /**
  * An activity representing a list of Events. This activity
@@ -408,6 +398,13 @@ public class EventListActivity extends AppCompatActivity
 //        progress.setMessage("Please wait...");
 //        progress.show();
 
+        //Show our progress bar
+        final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        final View recyclerView = findViewById(R.id.event_list);
+        final View emptyView = findViewById(R.id.empty_view);
+        recyclerView.setVisibility(View.GONE);
+        emptyView.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
         allEvents.clear();
 
         //Todo replace with api call
@@ -419,10 +416,18 @@ public class EventListActivity extends AppCompatActivity
                                      public void onBatchCompleted(GraphRequestBatch batch) {
                                          //TODO Sort our list
                                          // Reset RecyclerView with new items
-                                         View recyclerView = findViewById(R.id.event_list);
+
                                          assert recyclerView != null;
-                                         setupRecyclerView((RecyclerView) recyclerView, allEvents);
-                                         //progress.dismiss();
+                                         if (!allEvents.isEmpty()) {
+                                             progressBar.setVisibility(View.GONE);
+                                             recyclerView.setVisibility(View.VISIBLE);
+                                             setupRecyclerView((RecyclerView) recyclerView, allEvents);
+                                         } else {
+                                             progressBar.setVisibility(View.GONE);
+                                             recyclerView.setVisibility(View.GONE);
+                                             emptyView.setVisibility(View.VISIBLE);
+                                         }
+
                                      }
                                  }
         );

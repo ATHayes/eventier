@@ -4,11 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+
+import com.squareup.picasso.Picasso;
 
 /**
  * An activity representing a single Event detail screen. This
@@ -16,12 +19,13 @@ import android.view.MenuItem;
  * item pitch are presented side-by-side with a list of items
  * in a {@link EventListActivity}.
  */
-public class EventDetailActivity extends AppCompatActivity {
+public class EventDetailActivity extends AppCompatActivity implements EventDetailFragment.OnCoverRetrievedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_detail);
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -80,6 +84,26 @@ public class EventDetailActivity extends AppCompatActivity {
             navigateUpTo(new Intent(this, EventListActivity.class));
             return true;
         }
+
+        // TODO - revise
+        // Back button go back to whatever screen called it
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
         return super.onOptionsItemSelected(item);
     }
+
+    public void setPicture() {
+
+    }
+
+    @Override
+    public void onCoverRetrieved(String uri) {
+        ImageView imageView = (ImageView) findViewById(R.id.cover_photo);
+        Picasso.with(this).load(uri).into(imageView);
+    }
+
+
 }

@@ -21,7 +21,6 @@
             android:padding="16dp"
             android:scrollHorizontally="false"
             android:text=""
-
             tools:context="com.eventier.EventDetailFragment" />
 
     </LinearLayout>
@@ -30,7 +29,8 @@
     <LinearLayout
         android:layout_width="412dp"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:focusableInTouchMode="true">
 
         <TextView
             android:id="@+id/pitchValueLabel"
@@ -44,7 +44,6 @@
             android:text=""
 
             tools:context="com.eventier.EventDetailFragment" />
-
     </LinearLayout>
 
     <!--Host-->

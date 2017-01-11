@@ -1,6 +1,5 @@
 package com.athayes.eventier;
 
-import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,8 +19,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -362,12 +361,17 @@ public class OverviewActivity extends AppCompatActivity
     }
 
     public void getEventsFromFacebook(Calendar sinceCalendar, Calendar untilCalendar) {
-//        final ProgressDialog progress = new ProgressDialog(this);
-//        progress.setTitle("Loading");
-//        progress.setMessage("Please wait...");
-//        progress.show();
+
+        //Show our progress bar
+        final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        final View recyclerView = findViewById(R.id.event_list);
+        final View emptyView = findViewById(R.id.empty_view);
+        recyclerView.setVisibility(View.GONE);
+        emptyView.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
 
         allEvents.clear();
+
 
         //Todo replace with api call
         ArrayList<FacebookPage> facebookPages = GlobalVariables.getInstance().getFacebookPages();
@@ -377,11 +381,16 @@ public class OverviewActivity extends AppCompatActivity
                                      @Override
                                      public void onBatchCompleted(GraphRequestBatch batch) {
                                          //TODO Sort our list
-                                         // Reset RecyclerView with new items
-                                         View recyclerView = findViewById(R.id.event_list);
                                          assert recyclerView != null;
-                                         setupRecyclerView((RecyclerView) recyclerView, allEvents);
-                                         //progress.dismiss();
+                                         if (!allEvents.isEmpty()) {
+                                             progressBar.setVisibility(View.GONE);
+                                             recyclerView.setVisibility(View.VISIBLE);
+                                             setupRecyclerView((RecyclerView) recyclerView, allEvents);
+                                         } else {
+                                             progressBar.setVisibility(View.GONE);
+                                             recyclerView.setVisibility(View.GONE);
+                                             emptyView.setVisibility(View.VISIBLE);
+                                         }
                                      }
                                  }
         );

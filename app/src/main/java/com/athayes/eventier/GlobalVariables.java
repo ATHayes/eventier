@@ -2,8 +2,9 @@ package com.athayes.eventier;
 
 import android.app.Application;
 
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -13,8 +14,6 @@ import java.util.List;
 import java.util.Map;
 
 // Facebook API
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
 
 /**
  * Created by anthonyhayes on 05/11/2016.
@@ -61,30 +60,30 @@ public class GlobalVariables extends Application {
         dayAfterTomorrow = calDayAfterTomorrow.getTime();
 
 
-        addToITEMS(createEvent(0, "Silicon Valley Screening", "Watch two episodes of the award winning comedy series based " +
-                        "around a new tech startup as they make their way into the world of business in Silicon Valley.",
-                "Netsoc", "WGB G03", "7pm", sdf.format(today)));
-        addToITEMS(createEvent(1, "E&S Launch Night", "Learn about what E&S does.", "E&S", "Boole 3", "7pm", sdf.format(today)));
-        addToITEMS(createEvent(2, "The Politics of Technology", "Featuring TD Sean Sherlock.", "Government and Politics Society", "Boole 1", "7pm", sdf.format(tomorrow)));
-        addToITEMS(createEvent(3, "Treehouse of Horror quiz", "Spooky quiz", "SimpSoc", "Boole 4", "8pm", sdf.format(dayAfterTomorrow)));
-        addToITEMS(createEvent(4, "US Presidential Elections Screening",
-                "It's the time we've all been waiting for. The finale of what has proved to be an election of moments of" +
-                        " wonder and moments of \"oh god\". Watch it with Gov&Pol Society in the SU Common Room kicking off at 10 until late." +
-                        " There will be pizza and even cake, maybe even election themed cake !",
-                "GovPol", "Boole 1", "7pm", sdf.format(today)));
-        addToITEMS(createEvent(5, "UCC International Student Party", "Halloween has come and gone. All the fun is over and you've " +
-                        "nothing else to do but study now, right?" +
-                        " Wrong. Because this Friday night, UCC International Students Society are organising a" +
-                        " party at the Old Oak. Come one, come all because as always it...",
-                "UCC International Student Society", "Boole 4", "8pm", sdf.format(today)));
-        addToITEMS(createEvent(6, "Food Crawl 2016",
-                "Here we have it! The most anticipated Foodies event of the year! We will be holding the 2016 Food Crawl on Wednesday the 16th of November. " +
-                        "For those of you who may be unfamiliar with how the Food Crawl works, we will be taking you on a journey through the streets of Cork to sample some of the finest cuisines Cork City has to offer! We have a delicious variety of foods for you to sample from some of your favourite Cork restaurants and we'll also be introducing you to some you may not yet be familiar with! "
-                , "Foodies", "Boole Library", "7pm", sdf.format(today)));
-        addToITEMS(createEvent(7, "COMM CUP Finals",
-                "Our Comm Cup finals will be kicking off at 1pm as the 'Renford Rejects' will play head to head against 'Scouting for Boys' for the title of the Women's Comm Cup Champions. The highly anticipated Men’s final of 'Magellas lads 69 vs Lads on Touré/Tweets as bad as Niall Anglin' will follow at 2pm. Both games promise showcases of professional and fast paced soccer. " +
-                        "Be sure to join all of us here at the Commerce Society for the Comm Cup celebrations in Barberella at 8 P.M. ",
-                "Comm Soc", "Boole 4", "8pm", sdf.format(today)));
+//        addToITEMS(createEvent(0, "Silicon Valley Screening", "Watch two episodes of the award winning comedy series based " +
+//                        "around a new tech startup as they make their way into the world of business in Silicon Valley.",
+//                "Netsoc", "WGB G03", "7pm", sdf.format(today)));
+//        addToITEMS(createEvent(1, "E&S Launch Night", "Learn about what E&S does.", "E&S", "Boole 3", "7pm", sdf.format(today)));
+//        addToITEMS(createEvent(2, "The Politics of Technology", "Featuring TD Sean Sherlock.", "Government and Politics Society", "Boole 1", "7pm", sdf.format(tomorrow)));
+//        addToITEMS(createEvent(3, "Treehouse of Horror quiz", "Spooky quiz", "SimpSoc", "Boole 4", "8pm", sdf.format(dayAfterTomorrow)));
+//        addToITEMS(createEvent(4, "US Presidential Elections Screening",
+//                "It's the time we've all been waiting for. The finale of what has proved to be an election of moments of" +
+//                        " wonder and moments of \"oh god\". Watch it with Gov&Pol Society in the SU Common Room kicking off at 10 until late." +
+//                        " There will be pizza and even cake, maybe even election themed cake !",
+//                "GovPol", "Boole 1", "7pm", sdf.format(today)));
+//        addToITEMS(createEvent(5, "UCC International Student Party", "Halloween has come and gone. All the fun is over and you've " +
+//                        "nothing else to do but study now, right?" +
+//                        " Wrong. Because this Friday night, UCC International Students Society are organising a" +
+//                        " party at the Old Oak. Come one, come all because as always it...",
+//                "UCC International Student Society", "Boole 4", "8pm", sdf.format(today)));
+//        addToITEMS(createEvent(6, "Food Crawl 2016",
+//                "Here we have it! The most anticipated Foodies event of the year! We will be holding the 2016 Food Crawl on Wednesday the 16th of November. " +
+//                        "For those of you who may be unfamiliar with how the Food Crawl works, we will be taking you on a journey through the streets of Cork to sample some of the finest cuisines Cork City has to offer! We have a delicious variety of foods for you to sample from some of your favourite Cork restaurants and we'll also be introducing you to some you may not yet be familiar with! "
+//                , "Foodies", "Boole Library", "7pm", sdf.format(today)));
+//        addToITEMS(createEvent(7, "COMM CUP Finals",
+//                "Our Comm Cup finals will be kicking off at 1pm as the 'Renford Rejects' will play head to head against 'Scouting for Boys' for the title of the Women's Comm Cup Champions. The highly anticipated Men’s final of 'Magellas lads 69 vs Lads on Touré/Tweets as bad as Niall Anglin' will follow at 2pm. Both games promise showcases of professional and fast paced soccer. " +
+//                        "Be sure to join all of us here at the Commerce Society for the Comm Cup celebrations in Barberella at 8 P.M. ",
+//                "Comm Soc", "Boole 4", "8pm", sdf.format(today)));
 
 
         facebookPages = new ArrayList<>();
