@@ -235,7 +235,7 @@ public class EventListActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_home) {
+        if (id == R.id.nav_date) {
             // Stay here
 
         } else if (id == R.id.nav_upcoming) {
@@ -247,8 +247,8 @@ public class EventListActivity extends AppCompatActivity
 //            // Activity For Result, source: http://stackoverflow.com/questions/13643940/refresh-listview-after-updating-in-another-activity
 //            startActivityForResult(intent, CREATE_EVENT_REQUEST);
 
-        } else if (id == R.id.nav_settings) {
-            // Go to Settings
+//        } else if (id == R.id.nav_settings) {
+//            // Go to Settings
 
         } else if (id == R.id.nav_sign_out) {
             mFirebaseAuth.signOut();

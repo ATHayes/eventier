@@ -90,7 +90,6 @@ public class EventDetailFragment extends Fragment {
                         // Async call, manage data here, rather than returning a value
                         try {
                             JSONObject JSONEvent = response.getJSONObject();
-
                             Event thisEvent = EventService.getFromJSONObject(JSONEvent);
                             System.out.println("----TEST----");
                             setUpTextViews(rootView, thisEvent);
@@ -134,12 +133,12 @@ public class EventDetailFragment extends Fragment {
     public void setUpTextViews(View rootView, Event thisEvent) {
         ((TextView) rootView.findViewById(R.id.titleValueLabel)).setText(thisEvent.title);
         ((TextView) rootView.findViewById(R.id.pitchValueLabel)).setText(thisEvent.pitch);
-        ((TextView) rootView.findViewById(R.id.hostValueLabel)).setText(thisEvent.host);
+        //((TextView) rootView.findViewById(R.id.hostValueLabel)).setText(thisEvent.host);
         ((TextView) rootView.findViewById(R.id.timeValueLabel)).setText(thisEvent.time);
         ((TextView) rootView.findViewById(R.id.locationValueLabel)).setText(thisEvent.location);
         ((TextView) rootView.findViewById(R.id.dateValueLabel)).setText(thisEvent.date);
 
-        ((TextView) rootView.findViewById(R.id.hostLabel)).setVisibility(View.VISIBLE);
+//        ((TextView) rootView.findViewById(R.id.hostLabel)).setVisibility(View.VISIBLE);
         ((TextView) rootView.findViewById(R.id.timeLabel)).setVisibility(View.VISIBLE);
         ((TextView) rootView.findViewById(R.id.locationLabel)).setVisibility(View.VISIBLE);
         ((TextView) rootView.findViewById(R.id.dateLabel)).setVisibility(View.VISIBLE);

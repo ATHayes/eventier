@@ -35,7 +35,7 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with favourite icon, changing on whether it's saved or not", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Saving events will be added in a later release", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });

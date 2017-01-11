@@ -47,6 +47,7 @@
     </LinearLayout>
 
     <!--Host-->
+    <!--Todo - think this one over-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -59,8 +60,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:text="Host: "
-            android:visibility="invisible"
+            android:text=""
+            android:visibility="gone"
             android:textIsSelectable="true"
             tools:context="com.eventier.EventDetailFragment" />
 
@@ -72,6 +73,7 @@
             android:width="0dip"
             android:layout_weight="1"
             android:padding="16dp"
+            android:visibility="gone"
             android:text=""
             android:textIsSelectable="true"
             tools:context="com.eventier.EventDetailFragment" />

@@ -1,19 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/sign_in_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:weightSum="1">
 
+    <!--App Logo-->
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="99dp"
+        android:layout_height="120dp"
+        android:paddingLeft="-20dp"
+        android:paddingTop="20dp"
+        app:srcCompat="@mipmap/ic_launcher"
+        android:scaleType="fitXY" />
+
+
+    <TextView
+        android:text="Eventier"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/appName"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:layout_weight="0.09" />
+
+    <TextView
+        android:text="Find the best events around you"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/appDescription"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/login_button"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="30dp" />
 
 
-</FrameLayout>
+</LinearLayout>
