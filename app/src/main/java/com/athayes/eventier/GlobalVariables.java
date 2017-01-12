@@ -88,10 +88,10 @@ public class GlobalVariables extends Application {
 
         //TODO error handling for these pages.
         facebookPages = new ArrayList<>();
+
         facebookPages.add(new FacebookPage("uccscifi", "Sci-Fi Society"));
         facebookPages.add(new FacebookPage("uccphilosoph", "Philosophical Society"));
         facebookPages.add(new FacebookPage("NetsocUCC", "Networking, Gaming and Technology"));
-
         facebookPages.add(new FacebookPage("Accounting And Finance", "uccaccfin"));
         facebookPages.add(new FacebookPage("Africa", "uccafrica"));
         facebookPages.add(new FacebookPage("Amnesty", "UCCAmnesty"));
@@ -102,7 +102,6 @@ public class GlobalVariables extends Application {
         facebookPages.add(new FacebookPage("Art", "uccart.soc"));
         facebookPages.add(new FacebookPage("Barnardos", "UCCBarnardos"));
         facebookPages.add(new FacebookPage("Biology", "uccbiosoc"));
-
         facebookPages.add(new FacebookPage("BIS Society", "BisSociety"));
         facebookPages.add(new FacebookPage("Cancer", "ucc.cancersociety"));
         facebookPages.add(new FacebookPage("CCAE Architecture", "ccaearchitecturesociety"));

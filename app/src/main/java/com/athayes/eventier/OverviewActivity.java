@@ -74,6 +74,7 @@ public class OverviewActivity extends AppCompatActivity
     //Logging
     private static final String TAG = "EventListActivity";
 
+
     // Firebase instance variables - Step 7 of Firebase codelab
 //    private DatabaseReference mFirebaseDatabaseReference;
 //    private FirebaseRecyclerAdapter<FriendlyMessage, MessageViewHolder>
@@ -372,7 +373,47 @@ public class OverviewActivity extends AppCompatActivity
 
         allEvents.clear();
 
+        //
         ArrayList<FacebookPage> facebookPages = GlobalVariables.getInstance().getFacebookPages();
+
+        //Split this arrayList into a new arrayList for every 50 pages
+        ArrayList<ArrayList<FacebookPage>> pageGroups = new ArrayList<>();
+        ArrayList<GraphRequestBatch> batchRequestBatch = new ArrayList<>();
+        ArrayList<Boolean> flags = new ArrayList<>();
+
+        int size = facebookPages.size();
+        int batches = (size / 50);
+
+        for (int i = 1; i <= batches; i++) {
+            pageGroups.add(new ArrayList(facebookPages.subList(0, 49)));
+            flags.add(false);
+        }
+
+        for (int i = 1; i <= batches; i++) {
+            batchRequestBatch.add(facebookPageRequestBatch(pageGroups.get(i), sinceCalendar, untilCalendar);
+            batchRequestBatch.get(i).addCallback(new GraphRequestBatch.Callback() {
+                                                     @Override
+                                                     public void onBatchCompleted(GraphRequestBatch batch) {
+                                                         //TODO Sort our list
+                                                         assert recyclerView != null;
+                                                         if (!allEvents.isEmpty()) {
+                                                             progressBar.setVisibility(View.GONE);
+                                                             recyclerView.setVisibility(View.VISIBLE);
+                                                             setupRecyclerView((RecyclerView) recyclerView, allEvents);
+                                                         } else {
+                                                             progressBar.setVisibility(View.GONE);
+                                                             recyclerView.setVisibility(View.GONE);
+                                                             emptyView.setVisibility(View.VISIBLE);
+                                                         }
+                                                     }
+                                                 }
+            );
+        }
+        //Declare a new graphRequestBatch for each 50 (Maybe an array of them?)
+        //Figure out how many batches we'll have
+        //Set a true/false value on each batch
+        //Callback - test if all the batches are true
+
         GraphRequestBatch requestBatch = facebookPageRequestBatch(facebookPages, sinceCalendar, untilCalendar);
 
         requestBatch.addCallback(new GraphRequestBatch.Callback() {
@@ -430,7 +471,6 @@ public class OverviewActivity extends AppCompatActivity
                             //ex.printStackTrace();
                             System.out.println(hostName);
                         }
-
 
                     }
                 }
