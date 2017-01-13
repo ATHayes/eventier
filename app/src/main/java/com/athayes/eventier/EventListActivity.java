@@ -41,6 +41,7 @@ import org.json.JSONArray;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -447,7 +448,7 @@ public class EventListActivity extends AppCompatActivity
                                                         if (batchesProcessed < batches) {
                                                             batchesProcessed += 1;
                                                         } else {
-                                                            //TODO Sort our list
+                                                            Collections.sort(allEvents);
                                                             assert recyclerView != null;
                                                             if (!allEvents.isEmpty()) {
                                                                 progressBar.setVisibility(View.GONE);
