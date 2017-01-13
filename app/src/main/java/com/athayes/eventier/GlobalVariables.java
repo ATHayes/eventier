@@ -90,8 +90,6 @@ public class GlobalVariables extends Application {
         facebookPages = new ArrayList<>();
 
         facebookPages.add(new FacebookPage("uccscifi", "Sci-Fi Society"));
-        facebookPages.add(new FacebookPage("uccphilosoph", "Philosophical Society"));
-        facebookPages.add(new FacebookPage("NetsocUCC", "Networking, Gaming and Technology"));
         facebookPages.add(new FacebookPage("Accounting And Finance", "uccaccfin"));
         facebookPages.add(new FacebookPage("Africa", "uccafrica"));
         facebookPages.add(new FacebookPage("Amnesty", "UCCAmnesty"));

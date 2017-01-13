@@ -421,14 +421,15 @@ public class EventListActivity extends AppCompatActivity
 
         int numberofPages = facebookPages.size();
 
-        batches = (numberofPages / 50);
+        batches = (numberofPages / 50) + 1;
+        batchesProcessed = 0;
 
         //say there's 120 batches
         //start 0, end 49
         //start 50, end 99
         //start 100, end 120
 
-        for (int i = 0; i <= batches; i++) {
+        for (int i = 0; i <= batches - 1; i++) {
             int start = 0 + (i * 50);
             int end = 49 + (i * 50);
 
@@ -442,16 +443,23 @@ public class EventListActivity extends AppCompatActivity
                     sinceCalendar,
                     untilCalendar));
 
+            batchesProcessed += 1;
             requestBatchList.get(i).addCallback(new GraphRequestBatch.Callback() {
                                                     @Override
                                                     public void onBatchCompleted(GraphRequestBatch batch) {
+                                                        batchesProcessed += 1;
                                                         if (batchesProcessed < batches) {
-                                                            batchesProcessed += 1;
+                                                            // Do nothing
                                                         } else {
+                                                            //reset counters
+                                                            batches = 0;
+                                                            batchesProcessed = 0;
+
                                                             Collections.sort(allEvents);
                                                             assert recyclerView != null;
                                                             if (!allEvents.isEmpty()) {
                                                                 progressBar.setVisibility(View.GONE);
+                                                                emptyView.setVisibility(View.GONE);
                                                                 recyclerView.setVisibility(View.VISIBLE);
                                                                 setupRecyclerView((RecyclerView) recyclerView, allEvents);
                                                             } else {

@@ -398,7 +398,7 @@ public class OverviewActivity extends AppCompatActivity
         //start 50, end 99
         //start 100, end 120
 
-        for (int i = 0; i <= batches; i++) {
+        for (int i = 0; i <= batches - 1; i++) {
             int start = 0 + (i * 50);
             int end = 49 + (i * 50);
 
@@ -415,11 +415,13 @@ public class OverviewActivity extends AppCompatActivity
             requestBatchList.get(i).addCallback(new GraphRequestBatch.Callback() {
                                                      @Override
                                                      public void onBatchCompleted(GraphRequestBatch batch) {
+                                                         batchesProcessed += 1;
                                                          if (batchesProcessed < batches) {
-                                                             batchesProcessed += 1;
+                                                             // do nothing
                                                          } else {
-
-
+                                                             //reset counters
+                                                             batches = 0;
+                                                             batchesProcessed = 0;
                                                              Collections.sort(allEvents);
 
                                                              assert recyclerView != null;

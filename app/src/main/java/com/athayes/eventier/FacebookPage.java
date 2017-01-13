@@ -8,7 +8,7 @@ public class FacebookPage {
     private String facebookID;
     private String name;
 
-    public FacebookPage(String facebookID, String name) {
+    public FacebookPage(String name, String facebookID) {
         this.facebookID = facebookID;
         this.name = name;
     }
