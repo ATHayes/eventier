@@ -41,6 +41,7 @@ import org.json.JSONArray;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -83,6 +84,12 @@ public class EventListActivity extends AppCompatActivity
 
     //List of events, used for temporary storage - async methods
     List<Event> allEvents = new ArrayList<>();
+
+    //Batches
+    int batches = 0;
+
+    //Increment for each batch processed
+    int batchesProcessed = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -393,11 +400,6 @@ public class EventListActivity extends AppCompatActivity
     }
 
     public void getEventsFromFacebook(Calendar sinceCalendar, Calendar untilCalendar) {
-//        final ProgressDialog progress = new ProgressDialog(this);
-//        progress.setTitle("Loading");
-//        progress.setMessage("Please wait...");
-//        progress.show();
-
         //Show our progress bar
         final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         final View recyclerView = findViewById(R.id.event_list);
@@ -405,33 +407,69 @@ public class EventListActivity extends AppCompatActivity
         recyclerView.setVisibility(View.GONE);
         emptyView.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
+
         allEvents.clear();
 
-        //Todo replace with api call
         ArrayList<FacebookPage> facebookPages = GlobalVariables.getInstance().getFacebookPages();
-        GraphRequestBatch requestBatch = facebookPageRequestBatch(facebookPages, sinceCalendar, untilCalendar);
 
-        requestBatch.addCallback(new GraphRequestBatch.Callback() {
-                                     @Override
-                                     public void onBatchCompleted(GraphRequestBatch batch) {
-                                         //TODO Sort our list
-                                         // Reset RecyclerView with new items
+        //Declare a new graphRequestBatch for each 50 (Maybe an array of them?)
+        //Figure out how many batches we'll have
+        //Set a true/false value on each batch
+        //Callback - test if all the batches are true
+        ArrayList<GraphRequestBatch> requestBatchList = new ArrayList<>();
+        ArrayList<Boolean> flags = new ArrayList<>();
 
-                                         assert recyclerView != null;
-                                         if (!allEvents.isEmpty()) {
-                                             progressBar.setVisibility(View.GONE);
-                                             recyclerView.setVisibility(View.VISIBLE);
-                                             setupRecyclerView((RecyclerView) recyclerView, allEvents);
-                                         } else {
-                                             progressBar.setVisibility(View.GONE);
-                                             recyclerView.setVisibility(View.GONE);
-                                             emptyView.setVisibility(View.VISIBLE);
-                                         }
+        int numberofPages = facebookPages.size();
 
-                                     }
-                                 }
-        );
-        requestBatch.executeAsync();
+        batches = (numberofPages / 50);
+
+        //say there's 120 batches
+        //start 0, end 49
+        //start 50, end 99
+        //start 100, end 120
+
+        for (int i = 0; i <= batches; i++) {
+            int start = 0 + (i * 50);
+            int end = 49 + (i * 50);
+
+            // Avoid overflow error
+            if (end > numberofPages) {
+                end = numberofPages;
+            }
+
+            requestBatchList.add(facebookPageRequestBatch(
+                    new ArrayList<FacebookPage>(facebookPages.subList(start, end)),
+                    sinceCalendar,
+                    untilCalendar));
+
+            requestBatchList.get(i).addCallback(new GraphRequestBatch.Callback() {
+                                                    @Override
+                                                    public void onBatchCompleted(GraphRequestBatch batch) {
+                                                        if (batchesProcessed < batches) {
+                                                            batchesProcessed += 1;
+                                                        } else {
+                                                            Collections.sort(allEvents);
+                                                            assert recyclerView != null;
+                                                            if (!allEvents.isEmpty()) {
+                                                                progressBar.setVisibility(View.GONE);
+                                                                recyclerView.setVisibility(View.VISIBLE);
+                                                                setupRecyclerView((RecyclerView) recyclerView, allEvents);
+                                                            } else {
+                                                                // No data found
+                                                                progressBar.setVisibility(View.GONE);
+                                                                recyclerView.setVisibility(View.GONE);
+                                                                emptyView.setVisibility(View.VISIBLE);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+            );
+        }
+
+        for (GraphRequestBatch requestBatch : requestBatchList) {
+            requestBatch.executeAsync();
+        }
+
     }
 
 
