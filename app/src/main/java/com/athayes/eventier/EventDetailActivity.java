@@ -1,6 +1,5 @@
 package com.athayes.eventier;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -81,7 +80,8 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
             //
             // http://developer.android.com/design/patterns/navigation.html#up-vs-back
             //
-            navigateUpTo(new Intent(this, EventListActivity.class));
+            //navigateUpTo(new Intent(this, EventListActivity.class));
+            finish();
             return true;
         }
 

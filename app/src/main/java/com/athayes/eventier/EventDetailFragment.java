@@ -77,9 +77,7 @@ public class EventDetailFragment extends Fragment {
     }
 
     public void getEventFromFacebook(String eventID, final View rootView) {
-
         /* make the API call */
-
         new GraphRequest(
                 AccessToken.getCurrentAccessToken(),
                 eventID,
@@ -91,9 +89,7 @@ public class EventDetailFragment extends Fragment {
                         try {
                             JSONObject JSONEvent = response.getJSONObject();
                             Event thisEvent = EventService.getFromJSONObject(JSONEvent);
-                            System.out.println("----TEST----");
                             setUpTextViews(rootView, thisEvent);
-
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }

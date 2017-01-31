@@ -100,14 +100,12 @@ public class OverviewActivity extends AppCompatActivity
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
 
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
         // Action bar title
         setTitle("All Events");
-
 
         // Drawer (side menu)
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -142,11 +140,9 @@ public class OverviewActivity extends AppCompatActivity
             userName.setText(mUsername);
         }
 
-        //RecyclerView
         View recyclerView = findViewById(R.id.event_list);
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
-
 
         if (findViewById(R.id.event_detail_container) != null) {
             // The detail container view will be present only in the
@@ -202,7 +198,7 @@ public class OverviewActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        // noinspection SimplifiableIfStatement
 //        if (id == R.id.action_settings) {
 //            return true;
 //        }
@@ -268,9 +264,7 @@ public class OverviewActivity extends AppCompatActivity
 
     public class SimpleItemRecyclerViewAdapter
             extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
-
         private final List<Event> mValues;
-
         public SimpleItemRecyclerViewAdapter(List<Event> items) {
             mValues = items;
         }
@@ -363,7 +357,6 @@ public class OverviewActivity extends AppCompatActivity
         Toast.makeText(this, "Google Play Services error.", Toast.LENGTH_SHORT).show();
     }
 
-
     public void getEventsFromFacebook(Calendar dateCalendar) {
         getEventsFromFacebook(dateCalendar, dateCalendar);
     }
@@ -382,21 +375,19 @@ public class OverviewActivity extends AppCompatActivity
 
         ArrayList<FacebookPage> facebookPages = GlobalVariables.getInstance().getFacebookPages();
 
-        //Declare a new graphRequestBatch for each 50 (Maybe an array of them?)
-        //Figure out how many batches we'll have
-        //Set a true/false value on each batch
-        //Callback - test if all the batches are true
+        // Declare a new graphRequestBatch for each 50 (Maybe an array of them?)
+        // Figure out how many batches we'll have
+        // Set a true/false value on each batch
+        // Callback - test if all the batches are true
+
+        // Batching
+        // https://developers.facebook.com/docs/graph-api/making-multiple-requests
         ArrayList<GraphRequestBatch> requestBatchList = new ArrayList<>();
         ArrayList<Boolean> flags = new ArrayList<>();
 
         int numberofPages = facebookPages.size();
 
         batches = (numberofPages / 50);
-
-        //say there's 120 batches
-        //start 0, end 49
-        //start 50, end 99
-        //start 100, end 120
 
         for (int i = 0; i <= batches - 1; i++) {
             int start = 0 + (i * 50);
@@ -491,8 +482,6 @@ public class OverviewActivity extends AppCompatActivity
 }
 
 
-//batching
-// https://developers.facebook.com/docs/graph-api/making-multiple-requests
 //Facebook Name
 //
 //        GraphRequest request = GraphRequest.newMeRequest(

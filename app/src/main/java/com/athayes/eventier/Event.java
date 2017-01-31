@@ -49,7 +49,6 @@ public class Event implements Comparable<Event> {
     // FireBase doesn't support the date class in Java - we'll store the date as a string
     public final String date;
 
-
     public Event(String id, String title, String pitch, String host, String location, String time, String date) {
         this.id = id;
         this.title = title;
@@ -64,7 +63,6 @@ public class Event implements Comparable<Event> {
     public String toString() {
         return title;
     }
-
 
     //ToDo - single date/time or save as calendar object
     @Override
