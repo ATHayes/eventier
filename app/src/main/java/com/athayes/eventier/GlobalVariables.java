@@ -31,7 +31,6 @@ public class GlobalVariables extends Application {
 
     private List<Event> ITEMS;
     private ArrayList<FacebookPage> facebookPages;
-
     private Map<String, Event> ITEM_MAP;
     String myFormat = "dd/MM/yy"; // from strings
 
@@ -59,11 +58,7 @@ public class GlobalVariables extends Application {
         calDayAfterTomorrow.add(Calendar.DATE, 1);
         dayAfterTomorrow = calDayAfterTomorrow.getTime();
 
-
-
-        //TODO error handling for these pages.
         facebookPages = new ArrayList<>();
-
         facebookPages.add(new FacebookPage("uccscifi", "Sci-Fi Society"));
         facebookPages.add(new FacebookPage("Accounting And Finance Society", "uccaccfin"));
         facebookPages.add(new FacebookPage("Africa Society", "uccafrica"));
@@ -165,7 +160,6 @@ public class GlobalVariables extends Application {
         facebookPages.add(new FacebookPage("Surgeon Society", "surgsoc"));
         facebookPages.add(new FacebookPage("Traditional Music Society", "ucctradsoc"));
         facebookPages.add(new FacebookPage("WARPS", "ucc.warps"));
-
     }
 
     private static GlobalVariables instance;
