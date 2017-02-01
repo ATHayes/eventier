@@ -49,10 +49,14 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     // Facebook
-    compile 'com.facebook.android:facebook-android-sdk:4.+'
+    compile 'com.facebook.android:facebook-android-sdk:4.19.0'
 
-    //Picasso for image processing: https://square.github.io/picasso/#download
+    // Picasso for image processing: https://square.github.io/picasso/#download
     compile 'com.squareup.picasso:picasso:2.5.2'
+
+    // Image Popup
+    compile 'com.github.chathuralakmal:AndroidImagePopup:1.0.4'
+
 }
 
 // Add Firebase - From Firebase Console: www.console.firebase.google.com

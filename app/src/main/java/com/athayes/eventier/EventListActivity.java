@@ -421,29 +421,30 @@ public class EventListActivity extends AppCompatActivity
 
         int numberofPages = facebookPages.size();
 
-        batches = (numberofPages / 50) + 1;
+        // Zero based!
+        batches = (numberofPages / 50);
         batchesProcessed = 0;
 
-        //say there's 120 batches
-        //start 0, end 49
-        //start 50, end 99
-        //start 100, end 120
+        // Check if exactly divisible by 50
+        if (numberofPages % 50 == 0) {
+            batches -= 1;
+        }
+        ;
 
-        for (int i = 0; i <= batches - 1; i++) {
-            int start = 0 + (i * 50);
-            int end = 49 + (i * 50);
+        for (int i = 0; i <= batches; i++) {
+            int startIndex = 0 + (i * 50);
+            int endIndex = 49 + (i * 50);
 
             // Avoid overflow error
-            if (end > numberofPages) {
-                end = numberofPages;
+            if (endIndex >= numberofPages) {
+                endIndex = numberofPages - 1;
             }
 
             requestBatchList.add(facebookPageRequestBatch(
-                    new ArrayList<FacebookPage>(facebookPages.subList(start, end)),
+                    new ArrayList<FacebookPage>(facebookPages.subList(startIndex, endIndex)),
                     sinceCalendar,
                     untilCalendar));
 
-            batchesProcessed += 1;
             requestBatchList.get(i).addCallback(new GraphRequestBatch.Callback() {
                                                     @Override
                                                     public void onBatchCompleted(GraphRequestBatch batch) {
@@ -454,7 +455,6 @@ public class EventListActivity extends AppCompatActivity
                                                             //reset counters
                                                             batches = 0;
                                                             batchesProcessed = 0;
-
                                                             Collections.sort(allEvents);
                                                             assert recyclerView != null;
                                                             if (!allEvents.isEmpty()) {

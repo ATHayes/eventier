@@ -71,7 +71,7 @@ public class EventDetailFragment extends Fragment {
             // Facebook API call
             getEventFromFacebook(eventID, rootView);
         } else {
-            System.out.println("Event id null!!!!");
+            System.out.println("Event id null");
         }
         return rootView;
     }
