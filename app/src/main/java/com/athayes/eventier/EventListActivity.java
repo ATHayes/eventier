@@ -86,7 +86,7 @@ public class EventListActivity extends AppCompatActivity
     List<Event> allEvents = new ArrayList<>();
 
     //Batches
-    int batches = 0;
+    int totalBatches = 0;
 
     //Increment for each batch processed
     int batchesProcessed = 0;
@@ -419,25 +419,22 @@ public class EventListActivity extends AppCompatActivity
         ArrayList<GraphRequestBatch> requestBatchList = new ArrayList<>();
         ArrayList<Boolean> flags = new ArrayList<>();
 
-        int numberofPages = facebookPages.size();
+        int numberOfPages = facebookPages.size();
+        int pagesPerBatch = 50;
 
-        // Zero based!
-        batches = (numberofPages / 50);
+        // Round up (ceil)
+        totalBatches = (numberOfPages / pagesPerBatch) + ((numberOfPages == 0) ? 0 : 1);
+
+        // Set batches processed counter
         batchesProcessed = 0;
 
-        // Check if exactly divisible by 50
-        if (numberofPages % 50 == 0) {
-            batches -= 1;
-        }
-        ;
-
-        for (int i = 0; i <= batches; i++) {
-            int startIndex = 0 + (i * 50);
-            int endIndex = 49 + (i * 50);
+        for (int i = 0; i <= (totalBatches - 1); i++) {
+            int startIndex = 0 + (i * pagesPerBatch);
+            int endIndex = 49 + (i * pagesPerBatch);
 
             // Avoid overflow error
-            if (endIndex >= numberofPages) {
-                endIndex = numberofPages - 1;
+            if (endIndex >= numberOfPages) {
+                endIndex = numberOfPages - 1;
             }
 
             requestBatchList.add(facebookPageRequestBatch(
@@ -449,13 +446,14 @@ public class EventListActivity extends AppCompatActivity
                                                     @Override
                                                     public void onBatchCompleted(GraphRequestBatch batch) {
                                                         batchesProcessed += 1;
-                                                        if (batchesProcessed < batches) {
-                                                            // Do nothing
-                                                        } else {
-                                                            //reset counters
-                                                            batches = 0;
+                                                        if (batchesProcessed >= totalBatches) {
+
+                                                            // Reset counters
+                                                            totalBatches = 0;
                                                             batchesProcessed = 0;
+
                                                             Collections.sort(allEvents);
+
                                                             assert recyclerView != null;
                                                             if (!allEvents.isEmpty()) {
                                                                 progressBar.setVisibility(View.GONE);
