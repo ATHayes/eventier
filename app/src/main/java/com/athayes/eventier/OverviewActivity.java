@@ -84,10 +84,8 @@ public class OverviewActivity extends AppCompatActivity
     //List of events, used for temporary storage - async methods
     List<Event> allEvents = new ArrayList<>();
 
-    // Batches
+    // Counters for GraphRequestBatches
     int totalBatches = 0;
-
-    //Increment for each batch processed
     int batchesProcessed = 0;
 
     @Override
