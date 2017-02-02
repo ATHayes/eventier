@@ -400,10 +400,11 @@ public class EventListActivity extends AppCompatActivity
     }
 
     public void getEventsFromFacebook(Calendar sinceCalendar, Calendar untilCalendar) {
-        //Show our progress bar
-        final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+
         final View recyclerView = findViewById(R.id.event_list);
         final View emptyView = findViewById(R.id.empty_view);
+        final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+
         recyclerView.setVisibility(View.GONE);
         emptyView.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
@@ -411,13 +412,7 @@ public class EventListActivity extends AppCompatActivity
         allEvents.clear();
 
         ArrayList<FacebookPage> facebookPages = GlobalVariables.getInstance().getFacebookPages();
-
-        //Declare a new graphRequestBatch for each 50 (Maybe an array of them?)
-        //Figure out how many batches we'll have
-        //Set a true/false value on each batch
-        //Callback - test if all the batches are true
         ArrayList<GraphRequestBatch> requestBatchList = new ArrayList<>();
-        ArrayList<Boolean> flags = new ArrayList<>();
 
         int numberOfPages = facebookPages.size();
         int pagesPerBatch = 50;
@@ -425,7 +420,7 @@ public class EventListActivity extends AppCompatActivity
         // Round up (ceil)
         totalBatches = (numberOfPages / pagesPerBatch) + ((numberOfPages == 0) ? 0 : 1);
 
-        // Set batches processed counter
+        // Reset counter
         batchesProcessed = 0;
 
         for (int i = 0; i <= (totalBatches - 1); i++) {
