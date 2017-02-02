@@ -99,13 +99,12 @@ public class EventListActivity extends AppCompatActivity
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
 
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
         // Action bar title
-        setTitle("Home");
+        setTitle("Search By Date");
 
         // Drawer (side menu)
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -57,6 +57,10 @@ dependencies {
     // Image Popup
     compile 'com.github.chathuralakmal:AndroidImagePopup:1.0.4'
 
+    // Card View
+    compile 'com.android.support:cardview-v7:24.2.1'
+
+
 }
 
 // Add Firebase - From Firebase Console: www.console.firebase.google.com
