@@ -20,8 +20,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -183,7 +183,7 @@ public class EventListActivity extends AppCompatActivity
         };
 
         // Select Date Button
-        ImageButton button_select_date = (ImageButton) findViewById(R.id.button_select_date);
+        Button button_select_date = (Button) findViewById(R.id.button_select_date);
         button_select_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

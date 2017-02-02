@@ -19,7 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -163,7 +163,7 @@ public class OverviewActivity extends AppCompatActivity
         final Date today = new Date();
 
         // Select Date Button
-        ImageButton button_select_date = (ImageButton) findViewById(R.id.button_select_date);
+        Button button_select_date = (Button) findViewById(R.id.button_select_date);
         button_select_date.setVisibility(View.INVISIBLE);
 
         getEventsFromFacebook(todayCalendar, untilCalendar);
