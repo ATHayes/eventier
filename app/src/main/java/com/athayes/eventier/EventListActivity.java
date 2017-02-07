@@ -173,7 +173,7 @@ public class EventListActivity extends AppCompatActivity
 
                 SimpleDateFormat displayFormat = new SimpleDateFormat("EEEE, MMM d, yyyy");
                 if (todayCalendar.get(Calendar.DATE) == selectCalendar.get(Calendar.DATE)) {
-                    text_date.setText("Events tonight");
+                    text_date.setText("Today's Events");
                 } else {
                     text_date.setText(displayFormat.format(selectCalendar.getTime()));
                 }

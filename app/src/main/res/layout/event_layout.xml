@@ -36,7 +36,7 @@
                     android:layout_gravity="left"
                     android:text="Events Tonight"
                     android:layout_weight="1"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
                     android:gravity="center_vertical" />
 
                 <!--  ADDED SPACER VIEW -->
