@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -251,7 +252,6 @@ public class EventListActivity extends AppCompatActivity
             shareIntent.setType("text/plain");
             String shareBody = getResources().getString(R.string.play_store_url);
             String shareSub = getResources().getString(R.string.share_message);
-
             shareIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
             shareIntent.putExtra(Intent.EXTRA_SUBJECT, shareSub);
 
@@ -265,7 +265,14 @@ public class EventListActivity extends AppCompatActivity
             mFirebaseAuth.signOut();
             mUsername = ANONYMOUS;
             startActivity(new Intent(this, SignInActivity.class));
+
+
+        } else if (id == R.id.nav_privacy_policy) {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.privacy_policy_url)));
+            startActivity(browserIntent);
         }
+
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
