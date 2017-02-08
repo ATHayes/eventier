@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
+    <group
+        android:checkableBehavior="single"
+        android:id="@+id/grp1">
 
         <item
             android:id="@+id/nav_upcoming"
@@ -12,33 +14,29 @@
             android:icon="@drawable/ic_calendar"
             android:title="Search by Date" />
 
-
-        <!--<item-->
-        <!--android:id="@+id/nav_createEvent"-->
-        <!--android:icon="@drawable/ic_create_black_24dp"-->
-        <!--android:title="Create Event" />-->
+        <item
+            android:id="@+id/nav_sign_out"
+            android:icon="@drawable/ic_settings_power_black_24dp"
+            android:title="Log Out" />
 
         <!--<item-->
         <!--android:id="@+id/nav_settings"-->
         <!--android:icon="@drawable/ic_menu_manage"-->
         <!--android:title="Settings" />-->
-        <item
-            android:id="@+id/nav_sign_out"
-            android:icon="@drawable/ic_settings_power_black_24dp"
-            android:title="Log Out" />
+
     </group>
 
-    <!--<item android:title="Communicate">-->
-        <!--<menu>-->
-            <!--<item-->
-                <!--android:id="@+id/nav_share"-->
-                <!--android:icon="@drawable/ic_menu_share"-->
-                <!--android:title="Share" />-->
-            <!--<item-->
-                <!--android:id="@+id/nav_send"-->
-                <!--android:icon="@drawable/ic_menu_send"-->
-                <!--android:title="Send" />-->
-        <!--</menu>-->
-    <!--</item>-->
+
+    <group
+        android:checkableBehavior="single"
+        android:id="@+id/grp2">
+        <item android:title="Communicate">
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share this app" />
+        </item>
+    </group>
+
 
 </menu>

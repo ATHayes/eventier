@@ -216,7 +216,7 @@ public class OverviewActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_upcoming) {
 
-
+        }
 //        } else if (id == R.id.nav_createEvent) {
 //            Intent intent = new Intent(this, CreateEventActivity.class);
 //            // Activity For Result, source: http://stackoverflow.com/questions/13643940/refresh-listview-after-updating-in-another-activity
@@ -224,6 +224,21 @@ public class OverviewActivity extends AppCompatActivity
 
 //        } else if (id == R.id.nav_settings) {
 //            // Go to Settings
+
+        else if (id == R.id.nav_share) {
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("text/plain");
+            String shareBody = getResources().getString(R.string.play_store_url);
+            String shareSub = getResources().getString(R.string.share_message);
+            shareIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, shareSub);
+
+            try {
+                startActivity(Intent.createChooser(shareIntent, "Share Using"));
+            } catch (android.content.ActivityNotFoundException ex) {
+                Toast.makeText(OverviewActivity.this, "Error Sharing Content", Toast.LENGTH_SHORT).show();
+            }
+
 
         } else if (id == R.id.nav_sign_out) {
             mFirebaseAuth.signOut();
@@ -236,7 +251,6 @@ public class OverviewActivity extends AppCompatActivity
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        // TODO Make a method out of this code as it's used in more than 1 location
         final Calendar todayCalendar = Calendar.getInstance();
         // Make a new list from that list
         List<Event> FILTEREDITEMS = new ArrayList<Event>();
@@ -245,8 +259,6 @@ public class OverviewActivity extends AppCompatActivity
         // Get selected date as a string
         String selectedDate = databaseFormat.format(todayCalendar.getTime());
 
-
-        // Set the adaptor with the items
         recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(FILTEREDITEMS));
     }
 
@@ -263,6 +275,7 @@ public class OverviewActivity extends AppCompatActivity
     public class SimpleItemRecyclerViewAdapter
             extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
         private final List<Event> mValues;
+
         public SimpleItemRecyclerViewAdapter(List<Event> items) {
             mValues = items;
         }
@@ -332,6 +345,8 @@ public class OverviewActivity extends AppCompatActivity
     }
 
     // When the user is done with the subsequent activity and returns, the system calls the activity's onActivityResult() method.
+
+    //TODO - remove - only applies to createEvent
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
@@ -398,30 +413,30 @@ public class OverviewActivity extends AppCompatActivity
                     untilCalendar));
 
             requestBatchList.get(i).addCallback(new GraphRequestBatch.Callback() {
-                                                     @Override
-                                                     public void onBatchCompleted(GraphRequestBatch batch) {
-                                                         batchesProcessed += 1;
-                                                         if (batchesProcessed >= totalBatches) {
+                                                    @Override
+                                                    public void onBatchCompleted(GraphRequestBatch batch) {
+                                                        batchesProcessed += 1;
+                                                        if (batchesProcessed >= totalBatches) {
 
-                                                             // Reset counters
-                                                             totalBatches = 0;
-                                                             batchesProcessed = 0;
+                                                            // Reset counters
+                                                            totalBatches = 0;
+                                                            batchesProcessed = 0;
 
-                                                             Collections.sort(allEvents);
-                                                             assert recyclerView != null;
-                                                             if (!allEvents.isEmpty()) {
-                                                                 progressBar.setVisibility(View.GONE);
-                                                                 recyclerView.setVisibility(View.VISIBLE);
-                                                                 setupRecyclerView((RecyclerView) recyclerView, allEvents);
-                                                             } else {
-                                                                 // No data found
-                                                                 progressBar.setVisibility(View.GONE);
-                                                                 recyclerView.setVisibility(View.GONE);
-                                                                 emptyView.setVisibility(View.VISIBLE);
-                                                             }
-                                                         }
-                                                     }
-                                                 }
+                                                            Collections.sort(allEvents);
+                                                            assert recyclerView != null;
+                                                            if (!allEvents.isEmpty()) {
+                                                                progressBar.setVisibility(View.GONE);
+                                                                recyclerView.setVisibility(View.VISIBLE);
+                                                                setupRecyclerView((RecyclerView) recyclerView, allEvents);
+                                                            } else {
+                                                                // No data found
+                                                                progressBar.setVisibility(View.GONE);
+                                                                recyclerView.setVisibility(View.GONE);
+                                                                emptyView.setVisibility(View.VISIBLE);
+                                                            }
+                                                        }
+                                                    }
+                                                }
             );
         }
 

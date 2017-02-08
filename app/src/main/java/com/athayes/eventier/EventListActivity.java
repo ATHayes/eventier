@@ -245,14 +245,21 @@ public class EventListActivity extends AppCompatActivity
         } else if (id == R.id.nav_upcoming) {
             startActivity(new Intent(this, OverviewActivity.class));
 
-            // No Create Event at the moment
-//        } else if (id == R.id.nav_createEvent) {
-//            Intent intent = new Intent(this, CreateEventActivity.class);
-//            // Activity For Result, source: http://stackoverflow.com/questions/13643940/refresh-listview-after-updating-in-another-activity
-//            startActivityForResult(intent, CREATE_EVENT_REQUEST);
 
-//        } else if (id == R.id.nav_settings) {
-//            // Go to Settings
+        } else if (id == R.id.nav_share) {
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("text/plain");
+            String shareBody = getResources().getString(R.string.play_store_url);
+            String shareSub = getResources().getString(R.string.share_message);
+
+            shareIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, shareSub);
+
+            try {
+                startActivity(Intent.createChooser(shareIntent, "Share Using"));
+            } catch (android.content.ActivityNotFoundException ex) {
+                Toast.makeText(EventListActivity.this, "Error Sharing Content", Toast.LENGTH_SHORT).show();
+            }
 
         } else if (id == R.id.nav_sign_out) {
             mFirebaseAuth.signOut();
