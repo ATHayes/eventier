@@ -3,4 +3,30 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="centerColor">#4CAF50</color>
+    <color name="endColor">#2E7D32</color>
+    <color name="startColor">#81C784</color>
+
+
+    <!--UCC theme-->
+    <!--<color name="colorPrimary">#F44336</color>-->
+    <!--<color name="colorPrimaryDark">#D32F2F</color>-->
+    <!--<color name="colorAccent">#536DFE</color>-->
+    <!--<color name="startColor">#005180</color>-->
+    <!--<color name="centerColor">#1C797E</color>-->
+    <!--<color name="endColor">#39A37F</color>-->
+
+    <!--Theme 1-->
+    <!--<color name="colorPrimary">#005180</color>-->
+    <!--<color name="colorPrimaryDark">#004166</color>-->
+    <!--<color name="colorAccent">#39A37F</color>-->
+    <!--<color name="startColor">#39A37F</color>-->
+    <!--<color name="centerColor">#1C797E</color>-->
+    <!--<color name="endColor">#005180</color>-->
+
+
+    <!--Another theme-->
+    <!--<color name="colorPrimary">#3F51B5</color>-->
+    <!--<color name="colorPrimaryDark">#303F9F</color>-->
+    <!--<color name="colorAccent">#FF4081</color>-->
 </resources>

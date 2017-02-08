@@ -1,6 +1,7 @@
 package com.athayes.eventier;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -11,6 +12,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -104,7 +106,7 @@ public class OverviewActivity extends AppCompatActivity
         toolbar.setTitle(getTitle());
 
         // Action bar title
-        setTitle("All Events");
+        setTitle("This Week");
 
         // Drawer (side menu)
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -156,11 +158,9 @@ public class OverviewActivity extends AppCompatActivity
         final Calendar untilCalendar = Calendar.getInstance();
         final Calendar todayCalendar = Calendar.getInstance();
 
-        untilCalendar.add(Calendar.MONTH, 3);
+        untilCalendar.add(Calendar.WEEK_OF_YEAR, 1);
 
-        // Date text view
-        final TextView text_date = (TextView) findViewById(R.id.text_date);
-        text_date.setText("Upcoming Events");
+
         final Date today = new Date();
 
         // Select Date Button
@@ -168,6 +168,16 @@ public class OverviewActivity extends AppCompatActivity
         button_select_date.setVisibility(View.INVISIBLE);
 
         getEventsFromFacebook(todayCalendar, untilCalendar);
+
+        SimpleDateFormat displayFormat = new SimpleDateFormat("EEEE MMM d");
+        String sinceAPIString = displayFormat.format(todayCalendar.getTime());
+        String untilAPIString = displayFormat.format(untilCalendar.getTime());
+
+        // Date text view
+        final TextView text_date = (TextView) findViewById(R.id.text_date);
+
+        text_date.setText(sinceAPIString + " to " + untilAPIString);
+
     }
 
     // Event handler for back button
@@ -244,9 +254,28 @@ public class OverviewActivity extends AppCompatActivity
 
 
         } else if (id == R.id.nav_sign_out) {
-            mFirebaseAuth.signOut();
-            mUsername = ANONYMOUS;
-            startActivity(new Intent(this, SignInActivity.class));
+
+            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which) {
+                        case DialogInterface.BUTTON_POSITIVE:
+                            //Yes button clicked
+                            mFirebaseAuth.signOut();
+                            mUsername = ANONYMOUS;
+                            startActivity(new Intent(OverviewActivity.this, SignInActivity.class));
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            //No button clicked
+                            break;
+                    }
+                }
+            };
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Are you sure you want to log out?").setPositiveButton("Log out", dialogClickListener)
+                    .setNegativeButton("Stay here", dialogClickListener).show();
+
+
 
         } else if (id == R.id.nav_privacy_policy) {
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.privacy_policy_url)));

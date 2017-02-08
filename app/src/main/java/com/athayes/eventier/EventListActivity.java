@@ -2,6 +2,7 @@ package com.athayes.eventier;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -12,6 +13,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -262,9 +264,28 @@ public class EventListActivity extends AppCompatActivity
             }
 
         } else if (id == R.id.nav_sign_out) {
-            mFirebaseAuth.signOut();
-            mUsername = ANONYMOUS;
-            startActivity(new Intent(this, SignInActivity.class));
+
+            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which) {
+                        case DialogInterface.BUTTON_POSITIVE:
+                            //Yes button clicked
+                            mFirebaseAuth.signOut();
+                            mUsername = ANONYMOUS;
+                            startActivity(new Intent(EventListActivity.this, SignInActivity.class));
+
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            //No button clicked
+                            break;
+                    }
+                }
+            };
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Are you sure you want to log out?").setPositiveButton("Log out", dialogClickListener)
+                    .setNegativeButton("Stay here", dialogClickListener).show();
+
 
 
         } else if (id == R.id.nav_privacy_policy) {
@@ -277,6 +298,7 @@ public class EventListActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         // TODO Make a method out of this code as it's used in more than 1 location

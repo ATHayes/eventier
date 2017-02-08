@@ -59,7 +59,7 @@
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="16dp"
+            android:padding="8dp"
             android:text=""
             android:visibility="gone"
             android:textIsSelectable="true"
@@ -72,7 +72,7 @@
             android:layout_height="match_parent"
             android:width="0dip"
             android:layout_weight="1"
-            android:padding="16dp"
+            android:padding="8dp"
             android:visibility="gone"
             android:text=""
             android:textIsSelectable="true"
@@ -89,15 +89,16 @@
 
         <TextView
             android:id="@+id/timeLabel"
-
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="16dp"
+            android:padding="8dp"
             android:text="Time: "
             android:visibility="invisible"
             android:textIsSelectable="true"
-            tools:context="com.eventier.EventDetailFragment" />
+            tools:context="com.eventier.EventDetailFragment"
+            android:drawableLeft="@drawable/ic_access_time_black_24dp" />
+
 
         <TextView
             android:id="@+id/timeValueLabel"
@@ -106,7 +107,7 @@
             android:layout_height="match_parent"
             android:width="0dip"
             android:layout_weight="1"
-            android:padding="16dp"
+            android:padding="8dp"
             android:text=""
             android:textIsSelectable="true"
             tools:context="com.eventier.EventDetailFragment" />
@@ -125,11 +126,12 @@
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="16dp"
+            android:padding="8dp"
             android:text="Location: "
             android:visibility="invisible"
             android:textIsSelectable="true"
-            tools:context="com.eventier.EventDetailFragment" />
+            tools:context="com.eventier.EventDetailFragment"
+            android:drawableLeft="@drawable/ic_location_on_black_24dp" />
 
         <TextView
             android:id="@+id/locationValueLabel"
@@ -138,7 +140,7 @@
             android:layout_height="wrap_content"
             android:width="@dimen/item_width"
             android:layout_weight="1"
-            android:padding="16dp"
+            android:padding="8dp"
             android:textIsSelectable="true"
             tools:context="com.eventier.EventDetailFragment" />
     </LinearLayout>
@@ -155,11 +157,12 @@
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="16dp"
+            android:padding="8dp"
             android:text="Date: "
             android:visibility="invisible"
             android:textIsSelectable="true"
-            tools:context="com.eventier.EventDetailFragment" />
+            tools:context="com.eventier.EventDetailFragment"
+            android:drawableLeft="@drawable/ic_calendar" />
 
         <TextView
             android:id="@+id/dateValueLabel"
@@ -168,7 +171,7 @@
             android:layout_height="wrap_content"
             android:width="@dimen/item_width"
             android:layout_weight="1"
-            android:padding="16dp"
+            android:padding="8dp"
             android:textIsSelectable="true"
             tools:context="com.eventier.EventDetailFragment" />
 
