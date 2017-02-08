@@ -145,8 +145,6 @@ public class EventListActivity extends AppCompatActivity
         //RecyclerView
         View recyclerView = findViewById(R.id.event_list);
         assert recyclerView != null;
-        setupRecyclerView((RecyclerView) recyclerView);
-
 
         if (findViewById(R.id.event_detail_container) != null) {
             // The detail container view will be present only in the
@@ -161,7 +159,6 @@ public class EventListActivity extends AppCompatActivity
         final Calendar selectCalendar = Calendar.getInstance();
         final Calendar todayCalendar = Calendar.getInstance();
 
-        // Date text view
         final TextView text_date = (TextView) findViewById(R.id.text_date);
         final Date today = new Date();
 
@@ -195,7 +192,6 @@ public class EventListActivity extends AppCompatActivity
                         selectCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
-
         //getEventsFromFacebook();
         getEventsFromFacebook(todayCalendar);
     }
@@ -264,7 +260,6 @@ public class EventListActivity extends AppCompatActivity
             }
 
         } else if (id == R.id.nav_sign_out) {
-
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -286,38 +281,14 @@ public class EventListActivity extends AppCompatActivity
             builder.setMessage("Are you sure you want to log out?").setPositiveButton("Log out", dialogClickListener)
                     .setNegativeButton("Stay here", dialogClickListener).show();
 
-
-
         } else if (id == R.id.nav_privacy_policy) {
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.privacy_policy_url)));
             startActivity(browserIntent);
         }
 
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-
-    private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        // TODO Make a method out of this code as it's used in more than 1 location
-        final Calendar todayCalendar = Calendar.getInstance();
-        // Make a new list from that list
-        List<Event> FILTEREDITEMS = new ArrayList<Event>();
-        String myFormat = "dd/MM/yy";
-        SimpleDateFormat databaseFormat = new SimpleDateFormat(myFormat);
-        // Get selected date as a string
-        String selectedDate = databaseFormat.format(todayCalendar.getTime());
-
-//        // Filter out items based on their dates
-//        for (Event e : allEvents) {
-//            if (e.date.equals(selectedDate)) {
-//                FILTEREDITEMS.add(e);
-//            }
-//        }
-        // Set the adaptor with the items
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(FILTEREDITEMS));
     }
 
     // Overrided method - pass in a list of items
@@ -334,7 +305,6 @@ public class EventListActivity extends AppCompatActivity
             extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
 
         private final List<Event> mValues;
-
         public SimpleItemRecyclerViewAdapter(List<Event> items) {
             mValues = items;
         }
@@ -546,29 +516,3 @@ public class EventListActivity extends AppCompatActivity
         return request;
     }
 }
-
-
-//batching
-// https://developers.facebook.com/docs/graph-api/making-multiple-requests
-//Facebook Name
-//
-//        GraphRequest request = GraphRequest.newMeRequest(
-//                accessToken,
-//                new GraphRequest.GraphJSONObjectCallback() {
-//                    @Override
-//                    public void onCompleted(
-//                            JSONObject object,
-//                            GraphResponse response) {
-//                        try {
-//                            System.out.println(object.toString());
-//                            System.out.println(object.get("name"));
-//                        } catch (Exception ex) {
-//
-//                        }
-//
-//                    }
-//                });
-//        Bundle parameters = new Bundle();
-//        parameters.putString("fields", "id,name,link");
-//        request.setParameters(parameters);
-//        request.executeAsync();

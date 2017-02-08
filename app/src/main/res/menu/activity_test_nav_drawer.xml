@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group
-        android:checkableBehavior="single"
-        android:id="@+id/grp1">
+        android:id="@+id/grp1"
+        android:checkableBehavior="single">
 
         <item
             android:id="@+id/nav_upcoming"
@@ -14,10 +14,6 @@
             android:icon="@drawable/ic_calendar"
             android:title="Search by Date" />
 
-        <item
-            android:id="@+id/nav_sign_out"
-            android:icon="@drawable/ic_settings_power_black_24dp"
-            android:title="Log Out" />
 
         <!--<item-->
         <!--android:id="@+id/nav_settings"-->
@@ -28,8 +24,8 @@
 
 
     <group
-        android:checkableBehavior="single"
-        android:id="@+id/grp2">
+        android:id="@+id/grp2"
+        android:checkableBehavior="single">
 
         <item
             android:id="@+id/nav_privacy_policy"
@@ -40,6 +36,19 @@
             android:id="@+id/nav_share"
             android:icon="@drawable/ic_menu_share"
             android:title="Share this app" />
+
+
+    </group>
+
+
+    <group
+        android:id="@+id/grp3"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_sign_out"
+            android:icon="@drawable/ic_settings_power_black_24dp"
+            android:title="Log Out" />
 
 
     </group>

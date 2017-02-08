@@ -143,7 +143,7 @@ public class OverviewActivity extends AppCompatActivity
 
         View recyclerView = findViewById(R.id.event_list);
         assert recyclerView != null;
-        setupRecyclerView((RecyclerView) recyclerView);
+        //setupRecyclerView((RecyclerView) recyclerView);
 
         if (findViewById(R.id.event_detail_container) != null) {
             // The detail container view will be present only in the
@@ -286,17 +286,17 @@ public class OverviewActivity extends AppCompatActivity
         return true;
     }
 
-    private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        final Calendar todayCalendar = Calendar.getInstance();
-        // Make a new list from that list
-        List<Event> FILTEREDITEMS = new ArrayList<Event>();
-        String myFormat = "dd/MM/yy";
-        SimpleDateFormat databaseFormat = new SimpleDateFormat(myFormat);
-        // Get selected date as a string
-        String selectedDate = databaseFormat.format(todayCalendar.getTime());
-
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(FILTEREDITEMS));
-    }
+//    private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
+//        final Calendar todayCalendar = Calendar.getInstance();
+//        // Make a new list from that list
+//        List<Event> FILTEREDITEMS = new ArrayList<Event>();
+//        String myFormat = "dd/MM/yy";
+//        SimpleDateFormat databaseFormat = new SimpleDateFormat(myFormat);
+//        // Get selected date as a string
+//        String selectedDate = databaseFormat.format(todayCalendar.getTime());
+//
+//        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(FILTEREDITEMS));
+//    }
 
     // Overrided method - pass in a list of items
     private void setupRecyclerView(@NonNull RecyclerView recyclerView, List<Event> ITEMS) {
@@ -424,7 +424,6 @@ public class OverviewActivity extends AppCompatActivity
 
         ArrayList<FacebookPage> facebookPages = GlobalVariables.getInstance().getFacebookPages();
         ArrayList<GraphRequestBatch> requestBatchList = new ArrayList<>();
-
         int numberOfPages = facebookPages.size();
         int pagesPerBatch = 50;
 
