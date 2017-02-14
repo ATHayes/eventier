@@ -6,6 +6,7 @@
     <color name="centerColor">#4CAF50</color>
     <color name="endColor">#2E7D32</color>
     <color name="startColor">#81C784</color>
+    <color name="white">#FFFFFF</color>
 
 
     <!--UCC theme-->

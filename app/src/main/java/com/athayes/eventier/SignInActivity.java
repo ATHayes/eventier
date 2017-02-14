@@ -125,7 +125,7 @@ public class SignInActivity extends AppCompatActivity {
 
 
     public void startListActivity(){
-        Intent intent = new Intent(this, OverviewActivity.class);
+        Intent intent = new Intent(this, EventListActivity.class);
         startActivity(intent);
     }
 

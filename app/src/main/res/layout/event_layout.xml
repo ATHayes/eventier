@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -15,49 +15,14 @@
         android:paddingLeft="4dp"
         android:paddingRight="4dp">
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/card_view"
+        <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:cardCornerRadius="0dp"
-            app:cardElevation="2dp"
-            app:cardUseCompatPadding="true">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="43dp"
-                android:orientation="horizontal"
-                android:layout_margin="@dimen/text_margin">
-
-                <TextView
-                    android:id="@+id/text_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="left"
-                    android:text="Events Tonight"
-                    android:layout_weight="1"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
-                    android:gravity="center_vertical" />
-
-                <!--  ADDED SPACER VIEW -->
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-                <!-- /ADDED SPACER VIEW -->
-
-                <Button
-                    android:id="@+id/button_select_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:text="  Search"
-                    android:drawableLeft="@drawable/ic_calendar"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            ads:adSize="BANNER"
+            ads:adUnitId="@string/banner_ad_unit_id"></com.google.android.gms.ads.AdView>
 
     </LinearLayout>
     <!-- Include the event list sub-layout -->

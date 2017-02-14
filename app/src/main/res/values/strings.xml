@@ -30,6 +30,12 @@
     </string>
     <string name="privacy_policy_url">https://sites.google.com/view/eventier-privacy/home
     </string>
+    <string name="rate_url">https://sites.google.com/view/eventier-privacy/home
+    </string>
+
+
+    <string name="banner_ad_unit_id" translatable="false">
+        ca-app-pub-7581972583339154/9262466228</string>
 
 
 </resources>

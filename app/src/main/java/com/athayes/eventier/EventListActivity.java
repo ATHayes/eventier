@@ -23,7 +23,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -34,6 +33,9 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphRequestBatch;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
@@ -92,6 +94,10 @@ public class EventListActivity extends AppCompatActivity
     int totalBatches = 0;
     int batchesProcessed = 0;
 
+
+    private AdView mAdView;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,8 +112,16 @@ public class EventListActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
+        //Load ads
+        MobileAds.initialize(getApplicationContext(), "ca-app-pub-7581972583339154~7785733029");
+        // Initialize and request AdMob ad.
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
         // Action bar title
-        setTitle("Search By Date");
+        setTitle("Home");
+
 
         // Drawer (side menu)
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -158,42 +172,13 @@ public class EventListActivity extends AppCompatActivity
         // The getInstance method is a FACTORY METHOD that returns a concrete implementation of the Calendar class.
         final Calendar selectCalendar = Calendar.getInstance();
         final Calendar todayCalendar = Calendar.getInstance();
-
-        final TextView text_date = (TextView) findViewById(R.id.text_date);
         final Date today = new Date();
 
-        // Date picker and Recycler View
-        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                selectCalendar.set(Calendar.YEAR, year);
-                selectCalendar.set(Calendar.MONTH, monthOfYear);
-                selectCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-                SimpleDateFormat displayFormat = new SimpleDateFormat("EEEE, MMM d, yyyy");
-                if (todayCalendar.get(Calendar.DATE) == selectCalendar.get(Calendar.DATE)) {
-                    text_date.setText("Today's Events");
-                } else {
-                    text_date.setText(displayFormat.format(selectCalendar.getTime()));
-                }
-                //get Facebook events for this day - the list will be updated automatically
-                getEventsFromFacebook(selectCalendar);
-            }
-        };
-
-        // Select Date Button
-        Button button_select_date = (Button) findViewById(R.id.button_select_date);
-        button_select_date.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new DatePickerDialog(EventListActivity.this, date, selectCalendar
-                        .get(Calendar.YEAR), selectCalendar.get(Calendar.MONTH),
-                        selectCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
         //getEventsFromFacebook();
         getEventsFromFacebook(todayCalendar);
+
+        getSupportActionBar().setSubtitle("Today's Events");
+
     }
 
     // Event handler for back button
@@ -211,7 +196,7 @@ public class EventListActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.test_nav, menu);
+        getMenuInflater().inflate(R.menu.search_menu, menu);
         return true;
     }
 
@@ -224,9 +209,37 @@ public class EventListActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
+        if (id == R.id.search_button_menu) {
+
+            final Calendar selectCalendar = Calendar.getInstance();
+            final Calendar todayCalendar = Calendar.getInstance();
+
+
+            // Date picker and Recycler View
+            final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                      int dayOfMonth) {
+                    selectCalendar.set(Calendar.YEAR, year);
+                    selectCalendar.set(Calendar.MONTH, monthOfYear);
+                    selectCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                    SimpleDateFormat displayFormat = new SimpleDateFormat("EEEE, MMM d, yyyy");
+                    if (todayCalendar.get(Calendar.DATE) == selectCalendar.get(Calendar.DATE)) {
+                        getSupportActionBar().setSubtitle("Today's Events");
+                    } else {
+                        getSupportActionBar().setSubtitle(displayFormat.format(selectCalendar.getTime()));
+                    }
+                    //get Facebook events for this day - the list will be updated automatically
+                    getEventsFromFacebook(selectCalendar);
+                }
+            };
+
+            new DatePickerDialog(EventListActivity.this, date, selectCalendar
+                    .get(Calendar.YEAR), selectCalendar.get(Calendar.MONTH),
+                    selectCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -241,10 +254,10 @@ public class EventListActivity extends AppCompatActivity
         if (id == R.id.nav_date) {
             // Stay here
 
-        } else if (id == R.id.nav_upcoming) {
-            startActivity(new Intent(this, OverviewActivity.class));
-
-
+//        } else if (id == R.id.nav_upcoming) {
+//            startActivity(new Intent(this, OverviewActivity.class));
+//
+//
         } else if (id == R.id.nav_share) {
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("text/plain");
@@ -258,6 +271,7 @@ public class EventListActivity extends AppCompatActivity
             } catch (android.content.ActivityNotFoundException ex) {
                 Toast.makeText(EventListActivity.this, "Error Sharing Content", Toast.LENGTH_SHORT).show();
             }
+
 
         } else if (id == R.id.nav_sign_out) {
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
@@ -284,6 +298,9 @@ public class EventListActivity extends AppCompatActivity
         } else if (id == R.id.nav_privacy_policy) {
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.privacy_policy_url)));
             startActivity(browserIntent);
+        } else if (id == R.id.nav_rate) {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.play_store_url)));
+            startActivity(browserIntent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -305,6 +322,7 @@ public class EventListActivity extends AppCompatActivity
             extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
 
         private final List<Event> mValues;
+
         public SimpleItemRecyclerViewAdapter(List<Event> items) {
             mValues = items;
         }
@@ -371,6 +389,8 @@ public class EventListActivity extends AppCompatActivity
                 return super.toString() + " '" + mTitleView.getText() + "'";
             }
         }
+
+
     }
 
     // When the user is done with the subsequent activity and returns, the system calls the activity's onActivityResult() method.
@@ -515,4 +535,6 @@ public class EventListActivity extends AppCompatActivity
         );
         return request;
     }
+
+
 }

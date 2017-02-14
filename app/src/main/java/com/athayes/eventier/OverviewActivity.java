@@ -22,7 +22,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -163,9 +162,6 @@ public class OverviewActivity extends AppCompatActivity
 
         final Date today = new Date();
 
-        // Select Date Button
-        Button button_select_date = (Button) findViewById(R.id.button_select_date);
-        button_select_date.setVisibility(View.INVISIBLE);
 
         getEventsFromFacebook(todayCalendar, untilCalendar);
 
@@ -174,9 +170,9 @@ public class OverviewActivity extends AppCompatActivity
         String untilAPIString = displayFormat.format(untilCalendar.getTime());
 
         // Date text view
-        final TextView text_date = (TextView) findViewById(R.id.text_date);
+        //final TextView text_date = (TextView) findViewById(R.id.text_date);
 
-        text_date.setText(sinceAPIString + " to " + untilAPIString);
+        //text_date.setText(sinceAPIString + " to " + untilAPIString);
 
     }
 
@@ -225,9 +221,10 @@ public class OverviewActivity extends AppCompatActivity
         if (id == R.id.nav_date) {
             startActivity(new Intent(this, EventListActivity.class));
 
-        } else if (id == R.id.nav_upcoming) {
-
         }
+//        else if (id == R.id.nav_upcoming) {
+//
+//        }
 
 
 //        } else if (id == R.id.nav_createEvent) {
