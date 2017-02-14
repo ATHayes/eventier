@@ -40,18 +40,19 @@
                 android:layout_weight="0.24"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="-- host --"
-                    android:textAppearance="?attr/textAppearanceListItem" />
 
                 <TextView
                     android:id="@+id/titleValueLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="--title--" />
+                    android:text="--title--"
+                    android:textAppearance="?attr/textAppearanceListItem" />
+
+                <TextView
+                    android:id="@+id/id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-- host --" />
 
 
                 <TextView

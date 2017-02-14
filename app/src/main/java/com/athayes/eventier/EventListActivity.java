@@ -122,7 +122,6 @@ public class EventListActivity extends AppCompatActivity
         // Action bar title
         setTitle("Home");
 
-
         // Drawer (side menu)
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -174,6 +173,10 @@ public class EventListActivity extends AppCompatActivity
         final Calendar todayCalendar = Calendar.getInstance();
         final Date today = new Date();
 
+        //get our Facebook page pics
+
+
+
         //getEventsFromFacebook();
         getEventsFromFacebook(todayCalendar);
 
@@ -214,7 +217,6 @@ public class EventListActivity extends AppCompatActivity
             final Calendar selectCalendar = Calendar.getInstance();
             final Calendar todayCalendar = Calendar.getInstance();
 
-
             // Date picker and Recycler View
             final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
                 @Override
@@ -252,12 +254,10 @@ public class EventListActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_date) {
-            // Stay here
+            final Calendar todayCalendar = Calendar.getInstance();
+            getEventsFromFacebook(todayCalendar);
+            getSupportActionBar().setSubtitle("Today's Events");
 
-//        } else if (id == R.id.nav_upcoming) {
-//            startActivity(new Intent(this, OverviewActivity.class));
-//
-//
         } else if (id == R.id.nav_share) {
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("text/plain");
@@ -271,7 +271,6 @@ public class EventListActivity extends AppCompatActivity
             } catch (android.content.ActivityNotFoundException ex) {
                 Toast.makeText(EventListActivity.this, "Error Sharing Content", Toast.LENGTH_SHORT).show();
             }
-
 
         } else if (id == R.id.nav_sign_out) {
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
@@ -509,6 +508,15 @@ public class EventListActivity extends AppCompatActivity
         return requestBatch;
     }
 
+    // For images
+//    public GraphRequestBatch facebookPageRequestBatch(ArrayList<FacebookPage> facebookPages) {
+//        GraphRequestBatch requestBatch = new GraphRequestBatch();
+//        for (FacebookPage page : facebookPages) {
+//            requestBatch.add(getPictures(page.getFacebookID(), page.getName()));
+//        }
+//        return requestBatch;
+//    }
+
     // Get events since x until y
     public GraphRequest getEvents(String facebookID, final String hostName, Calendar sinceCalendar, Calendar untilCalendar) {
         SimpleDateFormat apiFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -535,6 +543,54 @@ public class EventListActivity extends AppCompatActivity
         );
         return request;
     }
+
+//    private void getPagePhotosFromFacebook(){
+//        ArrayList<FacebookPage> facebookPages = GlobalVariables.getInstance().getFacebookPages();
+//        ArrayList<GraphRequestBatch> requestBatchList = new ArrayList<>();
+//
+//        int numberOfPages = facebookPages.size();
+//        int pagesPerBatch = 50;
+//
+//        // Round up (ceil)
+//        totalBatches = (numberOfPages / pagesPerBatch) + ((numberOfPages == 0) ? 0 : 1);
+//
+//        // Reset counter
+//        batchesProcessed = 0;
+//
+//        for (int i = 0; i <= (totalBatches - 1); i++) {
+//            int startIndex = 0 + (i * pagesPerBatch);
+//            int endIndex = 49 + (i * pagesPerBatch);
+//
+//            // Avoid overflow error
+//            if (endIndex >= numberOfPages) {
+//                endIndex = numberOfPages - 1;
+//            }
+//
+//            requestBatchList.add(facebookPageRequestBatch(new ArrayList<FacebookPage>(facebookPages.subList(startIndex, endIndex));
+//
+//            requestBatchList.get(i).addCallback(new GraphRequestBatch.Callback() {
+//                                                    @Override
+//                                                    public void onBatchCompleted(GraphRequestBatch batch) {
+//                                                        batchesProcessed += 1;
+//                                                        if (batchesProcessed >= totalBatches) {
+//
+//                                                            // Reset counters
+//                                                            totalBatches = 0;
+//                                                            batchesProcessed = 0;
+//
+//                                                            } else {
+//
+//                                                            }
+//                                                        }
+//
+//                                                }
+//            );
+//        }
+//
+//        for (GraphRequestBatch requestBatch : requestBatchList) {
+//            requestBatch.executeAsync();
+//        }
+//    }
 
 
 }

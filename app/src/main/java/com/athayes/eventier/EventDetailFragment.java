@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.facebook.AccessToken;
@@ -45,15 +46,6 @@ public class EventDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        if (getArguments().containsKey(ARG_ITEM_ID)) {
-//            // Load the dummy content specified by the fragment
-//            // arguments. In a real-world scenario, use a Loader
-//            // to load content from a content provider.
-//            mItem = GlobalVariables.getInstance().getITEM_MAP().get(getArguments().getString(ARG_ITEM_ID));
-//            Activity activity = this.getActivity();
-//        }
-
-        // TODO The event id from Facebook API...
         if (getArguments().containsKey(ARG_ITEM_ID)) {
             eventID = getArguments().get(ARG_ITEM_ID).toString();
             System.out.println("ARG_ITEM_ID=" + eventID);
@@ -129,15 +121,17 @@ public class EventDetailFragment extends Fragment {
     public void setUpTextViews(View rootView, Event thisEvent) {
         ((TextView) rootView.findViewById(R.id.titleValueLabel)).setText(thisEvent.title);
         ((TextView) rootView.findViewById(R.id.pitchValueLabel)).setText(thisEvent.pitch);
-        //((TextView) rootView.findViewById(R.id.hostValueLabel)).setText(thisEvent.host);
+
         ((TextView) rootView.findViewById(R.id.timeValueLabel)).setText(thisEvent.time);
         ((TextView) rootView.findViewById(R.id.locationValueLabel)).setText(thisEvent.location);
         ((TextView) rootView.findViewById(R.id.dateValueLabel)).setText(thisEvent.date);
 
-//        ((TextView) rootView.findViewById(R.id.hostLabel)).setVisibility(View.VISIBLE);
         ((TextView) rootView.findViewById(R.id.timeLabel)).setVisibility(View.VISIBLE);
         ((TextView) rootView.findViewById(R.id.locationLabel)).setVisibility(View.VISIBLE);
         ((TextView) rootView.findViewById(R.id.dateLabel)).setVisibility(View.VISIBLE);
+
+        ((Button) rootView.findViewById(R.id.share_button)).setVisibility(View.VISIBLE);
+        ((Button) rootView.findViewById(R.id.save_button)).setVisibility(View.VISIBLE);
     }
 
     OnCoverRetrievedListener mCallback;

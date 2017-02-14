@@ -177,6 +177,53 @@
 
     </LinearLayout>
 
+
+    <!--Date -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:paddingTop="10dp">
+
+
+        <Button
+            android:text="Share Event"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/share_button"
+            android:layout_gravity="center_horizontal"
+            android:visibility="invisible"
+            style="@style/Widget.AppCompat.Button.Colored" />
+
+
+    </LinearLayout>
+
+    <!--Date -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:paddingTop="10dp">
+
+
+        <Button
+            android:text="Save to Calendar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/save_button"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            style="@style/Widget.AppCompat.Button.Colored" />
+
+
+    </LinearLayout>
+
     <!--style="?android:attr/textAppearanceMedium"-->
 
 

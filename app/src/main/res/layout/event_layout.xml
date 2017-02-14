@@ -1,34 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+<LinearLayout xmlns:ads2="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="1">
 
+
+    <!-- Include the event list sub-layout -->
+
+    <include
+        layout="@layout/event_list"
+        android:layout_width="match_parent"
+        android:layout_height="480dp"
+        android:layout_marginTop="60dp"
+        android:layout_weight="0.97" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="65dp"
+        android:layout_marginTop="0dp"
         android:orientation="horizontal"
         android:weightSum="1"
         android:paddingLeft="4dp"
         android:paddingRight="4dp">
 
-        <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+        <com.google.android.gms.ads.AdView
             android:id="@+id/adView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="63dp"
             android:layout_centerHorizontal="true"
             android:layout_alignParentTop="true"
-            ads:adSize="BANNER"
-            ads:adUnitId="@string/banner_ad_unit_id"></com.google.android.gms.ads.AdView>
-
+            ads2:adSize="BANNER"
+            ads2:adUnitId="@string/banner_ad_unit_id"
+            android:layout_weight="1"></com.google.android.gms.ads.AdView>
     </LinearLayout>
-    <!-- Include the event list sub-layout -->
-    <include
-        layout="@layout/event_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
 </LinearLayout>

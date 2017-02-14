@@ -8,6 +8,22 @@ public class FacebookPage {
     private String facebookID;
     private String name;
 
+    public FacebookPage(String facebookID, String name, String photoUrl) {
+        this.facebookID = facebookID;
+        this.name = name;
+        this.photoUrl = photoUrl;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
+
+    private String photoUrl;
+
     public FacebookPage(String name, String facebookID) {
         this.facebookID = facebookID;
         this.name = name;
