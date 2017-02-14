@@ -67,11 +67,11 @@
                     android:layout_height="wrap_content"
                     android:text="--time--" />
 
-                <TextView
-                    android:id="@+id/dateValueLabel"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="--date--" />
+                <!--<TextView-->
+                <!--android:id="@+id/dateValueLabel"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="&#45;&#45;date&#45;&#45;" />-->
             </LinearLayout>
         </LinearLayout>
 

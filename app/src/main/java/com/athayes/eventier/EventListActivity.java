@@ -341,7 +341,7 @@ public class EventListActivity extends AppCompatActivity
             holder.mTitleView.setText(mValues.get(position).title);
             holder.mTimeView.setText(mValues.get(position).time);
             holder.mLocationView.setText(mValues.get(position).location);
-            holder.mDateView.setText(mValues.get(position).date);
+            //holder.mDateView.setText(mValues.get(position).date);
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -371,7 +371,7 @@ public class EventListActivity extends AppCompatActivity
 
         public class ViewHolder extends RecyclerView.ViewHolder {
             public final View mView;
-            public final TextView mIdView, mTitleView, mTimeView, mLocationView, mDateView;
+            public final TextView mIdView, mTitleView, mTimeView, mLocationView;
             public Event mItem;
 
             public ViewHolder(View view) {
@@ -381,7 +381,7 @@ public class EventListActivity extends AppCompatActivity
                 mTitleView = (TextView) view.findViewById(R.id.titleValueLabel);
                 mTimeView = (TextView) view.findViewById(R.id.timeValueLabel);
                 mLocationView = (TextView) view.findViewById(R.id.locationValueLabel);
-                mDateView = (TextView) view.findViewById(R.id.dateValueLabel);
+
             }
 
             @Override
