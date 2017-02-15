@@ -42,6 +42,7 @@ public class EventService {
         String city = "No city specified";
         String street = "No street specified";
         String placeName = "No place name specified";
+//        String photoUrl = "No photo url";
 
         String title = "No title";
         String description = "No description";
@@ -89,6 +90,14 @@ public class EventService {
         } catch (Exception ex) {
             //System.out.println("location error");
         }
+
+//        // Photo url
+//        try {
+//            JSONObject cover = event.getJSONObject("cover");
+//            photoUrl = cover.getString("source");
+//        } catch (Exception ex) {
+//            //ex.printStackTrace();
+//        }
         //Create event object
         Event event1 = new Event(
                 id,
