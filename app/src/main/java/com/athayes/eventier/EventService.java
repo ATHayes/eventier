@@ -43,7 +43,6 @@ public class EventService {
         String street = "No street specified";
         String placeName = "No place name specified";
 //        String photoUrl = "No photo url";
-
         String title = "No title";
         String description = "No description";
         String id = "";

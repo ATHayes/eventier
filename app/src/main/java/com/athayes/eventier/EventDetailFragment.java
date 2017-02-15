@@ -2,6 +2,7 @@ package com.athayes.eventier;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -48,9 +49,11 @@ public class EventDetailFragment extends Fragment {
 
         if (getArguments().containsKey(ARG_ITEM_ID)) {
             eventID = getArguments().get(ARG_ITEM_ID).toString();
-            System.out.println("ARG_ITEM_ID=" + eventID);
+            //System.out.println("ARG_ITEM_ID=" + eventID);
             Activity activity = this.getActivity();
         }
+
+
     }
 
     @Override
@@ -58,6 +61,23 @@ public class EventDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.event_detail, container, false);
 
+        Button btnShare = (Button) rootView.findViewById(R.id.share_button);
+        btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                String shareBody = "https://www.facebook.com/events/" + eventID;
+                String shareSub = "Upcoming";
+                shareIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, shareSub);
+
+                try {
+                    startActivity(Intent.createChooser(shareIntent, "Share Using"));
+                } catch (android.content.ActivityNotFoundException ex) {
+                }
+            }
+        });
         // Show the dummy content as text in a TextView.
         if (eventID != null) {
             // Facebook API call
