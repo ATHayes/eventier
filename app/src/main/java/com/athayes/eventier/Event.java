@@ -1,6 +1,6 @@
 package com.athayes.eventier;
 
-import java.text.SimpleDateFormat;
+import java.text.ParseException;
 import java.util.Calendar;
 
 
@@ -66,18 +66,18 @@ public class Event implements Comparable<Event> {
         Calendar thisCalendar = Calendar.getInstance();
         Calendar compareCalendar = Calendar.getInstance();
 
-        String myFormat = "dd/MM/yy";
-        SimpleDateFormat databaseFormat = new SimpleDateFormat(myFormat);
-
         try {
-            compareCalendar.setTime(databaseFormat.parse(o.getStartTime()));
-        } catch (Exception ex) {
+            thisCalendar = ISO8601.toCalendar(getStartTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
 
         try {
-            thisCalendar.setTime(databaseFormat.parse(getStartTime()));
-        } catch (Exception ex) {
+            compareCalendar = ISO8601.toCalendar(o.getStartTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
+
         return thisCalendar.compareTo(compareCalendar);
     }
 }
