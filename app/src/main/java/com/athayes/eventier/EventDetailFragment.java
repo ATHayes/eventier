@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,11 @@ import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 
 import org.json.JSONObject;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * A fragment representing a single Event detail screen.
@@ -35,6 +41,8 @@ public class EventDetailFragment extends Fragment {
      * The dummy content this fragment is presenting.
      */
     private String eventID;
+
+    private Event event = null;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -78,7 +86,47 @@ public class EventDetailFragment extends Fragment {
                 }
             }
         });
-        // Show the dummy content as text in a TextView.
+
+
+        Button btnSaveToCalendar = (Button) rootView.findViewById(R.id.save_button);
+        btnSaveToCalendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Calendar startCal = Calendar.getInstance();
+                Calendar endCal = Calendar.getInstance();
+
+                SimpleDateFormat apiFormat = new SimpleDateFormat("dd/MM/yy");
+                try {
+                    System.out.println("Date: " + event.getDate());
+                    startCal.setTime(apiFormat.parse(event.getDate()));// all done
+                    endCal.setTime(apiFormat.parse(event.getDate()));
+                    endCal.add(Calendar.HOUR_OF_DAY, 2);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+
+                long now = new Date().getTime();
+                Intent intent2 = new Intent(Intent.ACTION_INSERT)
+                        .setData(CalendarContract.Events.CONTENT_URI)
+                        .setType("vnd.android.cursor.item/event")
+                        .putExtra(CalendarContract.Events.TITLE, event.getTitle())
+                        .putExtra(CalendarContract.Events.DESCRIPTION, event.getPitch())
+                        .putExtra(CalendarContract.Events.EVENT_LOCATION, event.getLocation())
+                        //.putExtra(CalendarContract.Events.DTSTART, startCal.getTime())
+                        .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startCal.getTime())
+                        .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endCal.getTime())
+                        //.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true)
+                        .putExtra(CalendarContract.Events.HAS_ALARM, 1)
+                        .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY);
+                startActivity(intent2);
+
+            }
+        });
+        //Show the dummy content as text in a TextView.
+
+
         if (eventID != null) {
             // Facebook API call
             getEventFromFacebook(eventID, rootView);
@@ -139,6 +187,8 @@ public class EventDetailFragment extends Fragment {
     }
 
     public void setUpTextViews(View rootView, Event thisEvent) {
+
+        event = thisEvent;
         ((TextView) rootView.findViewById(R.id.titleValueLabel)).setText(thisEvent.title);
         ((TextView) rootView.findViewById(R.id.pitchValueLabel)).setText(thisEvent.pitch);
 

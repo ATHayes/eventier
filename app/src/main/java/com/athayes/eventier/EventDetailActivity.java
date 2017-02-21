@@ -26,14 +26,6 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
         setSupportActionBar(toolbar);
         toolbar.setTitle((""));
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Saving events will be added in a later release", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
 
         // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar();
