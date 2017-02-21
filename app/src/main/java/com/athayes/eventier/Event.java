@@ -72,13 +72,11 @@ public class Event implements Comparable<Event> {
         try {
             compareCalendar.setTime(databaseFormat.parse(o.getStartTime()));
         } catch (Exception ex) {
-
         }
 
         try {
             thisCalendar.setTime(databaseFormat.parse(getStartTime()));
         } catch (Exception ex) {
-
         }
         return thisCalendar.compareTo(compareCalendar);
     }

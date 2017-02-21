@@ -227,11 +227,6 @@ public class OverviewActivity extends AppCompatActivity
 //        }
 
 
-//        } else if (id == R.id.nav_createEvent) {
-//            Intent intent = new Intent(this, CreateEventActivity.class);
-//            // Activity For Result, source: http://stackoverflow.com/questions/13643940/refresh-listview-after-updating-in-another-activity
-//            startActivityForResult(intent, CREATE_EVENT_REQUEST);
-
 //        } else if (id == R.id.nav_settings) {
 //            // Go to Settings
 
