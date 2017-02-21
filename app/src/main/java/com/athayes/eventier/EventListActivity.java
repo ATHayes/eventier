@@ -43,6 +43,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import org.json.JSONArray;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -310,9 +311,7 @@ public class EventListActivity extends AppCompatActivity
     // Overrided method - pass in a list of items
     private void setupRecyclerView(@NonNull RecyclerView recyclerView, List<Event> ITEMS) {
         // Set the adaptor with the items
-        for (Event e : ITEMS) {
-            System.out.println("Event: " + e.title + "date " + e.date);
-        }
+
         recyclerView.swapAdapter(new SimpleItemRecyclerViewAdapter(ITEMS), false);
         System.out.println("Adapter view swapped!");
     }
@@ -338,7 +337,16 @@ public class EventListActivity extends AppCompatActivity
             holder.mItem = mValues.get(position);
             holder.mIdView.setText(mValues.get(position).host);
             holder.mTitleView.setText(mValues.get(position).title);
-            holder.mTimeView.setText(mValues.get(position).time);
+
+            SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a");
+            Calendar startTimeCal = null;
+            try {
+                startTimeCal = ISO8601.toCalendar(mValues.get(position).startTime);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            holder.mTimeView.setText(timeFormat.format(startTimeCal.getTime()));
             holder.mLocationView.setText(mValues.get(position).location);
             //holder.mDateView.setText(mValues.get(position).date);
 

@@ -5,7 +5,6 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -46,7 +45,8 @@ public class EventService {
         String title = "No title";
         String description = "No description";
         String id = "";
-        Calendar cal = null;
+        String startTime = "";
+        String endTime = "";
 
         try {
             title = event.getString("name");
@@ -57,20 +57,22 @@ public class EventService {
         }
 
         try {
-            //Event DateTime
-            String raw = event.getString("start_time");
-            cal = ISO8601.toCalendar(raw);
+            //Event start time
+            startTime = event.getString("start_time");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
 
-        // Event date
-        SimpleDateFormat databaseFormat = new SimpleDateFormat("dd/MM/yy");
-        String eventDate = databaseFormat.format(cal.getTime());
+        try {
+            //Event end time
+            endTime = event.getString("end_time");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
-        //Event time
+        //Formats
+        SimpleDateFormat databaseFormat = new SimpleDateFormat("dd/MM/yy");
         SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a");
-        String eventTime = timeFormat.format(cal.getTime());
 
         // Place node (JSON object)/ optional
         try {
@@ -90,23 +92,14 @@ public class EventService {
             //System.out.println("location error");
         }
 
-//        // Photo url
-//        try {
-//            JSONObject cover = event.getJSONObject("cover");
-//            photoUrl = cover.getString("source");
-//        } catch (Exception ex) {
-//            //ex.printStackTrace();
-//        }
-        //Create event object
         Event event1 = new Event(
                 id,
                 title,
                 description,
                 host,
                 placeName,
-                eventTime,
-                eventDate);
-
+                startTime,
+                endTime);
         return event1;
     }
 }

@@ -298,9 +298,7 @@ public class OverviewActivity extends AppCompatActivity
     // Overrided method - pass in a list of items
     private void setupRecyclerView(@NonNull RecyclerView recyclerView, List<Event> ITEMS) {
         // Set the adaptor with the items
-        for (Event e : ITEMS) {
-            System.out.println("Event: " + e.title + "date " + e.date);
-        }
+
         recyclerView.swapAdapter(new SimpleItemRecyclerViewAdapter(ITEMS), false);
         System.out.println("Adapter view swapped!");
     }
@@ -325,9 +323,9 @@ public class OverviewActivity extends AppCompatActivity
             holder.mItem = mValues.get(position);
             holder.mIdView.setText(mValues.get(position).host);
             holder.mTitleView.setText(mValues.get(position).title);
-            holder.mTimeView.setText(mValues.get(position).time);
+            holder.mTimeView.setText(mValues.get(position).startTime);
             holder.mLocationView.setText(mValues.get(position).location);
-            holder.mDateView.setText(mValues.get(position).date);
+            holder.mDateView.setText(mValues.get(position).startTime);
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override

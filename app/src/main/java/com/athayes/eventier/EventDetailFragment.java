@@ -23,6 +23,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * A fragment representing a single Event detail screen.
@@ -93,19 +94,19 @@ public class EventDetailFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Calendar startCal = Calendar.getInstance();
-                Calendar endCal = Calendar.getInstance();
-
-                SimpleDateFormat apiFormat = new SimpleDateFormat("dd/MM/yy");
+                Calendar startTimeCal = null;
+                Calendar endTimeCal = null;
                 try {
-                    System.out.println("Date: " + event.getDate());
-                    startCal.setTime(apiFormat.parse(event.getDate()));// all done
-                    endCal.setTime(apiFormat.parse(event.getDate()));
-                    endCal.add(Calendar.HOUR_OF_DAY, 2);
+                    startTimeCal = ISO8601.toCalendar(event.getStartTime());
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
 
+                try {
+                    endTimeCal = ISO8601.toCalendar(event.getEndTime());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
 
                 long now = new Date().getTime();
                 Intent intent2 = new Intent(Intent.ACTION_INSERT)
@@ -114,9 +115,11 @@ public class EventDetailFragment extends Fragment {
                         .putExtra(CalendarContract.Events.TITLE, event.getTitle())
                         .putExtra(CalendarContract.Events.DESCRIPTION, event.getPitch())
                         .putExtra(CalendarContract.Events.EVENT_LOCATION, event.getLocation())
-                        //.putExtra(CalendarContract.Events.DTSTART, startCal.getTime())
-                        .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startCal.getTime())
-                        .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endCal.getTime())
+                        .putExtra(CalendarContract.Events.DTSTART, startTimeCal.getTimeInMillis())
+                        .putExtra(CalendarContract.Events.DTEND, endTimeCal.getTimeInMillis())
+                        .putExtra(CalendarContract.Events.EVENT_TIMEZONE, Locale.UK)
+                        .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startTimeCal.getTimeInMillis())
+                        .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTimeCal.getTimeInMillis())
                         //.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true)
                         .putExtra(CalendarContract.Events.HAS_ALARM, 1)
                         .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY);
@@ -187,21 +190,30 @@ public class EventDetailFragment extends Fragment {
     }
 
     public void setUpTextViews(View rootView, Event thisEvent) {
-
         event = thisEvent;
+
+        Calendar startTimeCal = null;
+        try {
+            startTimeCal = ISO8601.toCalendar(thisEvent.startTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, MMM d, yyyy");
+        String startTimeString = timeFormat.format(startTimeCal.getTime());
+        String dateString = dateFormat.format(startTimeCal.getTime());
+
         ((TextView) rootView.findViewById(R.id.titleValueLabel)).setText(thisEvent.title);
         ((TextView) rootView.findViewById(R.id.pitchValueLabel)).setText(thisEvent.pitch);
-
-        ((TextView) rootView.findViewById(R.id.timeValueLabel)).setText(thisEvent.time);
+        ((TextView) rootView.findViewById(R.id.timeValueLabel)).setText(startTimeString);
         ((TextView) rootView.findViewById(R.id.locationValueLabel)).setText(thisEvent.location);
-        ((TextView) rootView.findViewById(R.id.dateValueLabel)).setText(thisEvent.date);
-
-        ((TextView) rootView.findViewById(R.id.timeLabel)).setVisibility(View.VISIBLE);
-        ((TextView) rootView.findViewById(R.id.locationLabel)).setVisibility(View.VISIBLE);
-        ((TextView) rootView.findViewById(R.id.dateLabel)).setVisibility(View.VISIBLE);
-
-        ((Button) rootView.findViewById(R.id.share_button)).setVisibility(View.VISIBLE);
-        ((Button) rootView.findViewById(R.id.save_button)).setVisibility(View.VISIBLE);
+        ((TextView) rootView.findViewById(R.id.dateValueLabel)).setText(dateString);
+        rootView.findViewById(R.id.timeLabel).setVisibility(View.VISIBLE);
+        rootView.findViewById(R.id.locationLabel).setVisibility(View.VISIBLE);
+        rootView.findViewById(R.id.dateLabel).setVisibility(View.VISIBLE);
+        rootView.findViewById(R.id.share_button).setVisibility(View.VISIBLE);
+        rootView.findViewById(R.id.save_button).setVisibility(View.VISIBLE);
     }
 
     OnCoverRetrievedListener mCallback;

@@ -19,7 +19,6 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -145,10 +144,11 @@ public class CreateEventActivity extends AppCompatActivity {
         // Get values from each field
         String eventName = input_event_name.getText().toString();
         String eventDescription = input_event_description.getText().toString();
-        String eventTime = input_event_time.getText().toString();
+        String dateTime = input_event_time.getText().toString();
         String eventHost = input_event_host.getText().toString();
         String eventLocation = input_event_location.getText().toString();
-        String eventDate=input_event_date.getText().toString();
+        String startTime = "";
+        String endTime = "";
 
 //        try {
 //            // Try to parse the date from the text input
@@ -171,7 +171,7 @@ public class CreateEventActivity extends AppCompatActivity {
         // Create new event from values in each field
         // Size of the array is 1 larger than it's index - index starts at 0 based while size starts at 1
         // Therefore the next index (id value in Event) is always equal to the current size
-        Event event = new Event(Integer.toString(ITEMS.size()), eventName, eventDescription, eventHost, eventLocation, eventTime, eventDate);
+        Event event = new Event(Integer.toString(ITEMS.size()), eventName, eventDescription, eventHost, eventLocation, startTime, endTime);
 
         // Add the new event to the event list
         // Use the addToITEMS method to add to both the List and the Hash Map
