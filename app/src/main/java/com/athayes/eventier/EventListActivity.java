@@ -301,6 +301,9 @@ public class EventListActivity extends AppCompatActivity
         } else if (id == R.id.nav_rate) {
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.play_store_url)));
             startActivity(browserIntent);
+        } else if (id == R.id.nav_search_host) {
+            Intent intent = new Intent(this, FacebookPageListActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

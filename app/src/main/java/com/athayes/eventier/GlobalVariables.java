@@ -59,7 +59,6 @@ public class GlobalVariables extends Application {
         dayAfterTomorrow = calDayAfterTomorrow.getTime();
 
         facebookPages = new ArrayList<>();
-        facebookPages.add(new FacebookPage("uccscifi", "Sci-Fi Society"));
         facebookPages.add(new FacebookPage("Accounting And Finance Society", "uccaccfin"));
         facebookPages.add(new FacebookPage("Africa Society", "uccafrica"));
         facebookPages.add(new FacebookPage("Amnesty Society", "UCCAmnesty"));
@@ -258,8 +257,16 @@ public class GlobalVariables extends Application {
         this.ITEM_MAP = ITEM_MAP;
     }
 
-
     public ArrayList<FacebookPage> getFacebookPages() {
         return facebookPages;
+    }
+
+    public FacebookPage getFacebookPage(String facebookID) {
+        for (FacebookPage page : facebookPages) {
+            if (page.getFacebookID().compareTo(facebookID) == 0) {
+                return page;
+            }
+        }
+        return null;
     }
 }
