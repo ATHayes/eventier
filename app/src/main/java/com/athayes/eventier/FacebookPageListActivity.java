@@ -42,6 +42,7 @@ public class FacebookPageListActivity extends AppCompatActivity {
 
         View recyclerView = findViewById(R.id.facebookpage_list);
         assert recyclerView != null;
+
         setupRecyclerView((RecyclerView) recyclerView);
 
         if (findViewById(R.id.facebookpage_detail_container) != null) {

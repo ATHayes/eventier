@@ -59,6 +59,7 @@ public class GlobalVariables extends Application {
         dayAfterTomorrow = calDayAfterTomorrow.getTime();
 
         facebookPages = new ArrayList<>();
+        // UCC Societies
         facebookPages.add(new FacebookPage("Accounting And Finance Society", "uccaccfin"));
         facebookPages.add(new FacebookPage("Africa Society", "uccafrica"));
         facebookPages.add(new FacebookPage("Amnesty Society", "UCCAmnesty"));
@@ -86,6 +87,7 @@ public class GlobalVariables extends Application {
         facebookPages.add(new FacebookPage("Engineering Society", "UCCEngSoc"));
         facebookPages.add(new FacebookPage("Engineers Without Borders Society", "EngineerswithoutbordersUCC"));
         facebookPages.add(new FacebookPage("English Society", "1528413287397046"));
+        facebookPages.add(new FacebookPage("Entrepreneurial and Social Society", "261747967180908"));
         facebookPages.add(new FacebookPage("Environment Society", "UCCEnvirosoc"));
         facebookPages.add(new FacebookPage("Europa Society", "ucceuropa"));
         facebookPages.add(new FacebookPage("Fashion Society", "155068187434"));
@@ -189,14 +191,17 @@ public class GlobalVariables extends Application {
 
 
         // Academic
+        facebookPages.add(new FacebookPage("UCC College of Business and Law", "115489451872851"));
         //facebookPages.add(new FacebookPage("OTT Cork", "OTTCork"));
-        //facebookPages.add(new FacebookPage("OTT Cork", "OTTCork"));
+
+        //Music
+        facebookPages.add(new FacebookPage("Liva at St. Luke's", "538711329601290"));
 
 
         // Theatre
         facebookPages.add(new FacebookPage("Everyman Theatre", "80651236688"));
         facebookPages.add(new FacebookPage("Granary Theatre", "175256179251424"));
-        //facebookPages.add(new FacebookPage("OTT Cork", "OTTCork"));
+        facebookPages.add(new FacebookPage("Cork Opera House", "357268343449"));
         //facebookPages.add(new FacebookPage("OTT Cork", "OTTCork"));
 
         // Music
