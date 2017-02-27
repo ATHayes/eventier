@@ -6,8 +6,8 @@
     android:name="com.athayes.eventier.FacebookPageListFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
+    android:layout_marginLeft="4dp"
+    android:layout_marginRight="4dp"
     app:layoutManager="LinearLayoutManager"
     tools:context="com.athayes.eventier.FacebookPageListActivity"
     tools:listitem="@layout/facebookpage_list_content" />

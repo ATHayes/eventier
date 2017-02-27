@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -23,6 +25,7 @@ public class FacebookPageListActivity extends AppCompatActivity {
      * device.
      */
     private boolean mTwoPane;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +61,9 @@ public class FacebookPageListActivity extends AppCompatActivity {
 
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(GlobalVariables.getInstance().getFacebookPages()));
+        ArrayList<FacebookPage> pages = GlobalVariables.getInstance().getFacebookPages();
+        Collections.sort(pages);
+        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(pages));
     }
 
     public class SimpleItemRecyclerViewAdapter
@@ -80,7 +85,7 @@ public class FacebookPageListActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
             holder.mItem = mValues.get(position);
-            holder.mIdView.setText(mValues.get(position).getName());
+            holder.mNameView.setText(mValues.get(position).getName());
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -100,20 +105,19 @@ public class FacebookPageListActivity extends AppCompatActivity {
 
         public class ViewHolder extends RecyclerView.ViewHolder {
             public final View mView;
-            public final TextView mIdView;
-            public final TextView mContentView;
+            public final TextView mNameView;
             public FacebookPage mItem;
 
             public ViewHolder(View view) {
                 super(view);
                 mView = view;
-                mIdView = (TextView) view.findViewById(R.id.id);
-                mContentView = (TextView) view.findViewById(R.id.content);
+                mNameView = (TextView) view.findViewById(R.id.event_name);
+
             }
 
             @Override
             public String toString() {
-                return super.toString() + " '" + mContentView.getText() + "'";
+                return super.toString() + " '" + mNameView.getText() + "'";
             }
         }
     }

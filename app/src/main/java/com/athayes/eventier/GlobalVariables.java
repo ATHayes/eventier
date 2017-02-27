@@ -59,6 +59,7 @@ public class GlobalVariables extends Application {
         dayAfterTomorrow = calDayAfterTomorrow.getTime();
 
         facebookPages = new ArrayList<>();
+
         // UCC Societies
         facebookPages.add(new FacebookPage("Accounting And Finance Society", "uccaccfin"));
         facebookPages.add(new FacebookPage("Africa Society", "uccafrica"));
@@ -162,50 +163,39 @@ public class GlobalVariables extends Application {
         facebookPages.add(new FacebookPage("Traditional Music Society", "ucctradsoc"));
         facebookPages.add(new FacebookPage("WARPS", "ucc.warps"));
 
-
-        //Clubs
-        //facebookPages.add(new FacebookPage("OTT Cork", "OTTCork"));
-
-        // Pubs
+        // Pubs / Clubs
         facebookPages.add(new FacebookPage("Franciscan Well Brew Pub", "121375577958143"));
         facebookPages.add(new FacebookPage("Electric", "ElectricCork"));
-        //facebookPages.add(new FacebookPage("OTT Cork", "OTTCork"));
-        //facebookPages.add(new FacebookPage("OTT Cork", "OTTCork"));
-        //facebookPages.add(new FacebookPage("OTT Cork", "OTTCork"));
+        facebookPages.add(new FacebookPage("Sober Lane", "91646667265"));
+        facebookPages.add(new FacebookPage("Crane Lane", "cranelane"));
+        facebookPages.add(new FacebookPage("The Bodega", "BodegaCork"));
+        facebookPages.add(new FacebookPage("The Pav", "ThePavCork"));
+        facebookPages.add(new FacebookPage("The Secret Garden, Cork", "TheSecretGardenCork"));
 
         // Cinema
         facebookPages.add(new FacebookPage("Triskel Arts Centre", "148849978463380"));
-        //facebookPages.add(new FacebookPage("OTT Cork", "OTTCork"));
-        //facebookPages.add(new FacebookPage("OTT Cork", "OTTCork"));
+        facebookPages.add(new FacebookPage("Gate Cinema Cork", "GateCinemasCork"));
 
         // Art
         facebookPages.add(new FacebookPage("Crawford Art Gallery", "192247684119097"));
         facebookPages.add(new FacebookPage("The Glucksman", "51529118892"));
-        //facebookPages.add(new FacebookPage("OTT Cork", "OTTCork"));
-        //facebookPages.add(new FacebookPage("OTT Cork", "OTTCork"));
 
         // Gaming
         facebookPages.add(new FacebookPage("Cork Fighting Game Community", "243557759182283"));
-        //facebookPages.add(new FacebookPage("OTT Cork", "OTTCork"));
-        //facebookPages.add(new FacebookPage("OTT Cork", "OTTCork"));
-
 
         // Academic
         facebookPages.add(new FacebookPage("UCC College of Business and Law", "115489451872851"));
-        //facebookPages.add(new FacebookPage("OTT Cork", "OTTCork"));
 
-        //Music
-        facebookPages.add(new FacebookPage("Liva at St. Luke's", "538711329601290"));
-
+        // Music
+        facebookPages.add(new FacebookPage("Live at St. Luke's", "538711329601290"));
 
         // Theatre
         facebookPages.add(new FacebookPage("Everyman Theatre", "80651236688"));
         facebookPages.add(new FacebookPage("Granary Theatre", "175256179251424"));
         facebookPages.add(new FacebookPage("Cork Opera House", "357268343449"));
-        //facebookPages.add(new FacebookPage("OTT Cork", "OTTCork"));
 
-        // Music
-
+        // Literature
+        facebookPages.add(new FacebookPage("Waterstone's Bookstore, Cork", "corkwaterstones"));
 
 
     }

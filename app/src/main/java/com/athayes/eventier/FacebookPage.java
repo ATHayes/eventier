@@ -4,7 +4,7 @@ package com.athayes.eventier;
  * Created by anthonyhayes on 04/01/2017.
  */
 
-public class FacebookPage {
+public class FacebookPage implements Comparable<FacebookPage> {
     private String facebookID;
     private String name;
 
@@ -47,4 +47,8 @@ public class FacebookPage {
     }
 
 
+    @Override
+    public int compareTo(FacebookPage o) {
+        return this.getName().compareTo(o.getName());
+    }
 }
