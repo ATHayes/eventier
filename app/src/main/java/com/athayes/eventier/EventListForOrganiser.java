@@ -3,6 +3,7 @@ package com.athayes.eventier;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -22,6 +23,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.athayes.eventier.adapters.EventService;
+import com.athayes.eventier.fragments.AdFragment;
+import com.athayes.eventier.fragments.EventDetailFragment;
+import com.athayes.eventier.models.Event;
+import com.athayes.eventier.models.FacebookPage;
+import com.athayes.eventier.utils.ISO8601;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
@@ -52,14 +59,13 @@ import java.util.List;
  * item pitch side-by-side using two vertical panes.
  */
 public class EventListForOrganiser extends AppCompatActivity
-        implements GoogleApiClient.OnConnectionFailedListener {
+        implements GoogleApiClient.OnConnectionFailedListener, AdFragment.OnFragmentInteractionListener {
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
      */
     private boolean mTwoPane;
-
 
     public static final String ARG_ITEM_ID = "item_id";
     // Code number for new event ActivityForResult
@@ -78,19 +84,11 @@ public class EventListForOrganiser extends AppCompatActivity
     //Logging
     private static final String TAG = "EventListActivity";
 
-
-    // Firebase instance variables - Step 7 of Firebase codelab
-//    private DatabaseReference mFirebaseDatabaseReference;
-//    private FirebaseRecyclerAdapter<FriendlyMessage, MessageViewHolder>
-//            mFirebaseAdapter;
-
-
     FacebookPage selectedFacebookPage;
 
     // Counters for GraphRequestBatches
     int totalBatches = 0;
     int batchesProcessed = 0;
-
 
     // Ad view
     private AdView mAdView;
@@ -125,7 +123,6 @@ public class EventListForOrganiser extends AppCompatActivity
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-
         // Check if user is signed in
         if (mFirebaseUser == null) {
             startActivity(new Intent(this, SignInActivity.class));
@@ -141,7 +138,6 @@ public class EventListForOrganiser extends AppCompatActivity
 
         View recyclerView = findViewById(R.id.event_list);
         assert recyclerView != null;
-        //setupRecyclerView((RecyclerView) recyclerView);
 
         if (findViewById(R.id.event_detail_container) != null) {
             // The detail container view will be present only in the
@@ -209,7 +205,6 @@ public class EventListForOrganiser extends AppCompatActivity
             return true;
         }
 
-        // TODO - revise
         // Back button go back to whatever screen called it
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -226,6 +221,11 @@ public class EventListForOrganiser extends AppCompatActivity
 
         recyclerView.swapAdapter(new SimpleItemRecyclerViewAdapter(ITEMS), false);
         System.out.println("Adapter view swapped!");
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 
     public class SimpleItemRecyclerViewAdapter
@@ -269,20 +269,10 @@ public class EventListForOrganiser extends AppCompatActivity
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (mTwoPane) {
-                        Bundle arguments = new Bundle();
-                        arguments.putString(EventDetailFragment.ARG_ITEM_ID, holder.mItem.id);
-                        EventDetailFragment fragment = new EventDetailFragment();
-                        fragment.setArguments(arguments);
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.event_detail_container, fragment)
-                                .commit();
-                    } else {
-                        Context context = v.getContext();
-                        Intent intent = new Intent(context, EventDetailActivity.class);
-                        intent.putExtra(EventDetailFragment.ARG_ITEM_ID, holder.mItem.id);
-                        context.startActivity(intent);
-                    }
+                    Context context = v.getContext();
+                    Intent intent = new Intent(context, EventDetailActivity.class);
+                    intent.putExtra(EventDetailFragment.ARG_ITEM_ID, holder.mItem.id);
+                    context.startActivity(intent);
                 }
             });
         }

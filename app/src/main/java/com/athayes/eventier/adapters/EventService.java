@@ -1,4 +1,6 @@
-package com.athayes.eventier;
+package com.athayes.eventier.adapters;
+
+import com.athayes.eventier.models.Event;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

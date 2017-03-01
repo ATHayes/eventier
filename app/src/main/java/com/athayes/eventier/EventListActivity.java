@@ -28,14 +28,18 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.athayes.eventier.adapters.EventService;
+import com.athayes.eventier.fragments.AdFragment;
+import com.athayes.eventier.fragments.EventDetailFragment;
+import com.athayes.eventier.models.Event;
+import com.athayes.eventier.models.FacebookPage;
+import com.athayes.eventier.utils.ISO8601;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphRequestBatch;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
-import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
@@ -60,7 +64,7 @@ import java.util.List;
  * item pitch side-by-side using two vertical panes.
  */
 public class EventListActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener, AdFragment.OnFragmentInteractionListener {
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -83,18 +87,12 @@ public class EventListActivity extends AppCompatActivity
     //Logging
     private static final String TAG = "EventListActivity";
 
-    // Firebase instance variables - Step 7 of Firebase codelab
-//    private DatabaseReference mFirebaseDatabaseReference;
-//    private FirebaseRecyclerAdapter<FriendlyMessage, MessageViewHolder>
-//            mFirebaseAdapter;
-
     //List of events, used for temporary storage - async methods
     List<Event> allEvents = new ArrayList<>();
 
     // Counters for GraphRequestBatches
     int totalBatches = 0;
     int batchesProcessed = 0;
-
 
     private AdView mAdView;
 
@@ -114,11 +112,10 @@ public class EventListActivity extends AppCompatActivity
         toolbar.setTitle(getTitle());
 
         //Load ads
-        MobileAds.initialize(getApplicationContext(), "ca-app-pub-7581972583339154~7785733029");
-        // Initialize and request AdMob ad.
-        mAdView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+//        MobileAds.initialize(getApplicationContext(), "ca-app-pub-7581972583339154~7785733029");
+//        mAdView = (AdView) findViewById(R.id.adView);
+//        AdRequest adRequest = new AdRequest.Builder().build();
+//        mAdView.loadAd(adRequest);
 
         // Action bar title
         setTitle("Home");
@@ -148,7 +145,6 @@ public class EventListActivity extends AppCompatActivity
             finish();
             return;
         } else {
-            // Set up name and TODO profile picture
             mUsername = mFirebaseUser.getDisplayName();
             if (mFirebaseUser.getPhotoUrl() != null) {
                 mPhotoUrl = mFirebaseUser.getPhotoUrl().toString();
@@ -174,15 +170,10 @@ public class EventListActivity extends AppCompatActivity
         final Calendar todayCalendar = Calendar.getInstance();
         final Date today = new Date();
 
-        //get our Facebook page pics
-
-
-
         //getEventsFromFacebook();
         getEventsFromFacebook(todayCalendar);
 
         getSupportActionBar().setSubtitle("Today's Events");
-
     }
 
     // Event handler for back button
@@ -317,6 +308,11 @@ public class EventListActivity extends AppCompatActivity
 
         recyclerView.swapAdapter(new SimpleItemRecyclerViewAdapter(ITEMS), false);
         System.out.println("Adapter view swapped!");
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 
     public class SimpleItemRecyclerViewAdapter
@@ -519,15 +515,6 @@ public class EventListActivity extends AppCompatActivity
         return requestBatch;
     }
 
-    // For images
-//    public GraphRequestBatch facebookPageRequestBatch(ArrayList<FacebookPage> facebookPages) {
-//        GraphRequestBatch requestBatch = new GraphRequestBatch();
-//        for (FacebookPage page : facebookPages) {
-//            requestBatch.add(getPictures(page.getFacebookID(), page.getName()));
-//        }
-//        return requestBatch;
-//    }
-
     // Get events since x until y
     public GraphRequest getEvents(String facebookID, final String hostName, Calendar sinceCalendar, Calendar untilCalendar) {
         SimpleDateFormat apiFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -554,54 +541,5 @@ public class EventListActivity extends AppCompatActivity
         );
         return request;
     }
-
-//    private void getPagePhotosFromFacebook(){
-//        ArrayList<FacebookPage> facebookPages = GlobalVariables.getInstance().getFacebookPages();
-//        ArrayList<GraphRequestBatch> requestBatchList = new ArrayList<>();
-//
-//        int numberOfPages = facebookPages.size();
-//        int pagesPerBatch = 50;
-//
-//        // Round up (ceil)
-//        totalBatches = (numberOfPages / pagesPerBatch) + ((numberOfPages == 0) ? 0 : 1);
-//
-//        // Reset counter
-//        batchesProcessed = 0;
-//
-//        for (int i = 0; i <= (totalBatches - 1); i++) {
-//            int startIndex = 0 + (i * pagesPerBatch);
-//            int endIndex = 49 + (i * pagesPerBatch);
-//
-//            // Avoid overflow error
-//            if (endIndex >= numberOfPages) {
-//                endIndex = numberOfPages - 1;
-//            }
-//
-//            requestBatchList.add(facebookPageRequestBatch(new ArrayList<FacebookPage>(facebookPages.subList(startIndex, endIndex));
-//
-//            requestBatchList.get(i).addCallback(new GraphRequestBatch.Callback() {
-//                                                    @Override
-//                                                    public void onBatchCompleted(GraphRequestBatch batch) {
-//                                                        batchesProcessed += 1;
-//                                                        if (batchesProcessed >= totalBatches) {
-//
-//                                                            // Reset counters
-//                                                            totalBatches = 0;
-//                                                            batchesProcessed = 0;
-//
-//                                                            } else {
-//
-//                                                            }
-//                                                        }
-//
-//                                                }
-//            );
-//        }
-//
-//        for (GraphRequestBatch requestBatch : requestBatchList) {
-//            requestBatch.executeAsync();
-//        }
-//    }
-
 
 }

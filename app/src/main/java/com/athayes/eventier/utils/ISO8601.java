@@ -1,4 +1,4 @@
-package com.athayes.eventier;
+package com.athayes.eventier.utils;
 
 /**
  * Created by anthonyhayes on 03/01/2017.

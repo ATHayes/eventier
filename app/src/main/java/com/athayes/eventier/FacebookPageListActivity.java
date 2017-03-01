@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.athayes.eventier.models.FacebookPage;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -36,7 +38,6 @@ public class FacebookPageListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
-
         // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -45,7 +46,6 @@ public class FacebookPageListActivity extends AppCompatActivity {
 
         View recyclerView = findViewById(R.id.facebookpage_list);
         assert recyclerView != null;
-
         setupRecyclerView((RecyclerView) recyclerView);
 
         if (findViewById(R.id.facebookpage_detail_container) != null) {
@@ -55,10 +55,8 @@ public class FacebookPageListActivity extends AppCompatActivity {
             // activity should be in two-pane mode.
             mTwoPane = true;
         }
-
         setTitle("Choose an Organiser");
     }
-
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         ArrayList<FacebookPage> pages = GlobalVariables.getInstance().getFacebookPages();

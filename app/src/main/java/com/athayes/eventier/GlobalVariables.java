@@ -2,6 +2,8 @@ package com.athayes.eventier;
 
 import android.app.Application;
 
+import com.athayes.eventier.models.Event;
+import com.athayes.eventier.models.FacebookPage;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 

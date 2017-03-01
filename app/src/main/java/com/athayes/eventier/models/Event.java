@@ -1,4 +1,6 @@
-package com.athayes.eventier;
+package com.athayes.eventier.models;
+
+import com.athayes.eventier.utils.ISO8601;
 
 import java.text.ParseException;
 import java.util.Calendar;

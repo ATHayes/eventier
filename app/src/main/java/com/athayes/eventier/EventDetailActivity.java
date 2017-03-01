@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
+import com.athayes.eventier.fragments.EventDetailFragment;
 import com.squareup.picasso.Picasso;
 
 /**

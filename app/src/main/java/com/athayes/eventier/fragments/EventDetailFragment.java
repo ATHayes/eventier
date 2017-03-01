@@ -1,4 +1,4 @@
-package com.athayes.eventier;
+package com.athayes.eventier.fragments;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,6 +12,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.athayes.eventier.EventDetailActivity;
+import com.athayes.eventier.EventListActivity;
+import com.athayes.eventier.R;
+import com.athayes.eventier.adapters.EventService;
+import com.athayes.eventier.models.Event;
+import com.athayes.eventier.utils.ISO8601;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
