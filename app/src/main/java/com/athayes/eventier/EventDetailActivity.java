@@ -27,7 +27,6 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
         setSupportActionBar(toolbar);
         toolbar.setTitle((""));
 
-
         // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -93,20 +92,6 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
         final ImageView imageView = (ImageView) findViewById(R.id.cover_photo);
         Picasso.with(this).load(uri).into(imageView);
 
-//        final ImagePopup imagePopup = new ImagePopup(this);
-//        imagePopup.setBackgroundColor(Color.BLACK);
-//        imagePopup.setWindowWidth(800);
-//        imagePopup.setWindowHeight(800);
-//        imagePopup.setHideCloseIcon(true);
-//        imagePopup.setImageOnClickClose(true);
-
-//        imageView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                /** Initiate Popup view **/
-//                imagePopup.initiatePopup(imageView.getDrawable());
-//            }
-//        });
     }
 
 

@@ -44,7 +44,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -94,12 +93,9 @@ public class EventListForOrganiser extends AppCompatActivity
         setContentView(R.layout.activity_event_list);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String arg_facebook_id = getIntent().getStringExtra("FacebookID");
-        System.out.println(arg_facebook_id);
-        System.out.println("-------------------");
 
         selectedFacebookPage = GlobalVariables.getInstance().getFacebookPage(arg_facebook_id);
 
-        System.out.println(selectedFacebookPage.getFacebookID());
         // Initialize Firebase Auth
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
@@ -112,7 +108,7 @@ public class EventListForOrganiser extends AppCompatActivity
         setTitle(selectedFacebookPage.getName());
         getSupportActionBar().setSubtitle("Upcoming Events");
 
-        // Show the Up button in the action bar.
+        // Show the Up (back) button in the action bar.
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -124,7 +120,6 @@ public class EventListForOrganiser extends AppCompatActivity
             finish();
             return;
         } else {
-            // Set up name and TODO profile picture
             mUsername = mFirebaseUser.getDisplayName();
             if (mFirebaseUser.getPhotoUrl() != null) {
                 mPhotoUrl = mFirebaseUser.getPhotoUrl().toString();
@@ -142,21 +137,12 @@ public class EventListForOrganiser extends AppCompatActivity
             mTwoPane = true;
         }
 
-        // Calendar - Not a singleton - an abstract class.
-        // The getInstance method is a FACTORY METHOD that returns a concrete implementation of the Calendar class.
+        // Calendars
         final Calendar untilCalendar = Calendar.getInstance();
         final Calendar todayCalendar = Calendar.getInstance();
 
         untilCalendar.add(Calendar.WEEK_OF_YEAR, 3);
-        final Date today = new Date();
         getEventFromFacebook(todayCalendar, untilCalendar);
-
-        SimpleDateFormat displayFormat = new SimpleDateFormat("EEEE MMM d");
-        String sinceAPIString = displayFormat.format(todayCalendar.getTime());
-        String untilAPIString = displayFormat.format(untilCalendar.getTime());
-
-
-
     }
 
     // Event handler for back button
@@ -214,7 +200,7 @@ public class EventListForOrganiser extends AppCompatActivity
 
     @Override
     public void onFragmentInteraction(Uri uri) {
-
+        //required for ad fragment
     }
 
     public class SimpleItemRecyclerViewAdapter
@@ -349,22 +335,13 @@ public class EventListForOrganiser extends AppCompatActivity
                                 recyclerView.setVisibility(View.GONE);
                                 emptyView.setVisibility(View.VISIBLE);
                             }
-
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
-
                     }
                 }
         );
         request.executeAsync();
-
-
-    }
-
-
-    public void setPicture() {
-
     }
 
 }

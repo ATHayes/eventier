@@ -94,7 +94,6 @@ public class EventListActivity extends AppCompatActivity
     int batchesProcessed = 0;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,7 +107,6 @@ public class EventListActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
-
 
         // Action bar title
         setTitle("Home");
@@ -128,7 +126,6 @@ public class EventListActivity extends AppCompatActivity
         // Navigation view
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
         View headerView = navigationView.getHeaderView(0);
         TextView userName = (TextView) headerView.findViewById(R.id.userName);
 
@@ -157,15 +154,10 @@ public class EventListActivity extends AppCompatActivity
             mTwoPane = true;
         }
 
-        // Calendar - Not a singleton - an abstract class.
-        // The getInstance method is a FACTORY METHOD that returns a concrete implementation of the Calendar class.
-        final Calendar selectCalendar = Calendar.getInstance();
         final Calendar todayCalendar = Calendar.getInstance();
         final Date today = new Date();
 
-        //getEventsFromFacebook();
         getEventsFromFacebook(todayCalendar);
-
         getSupportActionBar().setSubtitle("Today's Events");
     }
 
@@ -392,21 +384,6 @@ public class EventListActivity extends AppCompatActivity
 
     }
 
-    // When the user is done with the subsequent activity and returns, the system calls the activity's onActivityResult() method.
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Check which request we're responding to
-        if (requestCode == CREATE_EVENT_REQUEST) {
-            // Make sure the request was successful
-            if (resultCode == RESULT_OK) {
-                // TODO - consider passing the date to the activity and back again, rather than simply recreating the activity
-                // The user created an event
-                Intent intent = getIntent();
-                finish();
-                startActivity(intent);
-            }
-        }
-    }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
