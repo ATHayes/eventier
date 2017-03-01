@@ -39,7 +39,6 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphRequestBatch;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
-import com.google.android.gms.ads.AdView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
@@ -94,7 +93,6 @@ public class EventListActivity extends AppCompatActivity
     int totalBatches = 0;
     int batchesProcessed = 0;
 
-    private AdView mAdView;
 
 
     @Override
@@ -111,11 +109,6 @@ public class EventListActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
-        //Load ads
-//        MobileAds.initialize(getApplicationContext(), "ca-app-pub-7581972583339154~7785733029");
-//        mAdView = (AdView) findViewById(R.id.adView);
-//        AdRequest adRequest = new AdRequest.Builder().build();
-//        mAdView.loadAd(adRequest);
 
         // Action bar title
         setTitle("Home");

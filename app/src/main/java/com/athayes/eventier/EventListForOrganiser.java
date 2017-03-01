@@ -33,9 +33,6 @@ import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
@@ -90,8 +87,6 @@ public class EventListForOrganiser extends AppCompatActivity
     int totalBatches = 0;
     int batchesProcessed = 0;
 
-    // Ad view
-    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,12 +156,6 @@ public class EventListForOrganiser extends AppCompatActivity
         String untilAPIString = displayFormat.format(untilCalendar.getTime());
 
 
-        //Load ads
-        MobileAds.initialize(getApplicationContext(), "ca-app-pub-7581972583339154~7785733029");
-        // Initialize and request AdMob ad.
-        mAdView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
 
     }
 
