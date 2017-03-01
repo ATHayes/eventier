@@ -297,7 +297,7 @@ public class EventListActivity extends AppCompatActivity
 
     @Override
     public void onFragmentInteraction(Uri uri) {
-
+        //required for ad fragement
     }
 
     public class SimpleItemRecyclerViewAdapter
@@ -471,7 +471,6 @@ public class EventListActivity extends AppCompatActivity
         }
 
     }
-
 
     public void addToList(List<Event> ITEMS) {
         allEvents.addAll(ITEMS);

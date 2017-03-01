@@ -2,7 +2,6 @@ package com.athayes.eventier;
 
 import android.app.Application;
 
-import com.athayes.eventier.models.Event;
 import com.athayes.eventier.models.FacebookPage;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
@@ -11,9 +10,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 // Facebook API
 
@@ -31,14 +27,10 @@ public class GlobalVariables extends Application {
         AppEventsLogger.activateApp(this);
     }
 
-    private List<Event> ITEMS;
     private ArrayList<FacebookPage> facebookPages;
-    private Map<String, Event> ITEM_MAP;
     String myFormat = "dd/MM/yy"; // from strings
 
     private GlobalVariables() {
-        ITEMS = new ArrayList<Event>();
-        ITEM_MAP = new HashMap<String, Event>();
 
         // We want our sample data to always be set to a combination of today, tomorrow and the next day
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
@@ -207,51 +199,6 @@ public class GlobalVariables extends Application {
     public static GlobalVariables getInstance() {
         if (instance == null) instance = new GlobalVariables();
         return instance;
-    }
-
-    /**
-     * @param position
-     * @param eventName
-     * @param pitch
-     * @param host
-     * @param location
-     * @param time
-     * @return
-     */
-    public Event createEvent(int position, String eventName, String pitch, String host, String location, String time, String date) {
-        return new Event(String.valueOf(position), eventName, pitch, host, location, time, date);
-    }
-
-    /**
-     * Method to add items
-     * This adds items to both the event LIST and event HASHMAP
-     * The event list is used for displaying events on the EventListActivity
-     * The event hashmap is used to find an event, given its id - used to display content in the EventDetailActivity
-     *
-     * @param event
-     */
-    public void addToITEMS(Event event) {
-        ITEMS.add(event);
-        ITEM_MAP.put(event.id, event);
-    }
-
-    public List<Event> getITEMS() {
-        return ITEMS;
-    }
-
-    public void setITEMS(List<Event> ITEMS) {
-        this.ITEMS = ITEMS;
-    }
-
-    /**
-     * A map of sample (dummy) items, by ID.
-     */
-    public Map<String, Event> getITEM_MAP() {
-        return ITEM_MAP;
-    }
-
-    public void setITEM_MAP(Map<String, Event> ITEM_MAP) {
-        this.ITEM_MAP = ITEM_MAP;
     }
 
     public ArrayList<FacebookPage> getFacebookPages() {
