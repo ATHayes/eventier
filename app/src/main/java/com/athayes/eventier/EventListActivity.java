@@ -206,11 +206,11 @@ public class EventListActivity extends AppCompatActivity
                     SimpleDateFormat displayFormat = new SimpleDateFormat("EEEE, MMM d, yyyy");
                     if (todayCalendar.get(Calendar.DATE) == selectCalendar.get(Calendar.DATE)) {
                         getSupportActionBar().setSubtitle("Today's Events");
+                        getEventsFromFacebook(todayCalendar);
                     } else {
                         getSupportActionBar().setSubtitle(displayFormat.format(selectCalendar.getTime()));
+                        getEventsFromFacebook(selectCalendar);
                     }
-                    //get Facebook events for this day - the list will be updated automatically
-                    getEventsFromFacebook(selectCalendar);
                 }
             };
 

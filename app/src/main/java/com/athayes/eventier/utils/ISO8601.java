@@ -29,6 +29,15 @@ public final class ISO8601 {
         return formatted.substring(0, 22) + ":" + formatted.substring(22);
     }
 
+    public static String toStringWithoutLocale(final Calendar calendar) {
+        Date date = calendar.getTime();
+        String formatted = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+                .format(date);
+        //remove trailing 00:00 characters
+        formatted = formatted.substring(0, 19);
+        return formatted;
+    }
+
     /**
      * Get current date and time formatted as ISO 8601 string.
      */
