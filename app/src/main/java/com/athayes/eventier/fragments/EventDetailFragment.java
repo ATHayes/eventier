@@ -220,6 +220,7 @@ public class EventDetailFragment extends Fragment {
 
     OnCoverRetrievedListener mCallback;
 
+
     // Container Activity must implement this interface
     public interface OnCoverRetrievedListener {
         public void onCoverRetrieved(String uri);

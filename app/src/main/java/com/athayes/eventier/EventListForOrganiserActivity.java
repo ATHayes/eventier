@@ -55,7 +55,8 @@ import java.util.List;
  * item pitch side-by-side using two vertical panes.
  */
 public class EventListForOrganiserActivity extends AppCompatActivity
-        implements GoogleApiClient.OnConnectionFailedListener, AdFragment.OnFragmentInteractionListener {
+        implements GoogleApiClient.OnConnectionFailedListener, AdFragment.OnFragmentInteractionListener,
+        EventDetailFragment.OnCoverRetrievedListener {
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -203,6 +204,11 @@ public class EventListForOrganiserActivity extends AppCompatActivity
         //required for ad fragment
     }
 
+    @Override
+    public void onCoverRetrieved(String uri) {
+        // update with cover photo
+    }
+
     public class SimpleItemRecyclerViewAdapter
             extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
         private final List<Event> mValues;
@@ -244,10 +250,22 @@ public class EventListForOrganiserActivity extends AppCompatActivity
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Context context = v.getContext();
-                    Intent intent = new Intent(context, EventDetailActivity.class);
-                    intent.putExtra(EventDetailFragment.ARG_ITEM_ID, holder.mItem.id);
-                    context.startActivity(intent);
+
+                    if (mTwoPane) {
+                        Bundle arguments = new Bundle();
+                        arguments.putString(EventDetailFragment.ARG_ITEM_ID, holder.mItem.id);
+                        EventDetailFragment fragment = new EventDetailFragment();
+                        fragment.setArguments(arguments);
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.event_detail_container, fragment)
+                                .commit();
+                    } else {
+                        Context context = v.getContext();
+                        Intent intent = new Intent(context, EventDetailActivity.class);
+                        intent.putExtra(EventDetailFragment.ARG_ITEM_ID, holder.mItem.id);
+                        context.startActivity(intent);
+                    }
+
                 }
             });
         }

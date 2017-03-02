@@ -203,6 +203,15 @@ public class EventListActivity extends AppCompatActivity
                     selectCalendar.set(Calendar.MONTH, monthOfYear);
                     selectCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
+                    if (mTwoPane) {
+                        // If a detail fragment is present
+                        if (getSupportFragmentManager().findFragmentById(R.id.event_detail_container) != null) {
+                            getSupportFragmentManager()
+                                    .beginTransaction().
+                                    remove(getSupportFragmentManager().findFragmentById(R.id.event_detail_container)).commit();
+                        }
+                    }
+
                     SimpleDateFormat displayFormat = new SimpleDateFormat("EEEE, MMM d, yyyy");
                     if (todayCalendar.get(Calendar.DATE) == selectCalendar.get(Calendar.DATE)) {
                         getSupportActionBar().setSubtitle("Today's Events");
