@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
+    android:layout_marginLeft="30dp"
     android:layout_marginRight="16dp"
     android:baselineAligned="false"
     android:divider="?android:attr/dividerHorizontal"
@@ -14,17 +14,15 @@
     <!--
     This layout is a two-pane layout for the FacebookPages
     master/detail flow.
-    
     -->
-
     <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/facebookpage_list"
         android:name="com.athayes.eventier.FacebookPageListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="150dp"
-        android:layout_marginRight="150dp"
+        android:layout_marginLeft="200dp"
+        android:layout_marginRight="200dp"
         app:layoutManager="LinearLayoutManager"
         tools:context="com.athayes.eventier.FacebookPageListActivity"
         tools:listitem="@layout/facebookpage_list_content" />

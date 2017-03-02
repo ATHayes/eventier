@@ -1,7 +1,6 @@
 package com.athayes.eventier;
 
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,42 +14,27 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.DatePicker;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.athayes.eventier.converters.EventConverter;
 import com.athayes.eventier.fragments.AdFragment;
 import com.athayes.eventier.fragments.EventDetailFragment;
+import com.athayes.eventier.fragments.EventListFragment;
 import com.athayes.eventier.models.Event;
-import com.athayes.eventier.models.FacebookPage;
-import com.athayes.eventier.utils.ISO8601;
-import com.facebook.AccessToken;
-import com.facebook.GraphRequest;
-import com.facebook.GraphRequestBatch;
-import com.facebook.GraphResponse;
-import com.facebook.HttpMethod;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import org.json.JSONArray;
-
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -65,15 +49,14 @@ public class EventListActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         GoogleApiClient.OnConnectionFailedListener,
         AdFragment.OnFragmentInteractionListener,
-        EventDetailFragment.OnCoverRetrievedListener {
+        EventDetailFragment.OnCoverRetrievedListener,
+        EventListFragment.OnFragmentInteractionListener {
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
      */
     private boolean mTwoPane;
-    // Code number for new event ActivityForResult
-    static final int CREATE_EVENT_REQUEST = 1;
 
     // Firebase instance variables
     private String mUsername;
@@ -94,7 +77,6 @@ public class EventListActivity extends AppCompatActivity
     // Counters for GraphRequestBatches
     int totalBatches = 0;
     int batchesProcessed = 0;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,10 +126,6 @@ public class EventListActivity extends AppCompatActivity
             userName.setText(mUsername);
         }
 
-        //RecyclerView
-        View recyclerView = findViewById(R.id.event_list);
-        // assert recyclerView != null;
-
         if (findViewById(R.id.event_detail_container) != null) {
             // The detail container view will be present only in the
             // large-screen layouts (res/values-w900dp).
@@ -156,8 +134,6 @@ public class EventListActivity extends AppCompatActivity
             mTwoPane = true;
         }
 
-        final Calendar todayCalendar = Calendar.getInstance();
-        getEventsFromFacebook(todayCalendar);
         getSupportActionBar().setSubtitle("Today's Events");
     }
 
@@ -212,13 +188,14 @@ public class EventListActivity extends AppCompatActivity
                         }
                     }
 
-                    SimpleDateFormat displayFormat = new SimpleDateFormat("EEEE, MMM d, yyyy");
+                    EventListFragment eventListFragment = (EventListFragment) getSupportFragmentManager().findFragmentById(R.id.eventListFragment);
                     if (todayCalendar.get(Calendar.DATE) == selectCalendar.get(Calendar.DATE)) {
                         getSupportActionBar().setSubtitle("Today's Events");
-                        getEventsFromFacebook(todayCalendar);
+                        eventListFragment.getEventsFromFacebook(todayCalendar);
                     } else {
+                        SimpleDateFormat displayFormat = new SimpleDateFormat("EEEE, MMM d, yyyy");
                         getSupportActionBar().setSubtitle(displayFormat.format(selectCalendar.getTime()));
-                        getEventsFromFacebook(selectCalendar);
+                        eventListFragment.getEventsFromFacebook(selectCalendar);
                     }
                 }
             };
@@ -241,9 +218,9 @@ public class EventListActivity extends AppCompatActivity
 
         if (id == R.id.nav_date) {
             final Calendar todayCalendar = Calendar.getInstance();
-            getEventsFromFacebook(todayCalendar);
+            //Todo fix
+            //getEventsFromFacebook(todayCalendar);
             getSupportActionBar().setSubtitle("Today's Events");
-
         } else if (id == R.id.nav_share) {
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("text/plain");
@@ -296,10 +273,6 @@ public class EventListActivity extends AppCompatActivity
         return true;
     }
 
-    // Overrided method - pass in a list of items
-    private void setupRecyclerView(@NonNull RecyclerView recyclerView, List<Event> ITEMS) {
-        recyclerView.swapAdapter(new SimpleItemRecyclerViewAdapter(ITEMS), false);
-    }
 
     @Override
     public void onFragmentInteraction(Uri uri) {
@@ -311,90 +284,6 @@ public class EventListActivity extends AppCompatActivity
         // Required - do nothing here
     }
 
-    public class SimpleItemRecyclerViewAdapter
-            extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
-
-        private final List<Event> mValues;
-
-        public SimpleItemRecyclerViewAdapter(List<Event> items) {
-            mValues = items;
-        }
-
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.event_list_content, parent, false);
-            return new ViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(final ViewHolder holder, int position) {
-            holder.mItem = mValues.get(position);
-            holder.mIdView.setText(mValues.get(position).host);
-            holder.mTitleView.setText(mValues.get(position).title);
-
-            SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a");
-            Calendar startTimeCal = null;
-            try {
-                startTimeCal = ISO8601.toCalendar(mValues.get(position).startTime);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
-            holder.mTimeView.setText(timeFormat.format(startTimeCal.getTime()));
-            holder.mLocationView.setText(mValues.get(position).location);
-            //holder.mDateView.setText(mValues.get(position).date);
-
-            holder.mView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mTwoPane) {
-                        Bundle arguments = new Bundle();
-                        arguments.putString(EventDetailFragment.ARG_ITEM_ID, holder.mItem.id);
-                        EventDetailFragment fragment = new EventDetailFragment();
-                        fragment.setArguments(arguments);
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.event_detail_container, fragment)
-                                .commit();
-                    } else {
-                        Context context = v.getContext();
-                        Intent intent = new Intent(context, EventDetailActivity.class);
-                        intent.putExtra(EventDetailFragment.ARG_ITEM_ID, holder.mItem.id);
-                        context.startActivity(intent);
-                    }
-                }
-            });
-        }
-
-        @Override
-        public int getItemCount() {
-            return mValues.size();
-        }
-
-        public class ViewHolder extends RecyclerView.ViewHolder {
-            public final View mView;
-            public final TextView mIdView, mTitleView, mTimeView, mLocationView;
-            public Event mItem;
-
-            public ViewHolder(View view) {
-                super(view);
-                mView = view;
-                mIdView = (TextView) view.findViewById(R.id.id);
-                mTitleView = (TextView) view.findViewById(R.id.titleValueLabel);
-                mTimeView = (TextView) view.findViewById(R.id.timeValueLabel);
-                mLocationView = (TextView) view.findViewById(R.id.locationValueLabel);
-
-            }
-
-            @Override
-            public String toString() {
-                return super.toString() + " '" + mTitleView.getText() + "'";
-            }
-        }
-
-
-    }
-
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
@@ -404,122 +293,5 @@ public class EventListActivity extends AppCompatActivity
         Toast.makeText(this, "Google Play Services error.", Toast.LENGTH_SHORT).show();
     }
 
-
-    public void getEventsFromFacebook(Calendar dateCalendar) {
-        getEventsFromFacebook(dateCalendar, dateCalendar);
-    }
-
-    public void getEventsFromFacebook(Calendar sinceCalendar, Calendar untilCalendar) {
-
-        final View recyclerView = findViewById(R.id.event_list);
-        final View emptyView = findViewById(R.id.empty_view);
-        final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-
-        recyclerView.setVisibility(View.GONE);
-        emptyView.setVisibility(View.GONE);
-        progressBar.setVisibility(View.VISIBLE);
-
-        allEvents.clear();
-
-        ArrayList<FacebookPage> facebookPages = GlobalVariables.getInstance().getFacebookPages();
-        ArrayList<GraphRequestBatch> requestBatchList = new ArrayList<>();
-
-        int numberOfPages = facebookPages.size();
-        int pagesPerBatch = 50;
-
-        // Round up (ceil)
-        totalBatches = (numberOfPages / pagesPerBatch) + ((numberOfPages == 0) ? 0 : 1);
-
-        // Reset counter
-        batchesProcessed = 0;
-
-        for (int i = 0; i <= (totalBatches - 1); i++) {
-            int startIndex = 0 + (i * pagesPerBatch);
-            int endIndex = 49 + (i * pagesPerBatch);
-
-            // Avoid overflow error
-            if (endIndex >= numberOfPages) {
-                endIndex = numberOfPages - 1;
-            }
-
-            requestBatchList.add(facebookPageRequestBatch(
-                    new ArrayList<FacebookPage>(facebookPages.subList(startIndex, endIndex)),
-                    sinceCalendar,
-                    untilCalendar));
-
-            requestBatchList.get(i).addCallback(new GraphRequestBatch.Callback() {
-                                                    @Override
-                                                    public void onBatchCompleted(GraphRequestBatch batch) {
-                                                        batchesProcessed += 1;
-                                                        if (batchesProcessed >= totalBatches) {
-
-                                                            // Reset counters
-                                                            totalBatches = 0;
-                                                            batchesProcessed = 0;
-
-                                                            Collections.sort(allEvents);
-
-                                                            assert recyclerView != null;
-                                                            if (!allEvents.isEmpty()) {
-                                                                progressBar.setVisibility(View.GONE);
-                                                                emptyView.setVisibility(View.GONE);
-                                                                recyclerView.setVisibility(View.VISIBLE);
-                                                                setupRecyclerView((RecyclerView) recyclerView, allEvents);
-                                                            } else {
-                                                                // No data found
-                                                                progressBar.setVisibility(View.GONE);
-                                                                recyclerView.setVisibility(View.GONE);
-                                                                emptyView.setVisibility(View.VISIBLE);
-                                                            }
-                                                        }
-                                                    }
-                                                }
-            );
-        }
-
-        for (GraphRequestBatch requestBatch : requestBatchList) {
-            requestBatch.executeAsync();
-        }
-
-    }
-
-    public void addToList(List<Event> ITEMS) {
-        allEvents.addAll(ITEMS);
-    }
-
-    public GraphRequestBatch facebookPageRequestBatch(ArrayList<FacebookPage> facebookPages, Calendar since, Calendar until) {
-        GraphRequestBatch requestBatch = new GraphRequestBatch();
-        for (FacebookPage page : facebookPages) {
-            requestBatch.add(getEvents(page.getFacebookID(), page.getName(), since, until));
-        }
-        return requestBatch;
-    }
-
-    // Get events since x until y
-    public GraphRequest getEvents(String facebookID, final String hostName, Calendar sinceCalendar, Calendar untilCalendar) {
-        SimpleDateFormat apiFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String sinceAPIString = apiFormat.format(sinceCalendar.getTime());
-        String untilAPIString = apiFormat.format(untilCalendar.getTime());
-        GraphRequest request = new GraphRequest(
-                AccessToken.getCurrentAccessToken(),
-                "/" + facebookID + "/events?since=" + sinceAPIString + "T00:00:00&until=" + untilAPIString + "T23:59:59",
-                null,
-                HttpMethod.GET,
-                new GraphRequest.Callback() {
-                    public void onCompleted(GraphResponse response) {
-                        // Async call, manage data here, rather than returning a value
-                        //TODO check if response object is null - will be more efficient
-                        try {
-                            JSONArray events = response.getJSONObject().getJSONArray("data");
-                            List<Event> ITEMS = EventConverter.getFromJSONArray(events, hostName);
-                            addToList(ITEMS);
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
-                    }
-                }
-        );
-        return request;
-    }
 
 }

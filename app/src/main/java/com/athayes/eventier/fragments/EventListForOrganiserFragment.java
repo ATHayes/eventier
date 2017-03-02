@@ -14,7 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.athayes.eventier.EventDetailActivity;
-import com.athayes.eventier.GlobalVariables;
+import com.athayes.eventier.EventListForOrganiserActivity;
 import com.athayes.eventier.R;
 import com.athayes.eventier.converters.EventConverter;
 import com.athayes.eventier.models.Event;
@@ -38,31 +38,32 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link EventListFragment.OnFragmentInteractionListener} interface
+ * {@link EventListForOrganiserFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link EventListFragment#newInstance} factory method to
+ * Use the {@link EventListForOrganiserFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class EventListFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class EventListForOrganiserFragment extends Fragment {
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;
+    private EventListForOrganiserFragment.OnFragmentInteractionListener mListener;
     private Boolean mTwoPane = false;
 
     private View recyclerView;
     private View emptyView;
     private ProgressBar progressBar;
 
+    FacebookPage selectedFacebookPage;
+
+    /**
+     * The fragment argument representing the item ID that this fragment
+     * represents.
+     */
+    //Todo replace with object
+    public static final String ARG_FACEBOOKPAGE_ID = "facebookpage_id";
+    public static final String ARG_FACEBOOKPAGE_NAME = "facebookpage_name";
 
     //Logging
-    private static final String TAG = "EventListFragment";
+    private static final String TAG = "EventListForOrganiserFragment";
 
     //List of events, used for temporary storage - async methods
     List<Event> allEvents = new ArrayList<>();
@@ -71,7 +72,7 @@ public class EventListFragment extends Fragment {
     int totalBatches = 0;
     int batchesProcessed = 0;
 
-    public EventListFragment() {
+    public EventListForOrganiserFragment() {
         // Required empty public constructor
     }
 
@@ -81,14 +82,12 @@ public class EventListFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment EventListFragment.
+     * @return A new instance of fragment EventListForOrganiserFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static EventListFragment newInstance(String param1, String param2) {
-        EventListFragment fragment = new EventListFragment();
+    public static EventListForOrganiserFragment newInstance(String param1, String param2) {
+        EventListForOrganiserFragment fragment = new EventListForOrganiserFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -97,9 +96,13 @@ public class EventListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            String id = getArguments().get(ARG_FACEBOOKPAGE_ID).toString();
+            String name = getArguments().get(ARG_FACEBOOKPAGE_NAME).toString();
+            selectedFacebookPage = new FacebookPage(name, id);
         }
+
+        EventListForOrganiserActivity activity = (EventListForOrganiserActivity) getActivity();
+
     }
 
     @Override
@@ -107,12 +110,15 @@ public class EventListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_event_list, container, false);
-
         recyclerView = rootView.findViewById(R.id.event_recycler_view);
         emptyView = rootView.findViewById(R.id.empty_view);
         progressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar);
+        // Calendars
+        final Calendar untilCalendar = Calendar.getInstance();
         final Calendar todayCalendar = Calendar.getInstance();
-        getEventsFromFacebook(todayCalendar);
+
+        untilCalendar.add(Calendar.WEEK_OF_YEAR, 3);
+        getEventsFromFacebook(todayCalendar, untilCalendar);
 
         if (rootView.findViewById(R.id.event_detail_container) != null) {
             // The detail container view will be present only in the
@@ -121,6 +127,7 @@ public class EventListFragment extends Fragment {
             // activity should be in two-pane mode.
             mTwoPane = true;
         }
+
         return rootView;
     }
 
@@ -134,8 +141,8 @@ public class EventListFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof EventListForOrganiserFragment.OnFragmentInteractionListener) {
+            mListener = (EventListForOrganiserFragment.OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -164,7 +171,7 @@ public class EventListFragment extends Fragment {
     }
 
     public class SimpleItemRecyclerViewAdapter
-            extends RecyclerView.Adapter<EventListFragment.SimpleItemRecyclerViewAdapter.ViewHolder> {
+            extends RecyclerView.Adapter<EventListForOrganiserFragment.SimpleItemRecyclerViewAdapter.ViewHolder> {
 
         private final List<Event> mValues;
 
@@ -173,14 +180,14 @@ public class EventListFragment extends Fragment {
         }
 
         @Override
-        public EventListFragment.SimpleItemRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public EventListForOrganiserFragment.SimpleItemRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.event_list_content, parent, false);
-            return new EventListFragment.SimpleItemRecyclerViewAdapter.ViewHolder(view);
+            return new EventListForOrganiserFragment.SimpleItemRecyclerViewAdapter.ViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(final EventListFragment.SimpleItemRecyclerViewAdapter.ViewHolder holder, int position) {
+        public void onBindViewHolder(final EventListForOrganiserFragment.SimpleItemRecyclerViewAdapter.ViewHolder holder, int position) {
             holder.mItem = mValues.get(position);
             holder.mIdView.setText(mValues.get(position).host);
             holder.mTitleView.setText(mValues.get(position).title);
@@ -195,7 +202,11 @@ public class EventListFragment extends Fragment {
 
             holder.mTimeView.setText(timeFormat.format(startTimeCal.getTime()));
             holder.mLocationView.setText(mValues.get(position).location);
-            //holder.mDateView.setText(mValues.get(position).date);
+
+            holder.mDateView.setVisibility(View.VISIBLE);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE d MMMM");
+            String dateString = dateFormat.format(startTimeCal.getTime());
+            holder.mDateView.setText(dateString);
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -225,7 +236,7 @@ public class EventListFragment extends Fragment {
 
         public class ViewHolder extends RecyclerView.ViewHolder {
             public final View mView;
-            public final TextView mIdView, mTitleView, mTimeView, mLocationView;
+            public final TextView mIdView, mTitleView, mTimeView, mLocationView, mDateView;
             public Event mItem;
 
             public ViewHolder(View view) {
@@ -235,6 +246,7 @@ public class EventListFragment extends Fragment {
                 mTitleView = (TextView) view.findViewById(R.id.titleValueLabel);
                 mTimeView = (TextView) view.findViewById(R.id.timeValueLabel);
                 mLocationView = (TextView) view.findViewById(R.id.locationValueLabel);
+                mDateView = (TextView) view.findViewById(R.id.dateValueLabel);
             }
 
             @Override
@@ -246,7 +258,7 @@ public class EventListFragment extends Fragment {
 
     // Overrided method - pass in a list of items
     private void setupRecyclerView(@NonNull RecyclerView recyclerView, List<Event> ITEMS) {
-        recyclerView.swapAdapter(new EventListFragment.SimpleItemRecyclerViewAdapter(ITEMS), false);
+        recyclerView.swapAdapter(new EventListForOrganiserFragment.SimpleItemRecyclerViewAdapter(ITEMS), false);
     }
 
 
@@ -254,75 +266,6 @@ public class EventListFragment extends Fragment {
         getEventsFromFacebook(dateCalendar, dateCalendar);
     }
 
-    public void getEventsFromFacebook(Calendar sinceCalendar, Calendar untilCalendar) {
-
-        recyclerView.setVisibility(View.GONE);
-        emptyView.setVisibility(View.GONE);
-        progressBar.setVisibility(View.VISIBLE);
-
-        allEvents.clear();
-
-        ArrayList<FacebookPage> facebookPages = GlobalVariables.getInstance().getFacebookPages();
-        ArrayList<GraphRequestBatch> requestBatchList = new ArrayList<>();
-
-        int numberOfPages = facebookPages.size();
-        int pagesPerBatch = 50;
-
-        // Round up (ceil)
-        totalBatches = (numberOfPages / pagesPerBatch) + ((numberOfPages == 0) ? 0 : 1);
-
-        // Reset counter
-        batchesProcessed = 0;
-
-        for (int i = 0; i <= (totalBatches - 1); i++) {
-            int startIndex = 0 + (i * pagesPerBatch);
-            int endIndex = 49 + (i * pagesPerBatch);
-
-            // Avoid overflow error
-            if (endIndex >= numberOfPages) {
-                endIndex = numberOfPages - 1;
-            }
-
-            requestBatchList.add(facebookPageRequestBatch(
-                    new ArrayList<FacebookPage>(facebookPages.subList(startIndex, endIndex)),
-                    sinceCalendar,
-                    untilCalendar));
-
-            requestBatchList.get(i).addCallback(new GraphRequestBatch.Callback() {
-                                                    @Override
-                                                    public void onBatchCompleted(GraphRequestBatch batch) {
-                                                        batchesProcessed += 1;
-                                                        if (batchesProcessed >= totalBatches) {
-
-                                                            // Reset counters
-                                                            totalBatches = 0;
-                                                            batchesProcessed = 0;
-
-                                                            Collections.sort(allEvents);
-
-                                                            assert recyclerView != null;
-                                                            if (!allEvents.isEmpty()) {
-                                                                progressBar.setVisibility(View.GONE);
-                                                                emptyView.setVisibility(View.GONE);
-                                                                recyclerView.setVisibility(View.VISIBLE);
-                                                                setupRecyclerView((RecyclerView) recyclerView, allEvents);
-                                                            } else {
-                                                                // No data found
-                                                                progressBar.setVisibility(View.GONE);
-                                                                recyclerView.setVisibility(View.GONE);
-                                                                emptyView.setVisibility(View.VISIBLE);
-                                                            }
-                                                        }
-                                                    }
-                                                }
-            );
-        }
-
-        for (GraphRequestBatch requestBatch : requestBatchList) {
-            requestBatch.executeAsync();
-        }
-
-    }
 
     public void addToList(List<Event> ITEMS) {
         allEvents.addAll(ITEMS);
@@ -363,4 +306,53 @@ public class EventListFragment extends Fragment {
         return request;
     }
 
+    public void getEventsFromFacebook(Calendar sinceCalendar, Calendar untilCalendar) {
+
+        SimpleDateFormat apiFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String sinceAPIString = apiFormat.format(sinceCalendar.getTime());
+        String untilAPIString = apiFormat.format(untilCalendar.getTime());
+
+        recyclerView.setVisibility(View.GONE);
+        emptyView.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+
+        GraphRequest request = new GraphRequest(
+                AccessToken.getCurrentAccessToken(),
+                "/" + selectedFacebookPage.getFacebookID()
+                        + "/events?since="
+                        + sinceAPIString +
+                        "T00:00:00&until="
+                        + untilAPIString +
+                        "T23:59:59",
+                null,
+                HttpMethod.GET,
+                new GraphRequest.Callback() {
+                    public void onCompleted(GraphResponse response) {
+                        // Async call, manage data here, rather than returning a value
+                        //TODO check if response object is null - will be more efficient
+                        try {
+                            JSONArray events = response.getJSONObject().getJSONArray("data");
+                            List<Event> ITEMS = EventConverter.getFromJSONArray(events, selectedFacebookPage.getName());
+                            //set up the ui
+                            assert recyclerView != null;
+                            Collections.sort(ITEMS);
+                            if (!ITEMS.isEmpty()) {
+                                progressBar.setVisibility(View.GONE);
+                                emptyView.setVisibility(View.GONE);
+                                recyclerView.setVisibility(View.VISIBLE);
+                                setupRecyclerView((RecyclerView) recyclerView, ITEMS);
+                            } else {
+                                // No data found
+                                progressBar.setVisibility(View.GONE);
+                                recyclerView.setVisibility(View.GONE);
+                                emptyView.setVisibility(View.VISIBLE);
+                            }
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                }
+        );
+        request.executeAsync();
+    }
 }

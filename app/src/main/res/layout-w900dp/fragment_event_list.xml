@@ -8,18 +8,16 @@
     android:baselineAligned="false"
     android:divider="?android:attr/dividerHorizontal"
     android:orientation="horizontal"
-    android:showDividers="middle"
-    tools:context="com.eventier.EventListActivity">
+    android:showDividers="middle">
 
     <!--
     This layout is a two-pane layout for the Events
     master/detail flow.
-    
     -->
 
     <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/event_list"
+        android:id="@+id/event_recycler_view"
         android:name="com.masterdetail.masterdetail.EventListFragment"
         android:layout_width="350dp"
         android:layout_height="match_parent"
@@ -27,15 +25,14 @@
         android:layout_marginRight="16dp"
         android:paddingTop="20px"
         app:layoutManager="LinearLayoutManager"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context="com.eventier.EventListActivity"
-        tools:listitem="@layout/event_list_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        tools:listitem="@layout/event_list_content" />
 
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fillViewport="true">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -46,6 +43,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3" />
+
         </LinearLayout>
     </ScrollView>
 
@@ -55,7 +53,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:text="No Events found"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
     <ProgressBar
         android:id="@+id/progress_bar"
