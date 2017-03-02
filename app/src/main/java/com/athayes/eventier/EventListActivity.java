@@ -62,7 +62,10 @@ import java.util.List;
  * item pitch side-by-side using two vertical panes.
  */
 public class EventListActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener, AdFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        GoogleApiClient.OnConnectionFailedListener,
+        AdFragment.OnFragmentInteractionListener,
+        EventDetailFragment.OnCoverRetrievedListener {
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -292,6 +295,11 @@ public class EventListActivity extends AppCompatActivity
     @Override
     public void onFragmentInteraction(Uri uri) {
         //required for ad fragement
+    }
+
+    @Override
+    public void onCoverRetrieved(String uri) {
+        // Required - do nothing here
     }
 
     public class SimpleItemRecyclerViewAdapter

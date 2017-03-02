@@ -225,6 +225,11 @@ public class EventDetailFragment extends Fragment {
         public void onCoverRetrieved(String uri);
     }
 
+    // Container Activity must implement this interface
+    public interface OnEventSelectedListener {
+        //
+    }
+
 
     @Override
     public void onAttach(Context context) {
@@ -240,7 +245,7 @@ public class EventDetailFragment extends Fragment {
             mCallback = (OnCoverRetrievedListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
-                    + " must implement OnHeadlineSelectedListener");
+                    + " must implement OnCoverRetrievedListener");
         }
     }
 
