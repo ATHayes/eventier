@@ -28,7 +28,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.athayes.eventier.adapters.EventService;
+import com.athayes.eventier.converters.EventConverter;
 import com.athayes.eventier.fragments.AdFragment;
 import com.athayes.eventier.fragments.EventDetailFragment;
 import com.athayes.eventier.models.Event;
@@ -51,7 +51,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -144,7 +143,7 @@ public class EventListActivity extends AppCompatActivity
 
         //RecyclerView
         View recyclerView = findViewById(R.id.event_list);
-        assert recyclerView != null;
+        // assert recyclerView != null;
 
         if (findViewById(R.id.event_detail_container) != null) {
             // The detail container view will be present only in the
@@ -155,8 +154,6 @@ public class EventListActivity extends AppCompatActivity
         }
 
         final Calendar todayCalendar = Calendar.getInstance();
-        final Date today = new Date();
-
         getEventsFromFacebook(todayCalendar);
         getSupportActionBar().setSubtitle("Today's Events");
     }
@@ -289,10 +286,7 @@ public class EventListActivity extends AppCompatActivity
 
     // Overrided method - pass in a list of items
     private void setupRecyclerView(@NonNull RecyclerView recyclerView, List<Event> ITEMS) {
-        // Set the adaptor with the items
-
         recyclerView.swapAdapter(new SimpleItemRecyclerViewAdapter(ITEMS), false);
-        System.out.println("Adapter view swapped!");
     }
 
     @Override
@@ -500,7 +494,7 @@ public class EventListActivity extends AppCompatActivity
                         //TODO check if response object is null - will be more efficient
                         try {
                             JSONArray events = response.getJSONObject().getJSONArray("data");
-                            List<Event> ITEMS = EventService.getFromJSONArray(events, hostName);
+                            List<Event> ITEMS = EventConverter.getFromJSONArray(events, hostName);
                             addToList(ITEMS);
                         } catch (Exception ex) {
                             ex.printStackTrace();

@@ -191,7 +191,6 @@ public class GlobalVariables extends Application {
         // Literature
         facebookPages.add(new FacebookPage("Waterstone's Bookstore, Cork", "corkwaterstones"));
 
-
     }
 
     private static GlobalVariables instance;

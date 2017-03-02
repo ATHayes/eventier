@@ -40,7 +40,7 @@
                 android:value="com.athayes.eventier.EventListActivity" />
         </activity>
         <activity
-            android:name=".EventListForOrganiser"
+            android:name=".EventListForOrganiserActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data

@@ -23,7 +23,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.athayes.eventier.adapters.EventService;
+import com.athayes.eventier.converters.EventConverter;
 import com.athayes.eventier.fragments.AdFragment;
 import com.athayes.eventier.fragments.EventDetailFragment;
 import com.athayes.eventier.models.Event;
@@ -54,7 +54,7 @@ import java.util.List;
  * item pitch. On tablets, the activity presents the list of items and
  * item pitch side-by-side using two vertical panes.
  */
-public class EventListForOrganiser extends AppCompatActivity
+public class EventListForOrganiserActivity extends AppCompatActivity
         implements GoogleApiClient.OnConnectionFailedListener, AdFragment.OnFragmentInteractionListener {
 
     /**
@@ -320,7 +320,7 @@ public class EventListForOrganiser extends AppCompatActivity
                         //TODO check if response object is null - will be more efficient
                         try {
                             JSONArray events = response.getJSONObject().getJSONArray("data");
-                            List<Event> ITEMS = EventService.getFromJSONArray(events, selectedFacebookPage.getName());
+                            List<Event> ITEMS = EventConverter.getFromJSONArray(events, selectedFacebookPage.getName());
                             //set up the ui
                             assert recyclerView != null;
                             Collections.sort(ITEMS);

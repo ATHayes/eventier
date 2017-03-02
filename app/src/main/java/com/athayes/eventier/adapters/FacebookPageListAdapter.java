@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.athayes.eventier.EventListForOrganiser;
+import com.athayes.eventier.EventListForOrganiserActivity;
 import com.athayes.eventier.R;
 import com.athayes.eventier.models.FacebookPage;
 
@@ -40,7 +40,7 @@ public class FacebookPageListAdapter extends RecyclerView.Adapter<FacebookPageLi
             @Override
             public void onClick(View v) {
                 Context context = v.getContext();
-                Intent intent = new Intent(context, EventListForOrganiser.class);
+                Intent intent = new Intent(context, EventListForOrganiserActivity.class);
                 intent.putExtra("FacebookID", holder.mItem.getFacebookID());
                 context.startActivity(intent);
             }

@@ -1,4 +1,4 @@
-package com.athayes.eventier.adapters;
+package com.athayes.eventier.converters;
 
 import com.athayes.eventier.models.Event;
 
@@ -11,10 +11,12 @@ import java.util.List;
 
 /**
  * Created by anthonyhayes on 03/01/2017.
+ *
+ * Can convert an array of JSON objects or a single JSON object into an Event
  */
 
 
-public class EventService {
+public class EventConverter {
 
     public static List<Event> getFromJSONArray(JSONArray events, String host) {
         // List

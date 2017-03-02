@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.athayes.eventier.EventDetailActivity;
 import com.athayes.eventier.EventListActivity;
 import com.athayes.eventier.R;
-import com.athayes.eventier.adapters.EventService;
+import com.athayes.eventier.converters.EventConverter;
 import com.athayes.eventier.models.Event;
 import com.athayes.eventier.utils.ISO8601;
 import com.facebook.AccessToken;
@@ -133,8 +133,6 @@ public class EventDetailFragment extends Fragment {
 
             }
         });
-        //Show the dummy content as text in a TextView.
-
 
         if (eventID != null) {
             // Facebook API call
@@ -157,7 +155,7 @@ public class EventDetailFragment extends Fragment {
                         // Async call, manage data here, rather than returning a value
                         try {
                             JSONObject JSONEvent = response.getJSONObject();
-                            Event thisEvent = EventService.getFromJSONObject(JSONEvent);
+                            Event thisEvent = EventConverter.getFromJSONObject(JSONEvent);
                             setUpTextViews(rootView, thisEvent);
                         } catch (Exception ex) {
                             ex.printStackTrace();
@@ -191,8 +189,6 @@ public class EventDetailFragment extends Fragment {
                     }
                 }
         ).executeAsync();
-
-
     }
 
     public void setUpTextViews(View rootView, Event thisEvent) {

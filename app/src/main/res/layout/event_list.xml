@@ -20,6 +20,13 @@
         tools:context="com.eventier.EventListActivity"
         tools:listitem="@layout/event_list_content" />
 
+    <!--<fragment-->
+    <!--android:name="com.athayes.eventier.fragments.EventListFragment"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:id="@+id/EventListFragment">-->
+    <!--</fragment>-->
+
     <TextView
         android:id="@+id/empty_view"
         android:layout_width="match_parent"
