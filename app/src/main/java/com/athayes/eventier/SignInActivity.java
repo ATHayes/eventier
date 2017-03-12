@@ -62,10 +62,10 @@ public class SignInActivity extends AppCompatActivity {
                     // User is signed in
                     //Log.d("tag", "onAuthStateChanged:signed_in:" + user.getUid());
                     startListActivity();
-                } else {
+                }
                     // User is signed out
                     //Log.d(TAG, "onAuthStateChanged:signed_out");
-                }
+
                 // ...
             }
         };

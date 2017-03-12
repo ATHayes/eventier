@@ -2,10 +2,14 @@ package com.athayes.eventier;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.athayes.eventier.adapters.FacebookPageListAdapter;
@@ -22,6 +26,7 @@ public class FacebookPageListActivity extends AppCompatActivity {
      * device.
      */
     private boolean mTwoPane;
+    FacebookPageListAdapter facebookPageListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +37,6 @@ public class FacebookPageListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
-        // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -49,12 +53,33 @@ public class FacebookPageListActivity extends AppCompatActivity {
             // activity should be in two-pane mode.
             mTwoPane = true;
         }
-        setTitle("Choose an Organiser");
+        setTitle("Search...");
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search_facebook_page_menu, menu);
+        final MenuItem searchItem = menu.findItem(R.id.search_view);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String text) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String text) {
+                facebookPageListAdapter.getFilter().filter(text);
+                return true;
+            }
+        });
+        return true;
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         ArrayList<FacebookPage> pages = GlobalVariables.getInstance().getFacebookPages();
         Collections.sort(pages);
-        recyclerView.setAdapter(new FacebookPageListAdapter(pages));
+        facebookPageListAdapter = new FacebookPageListAdapter(pages, this);
+        recyclerView.setAdapter(facebookPageListAdapter);
     }
 }

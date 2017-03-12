@@ -10,7 +10,6 @@
     <string name="title_activity_login">Sign in</string>
     <string name="facebook_app_id">399593047043087</string>
 
-
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
@@ -39,8 +38,6 @@
     <string name="title_facebookpage_list">FacebookPages</string>
     <string name="title_facebookpage_detail">FacebookPage Detail</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

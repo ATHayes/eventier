@@ -275,7 +275,7 @@ public class EventListFragment extends Fragment {
         batchesProcessed = 0;
 
         for (int i = 0; i <= (totalBatches - 1); i++) {
-            int startIndex = 0 + (i * pagesPerBatch);
+            int startIndex = (i * pagesPerBatch);
             int endIndex = 49 + (i * pagesPerBatch);
 
             // Avoid overflow error

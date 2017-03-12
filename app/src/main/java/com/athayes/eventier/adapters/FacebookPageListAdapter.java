@@ -2,27 +2,35 @@ package com.athayes.eventier.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.hardware.camera2.params.Face;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.athayes.eventier.EventListForOrganiserActivity;
 import com.athayes.eventier.R;
 import com.athayes.eventier.models.FacebookPage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by anthonyhayes on 01/03/2017.
  */
 
-public class FacebookPageListAdapter extends RecyclerView.Adapter<FacebookPageListAdapter.ViewHolder> {
-    private final List<FacebookPage> mValues;
+public class FacebookPageListAdapter extends RecyclerView.Adapter<FacebookPageListAdapter.ViewHolder> implements Filterable{
+    protected List<FacebookPage> list;
+    protected List<FacebookPage> originalList;
+    protected Context context;
 
-    public FacebookPageListAdapter(List<FacebookPage> items) {
-        mValues = items;
+    public FacebookPageListAdapter(List<FacebookPage> items, Context context) {
+        list = items;
+        this.originalList = items;
+        this.context = context;
     }
 
     @Override
@@ -34,8 +42,8 @@ public class FacebookPageListAdapter extends RecyclerView.Adapter<FacebookPageLi
 
     @Override
     public void onBindViewHolder(final FacebookPageListAdapter.ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mNameView.setText(mValues.get(position).getName());
+        holder.mItem = list.get(position);
+        holder.mNameView.setText(list.get(position).getName());
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,7 +57,7 @@ public class FacebookPageListAdapter extends RecyclerView.Adapter<FacebookPageLi
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return list.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -67,6 +75,44 @@ public class FacebookPageListAdapter extends RecyclerView.Adapter<FacebookPageLi
         public String toString() {
             return super.toString() + " '" + mNameView.getText() + "'";
         }
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @SuppressWarnings("unchecked")
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                list = (List<FacebookPage>) results.values;
+                FacebookPageListAdapter.this.notifyDataSetChanged();
+            }
+
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                List<FacebookPage> filteredResults = null;
+                if (constraint.length() == 0) {
+                    filteredResults = originalList;
+                } else {
+                    filteredResults = getFilteredResults(constraint.toString().toLowerCase());
+                }
+
+                FilterResults results = new FilterResults();
+                results.values = filteredResults;
+
+                return results;
+            }
+        };
+    }
+
+    protected List<FacebookPage> getFilteredResults(String constraint) {
+        List<FacebookPage> results = new ArrayList<>();
+
+        for (FacebookPage page : originalList) {
+            if (page.getName().toLowerCase().contains(constraint)) {
+                results.add(page);
+            }
+        }
+        return results;
     }
 }
 
