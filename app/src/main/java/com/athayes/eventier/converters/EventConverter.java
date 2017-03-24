@@ -34,7 +34,6 @@ public class EventConverter {
         return ITEMS;
     }
 
-
     public static Event getFromJSONObject(JSONObject event) {
         Event event1 = getFromJSONObject(event, "None");
         return event1;
