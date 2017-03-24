@@ -186,14 +186,13 @@ public class EventListFragment extends Fragment {
             holder.mTitleView.setText(mValues.get(position).title);
 
             SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a");
-            Calendar startTimeCal = null;
             try {
-                startTimeCal = ISO8601.toCalendar(mValues.get(position).startTime);
+                Calendar startTimeCal = ISO8601.toCalendar(mValues.get(position).startTime);
                 holder.mTimeView.setText(timeFormat.format(startTimeCal.getTime()));
             } catch (ParseException e) {
                 e.printStackTrace();
-            }
-            
+        }
+
             holder.mLocationView.setText(mValues.get(position).location);
             //holder.mDateView.setText(mValues.get(position).date);
 

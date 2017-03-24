@@ -4,11 +4,16 @@ package com.athayes.eventier.utils;
  * Created by anthonyhayes on 03/01/2017.
  */
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 /**
  * Helper class for handling a most common subset of ISO 8601 strings
@@ -50,15 +55,10 @@ public final class ISO8601 {
      */
     public static Calendar toCalendar(final String iso8601string)
             throws ParseException {
-        Calendar calendar = GregorianCalendar.getInstance();
-        String s = iso8601string.replace("Z", "+00:00");
-        try {
-            s = s.substring(0, 22) + s.substring(23);  // to get rid of the ":"
-        } catch (IndexOutOfBoundsException e) {
-            throw new ParseException("Invalid length", 0);
-        }
-        Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(s);
-        calendar.setTime(date);
+        Calendar calendar;
+        DateTimeFormatter parser2 = ISODateTimeFormat.dateTimeNoMillis();
+        DateTime dateTime = parser2.parseDateTime(iso8601string);
+        calendar = dateTime.toCalendar(Locale.getDefault());
         return calendar;
     }
 
