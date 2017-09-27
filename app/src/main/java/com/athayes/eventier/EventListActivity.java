@@ -27,6 +27,7 @@ import com.athayes.eventier.fragments.AdFragment;
 import com.athayes.eventier.fragments.EventDetailFragment;
 import com.athayes.eventier.fragments.EventListFragment;
 import com.athayes.eventier.models.Event;
+import com.facebook.login.LoginManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
@@ -114,17 +115,17 @@ public class EventListActivity extends AppCompatActivity
         TextView userName = (TextView) headerView.findViewById(R.id.userName);
 
         // Check if user is signed in
-        if (mFirebaseUser == null) {
-            startActivity(new Intent(this, SignInActivity.class));
-            finish();
-            return;
-        } else {
-            mUsername = mFirebaseUser.getDisplayName();
-            if (mFirebaseUser.getPhotoUrl() != null) {
-                mPhotoUrl = mFirebaseUser.getPhotoUrl().toString();
-            }
-            userName.setText(mUsername);
-        }
+//        if (mFirebaseUser == null) {
+//            startActivity(new Intent(this, SignInActivity.class));
+//            finish();
+//            return;
+//        } else {
+//            mUsername = mFirebaseUser.getDisplayName();
+//            if (mFirebaseUser.getPhotoUrl() != null) {
+//                mPhotoUrl = mFirebaseUser.getPhotoUrl().toString();
+//            }
+//            userName.setText(mUsername);
+//        }
 
         if (findViewById(R.id.event_detail_container) != null) {
             // The detail container view will be present only in the
@@ -243,16 +244,16 @@ public class EventListActivity extends AppCompatActivity
                         case DialogInterface.BUTTON_POSITIVE:
                             //Yes button clicked
                             mFirebaseAuth.signOut();
+                            // Sign out of Facebook
+                            LoginManager.getInstance().logOut();
                             mUsername = ANONYMOUS;
                             startActivity(new Intent(EventListActivity.this, SignInActivity.class));
-
                         case DialogInterface.BUTTON_NEGATIVE:
                             //No button clicked
                             break;
                     }
                 }
             };
-
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Are you sure you want to log out?").setPositiveButton("Log out", dialogClickListener)
                     .setNegativeButton("Stay here", dialogClickListener).show();

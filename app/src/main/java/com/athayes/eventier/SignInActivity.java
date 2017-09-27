@@ -60,7 +60,9 @@ public class SignInActivity extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // User is signed in
-                    //Log.d("tag", "onAuthStateChanged:signed_in:" + user.getUid());
+
+                    // If the app has just updated, log the user out of facebook and bring them to the log in page
+                    //if (!)
                     startListActivity();
                 }
                     // User is signed out
@@ -80,7 +82,6 @@ public class SignInActivity extends AppCompatActivity {
             public void onSuccess(LoginResult loginResult) {
                 System.out.println("callback success");
                 handleFacebookAccessToken(loginResult.getAccessToken());
-
             }
 
             @Override

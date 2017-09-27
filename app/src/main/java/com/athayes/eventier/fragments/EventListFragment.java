@@ -320,7 +320,6 @@ public class EventListFragment extends Fragment {
         for (GraphRequestBatch requestBatch : requestBatchList) {
             requestBatch.executeAsync();
         }
-
     }
 
     public void addToList(List<Event> ITEMS) {
