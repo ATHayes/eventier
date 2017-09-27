@@ -60,15 +60,10 @@ public class SignInActivity extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // User is signed in
-
-                    // If the app has just updated, log the user out of facebook and bring them to the log in page
-                    //if (!)
                     startListActivity();
                 }
-                    // User is signed out
-                    //Log.d(TAG, "onAuthStateChanged:signed_out");
-
-                // ...
+                // User is signed out
+                //Log.d(TAG, "onAuthStateChanged:signed_out");
             }
         };
 

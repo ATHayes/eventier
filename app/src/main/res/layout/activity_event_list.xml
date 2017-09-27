@@ -45,13 +45,6 @@
                 android:layout_height="480dp"
                 android:layout_marginTop="60dp"
                 android:layout_weight="0.97"></fragment>
-
-            <fragment
-                android:id="@+id/adFragment"
-                android:name="com.athayes.eventier.fragments.AdFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"></fragment>
-
         </LinearLayout>
 
     </android.support.design.widget.CoordinatorLayout>

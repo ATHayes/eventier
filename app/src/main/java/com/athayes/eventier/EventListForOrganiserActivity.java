@@ -16,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.athayes.eventier.fragments.AdFragment;
 import com.athayes.eventier.fragments.EventDetailFragment;
 import com.athayes.eventier.fragments.EventListForOrganiserFragment;
 import com.athayes.eventier.models.FacebookPage;
@@ -35,7 +34,6 @@ import com.google.firebase.auth.FirebaseUser;
  */
 public class EventListForOrganiserActivity extends AppCompatActivity
         implements GoogleApiClient.OnConnectionFailedListener,
-        AdFragment.OnFragmentInteractionListener,
         EventDetailFragment.OnCoverRetrievedListener,
         EventListForOrganiserFragment.OnFragmentInteractionListener {
 
