@@ -47,7 +47,6 @@ public class EventListForOrganiserFragment extends Fragment {
 
     private EventListForOrganiserFragment.OnFragmentInteractionListener mListener;
     private Boolean mTwoPane = false;
-
     private View recyclerView;
     private View emptyView;
     private ProgressBar progressBar;
@@ -104,7 +103,6 @@ public class EventListForOrganiserFragment extends Fragment {
         EventListForOrganiserActivity activity = (EventListForOrganiserActivity) getActivity();
 
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -307,15 +305,12 @@ public class EventListForOrganiserFragment extends Fragment {
     }
 
     public void getEventsFromFacebook(Calendar sinceCalendar, Calendar untilCalendar) {
-
         SimpleDateFormat apiFormat = new SimpleDateFormat("yyyy-MM-dd");
         String sinceAPIString = apiFormat.format(sinceCalendar.getTime());
         String untilAPIString = apiFormat.format(untilCalendar.getTime());
-
         recyclerView.setVisibility(View.GONE);
         emptyView.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
-
         GraphRequest request = new GraphRequest(
                 AccessToken.getCurrentAccessToken(),
                 "/" + selectedFacebookPage.getFacebookID()

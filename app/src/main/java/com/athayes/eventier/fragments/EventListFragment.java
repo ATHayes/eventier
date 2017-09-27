@@ -52,14 +52,11 @@ public class EventListFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
     private OnFragmentInteractionListener mListener;
     private Boolean mTwoPane = false;
-
     private View recyclerView;
     private View emptyView;
     private ProgressBar progressBar;
-
 
     //Logging
     private static final String TAG = "EventListFragment";
@@ -248,7 +245,6 @@ public class EventListFragment extends Fragment {
         recyclerView.swapAdapter(new EventListFragment.SimpleItemRecyclerViewAdapter(ITEMS), false);
     }
 
-
     public void getEventsFromFacebook(Calendar dateCalendar) {
         getEventsFromFacebook(dateCalendar, dateCalendar);
     }
@@ -277,9 +273,9 @@ public class EventListFragment extends Fragment {
             int startIndex = (i * pagesPerBatch);
             int endIndex = 49 + (i * pagesPerBatch);
 
-            // Avoid overflow error
+            // Avoid overflow error (Removed the -1 as of Sep 26th)
             if (endIndex >= numberOfPages) {
-                endIndex = numberOfPages - 1;
+                endIndex = numberOfPages;
             }
 
             requestBatchList.add(facebookPageRequestBatch(
@@ -320,7 +316,6 @@ public class EventListFragment extends Fragment {
         for (GraphRequestBatch requestBatch : requestBatchList) {
             requestBatch.executeAsync();
         }
-
     }
 
     public void addToList(List<Event> ITEMS) {
@@ -361,5 +356,4 @@ public class EventListFragment extends Fragment {
         );
         return request;
     }
-
 }

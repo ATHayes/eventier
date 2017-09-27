@@ -22,7 +22,6 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_detail);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle((""));
@@ -32,7 +31,6 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
         setTitle("");
 
         // savedInstanceState is non-null when there is fragment state
@@ -83,9 +81,7 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
         return super.onOptionsItemSelected(item);
     }
 
-    public void setPicture() {
-
-    }
+    public void setPicture() {}
 
     @Override
     public void onCoverRetrieved(String uri) {
@@ -93,6 +89,4 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
         Picasso.with(this).load(uri).into(imageView);
 
     }
-
-
 }

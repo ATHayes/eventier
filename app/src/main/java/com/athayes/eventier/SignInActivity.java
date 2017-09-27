@@ -60,13 +60,10 @@ public class SignInActivity extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // User is signed in
-                    //Log.d("tag", "onAuthStateChanged:signed_in:" + user.getUid());
                     startListActivity();
                 }
-                    // User is signed out
-                    //Log.d(TAG, "onAuthStateChanged:signed_out");
-
-                // ...
+                // User is signed out
+                //Log.d(TAG, "onAuthStateChanged:signed_out");
             }
         };
 
@@ -80,7 +77,6 @@ public class SignInActivity extends AppCompatActivity {
             public void onSuccess(LoginResult loginResult) {
                 System.out.println("callback success");
                 handleFacebookAccessToken(loginResult.getAccessToken());
-
             }
 
             @Override
@@ -118,17 +114,14 @@ public class SignInActivity extends AppCompatActivity {
                             Toast.makeText(SignInActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
-                        // ...
                     }
                 });
     }
-
 
     public void startListActivity(){
         Intent intent = new Intent(this, EventListActivity.class);
         startActivity(intent);
     }
-
 
     // Register the listener for Firebase authentication state
     @Override

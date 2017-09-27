@@ -67,8 +67,6 @@ public class EventDetailFragment extends Fragment {
             //System.out.println("ARG_ITEM_ID=" + eventID);
             Activity activity = this.getActivity();
         }
-
-
     }
 
     @Override
@@ -93,7 +91,6 @@ public class EventDetailFragment extends Fragment {
                 }
             }
         });
-
 
         Button btnSaveToCalendar = (Button) rootView.findViewById(R.id.save_button);
         btnSaveToCalendar.setOnClickListener(new View.OnClickListener() {
@@ -130,7 +127,6 @@ public class EventDetailFragment extends Fragment {
                         .putExtra(CalendarContract.Events.HAS_ALARM, 1)
                         .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY);
                 startActivity(intent2);
-
             }
         });
 
@@ -217,9 +213,7 @@ public class EventDetailFragment extends Fragment {
         rootView.findViewById(R.id.share_button).setVisibility(View.VISIBLE);
         rootView.findViewById(R.id.save_button).setVisibility(View.VISIBLE);
     }
-
     OnCoverRetrievedListener mCallback;
-
 
     // Container Activity must implement this interface
     public interface OnCoverRetrievedListener {
@@ -230,7 +224,6 @@ public class EventDetailFragment extends Fragment {
     public interface OnEventSelectedListener {
         //
     }
-
 
     @Override
     public void onAttach(Context context) {
@@ -249,5 +242,4 @@ public class EventDetailFragment extends Fragment {
                     + " must implement OnCoverRetrievedListener");
         }
     }
-
 }
