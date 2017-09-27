@@ -273,9 +273,9 @@ public class EventListFragment extends Fragment {
             int startIndex = (i * pagesPerBatch);
             int endIndex = 49 + (i * pagesPerBatch);
 
-            // Avoid overflow error
+            // Avoid overflow error (Removed the -1 as of Sep 26th)
             if (endIndex >= numberOfPages) {
-                endIndex = numberOfPages - 1;
+                endIndex = numberOfPages;
             }
 
             requestBatchList.add(facebookPageRequestBatch(
