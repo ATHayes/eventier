@@ -24,7 +24,6 @@ import com.google.android.gms.ads.MobileAds;
 public class AdFragment extends Fragment {
     private AdView mAdView;
     private OnFragmentInteractionListener mListener;
-
     public AdFragment() {
         // Required empty public constructor
     }

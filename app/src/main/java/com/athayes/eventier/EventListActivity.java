@@ -23,7 +23,6 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.athayes.eventier.fragments.AdFragment;
 import com.athayes.eventier.fragments.EventDetailFragment;
 import com.athayes.eventier.fragments.EventListFragment;
 import com.athayes.eventier.models.Event;
@@ -49,14 +48,10 @@ import java.util.List;
 public class EventListActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         GoogleApiClient.OnConnectionFailedListener,
-        AdFragment.OnFragmentInteractionListener,
         EventDetailFragment.OnCoverRetrievedListener,
         EventListFragment.OnFragmentInteractionListener {
 
-    /**
-     * Whether or not the activity is in two-pane mode, i.e. running on a tablet
-     * device.
-     */
+    // Whether or not the activity is in two-pane mode, i.e. running on a tablet device.
     private boolean mTwoPane;
 
     // Firebase instance variables
@@ -115,17 +110,17 @@ public class EventListActivity extends AppCompatActivity
         TextView userName = (TextView) headerView.findViewById(R.id.userName);
 
         // Check if user is signed in
-//        if (mFirebaseUser == null) {
-//            startActivity(new Intent(this, SignInActivity.class));
-//            finish();
-//            return;
-//        } else {
-//            mUsername = mFirebaseUser.getDisplayName();
-//            if (mFirebaseUser.getPhotoUrl() != null) {
-//                mPhotoUrl = mFirebaseUser.getPhotoUrl().toString();
-//            }
-//            userName.setText(mUsername);
-//        }
+        if (mFirebaseUser == null) {
+            startActivity(new Intent(this, SignInActivity.class));
+            finish();
+            return;
+        } else {
+            mUsername = mFirebaseUser.getDisplayName();
+            if (mFirebaseUser.getPhotoUrl() != null) {
+                mPhotoUrl = mFirebaseUser.getPhotoUrl().toString();
+            }
+            userName.setText(mUsername);
+        }
 
         if (findViewById(R.id.event_detail_container) != null) {
             // The detail container view will be present only in the
@@ -164,13 +159,10 @@ public class EventListActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.search_button_menu) {
-
             final Calendar selectCalendar = Calendar.getInstance();
             final Calendar todayCalendar = Calendar.getInstance();
-
             // Date picker and Recycler View
             final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
                 @Override
@@ -179,7 +171,6 @@ public class EventListActivity extends AppCompatActivity
                     selectCalendar.set(Calendar.YEAR, year);
                     selectCalendar.set(Calendar.MONTH, monthOfYear);
                     selectCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
                     if (mTwoPane) {
                         // If a detail fragment is present
                         if (getSupportFragmentManager().findFragmentById(R.id.event_detail_container) != null) {
@@ -188,7 +179,6 @@ public class EventListActivity extends AppCompatActivity
                                     remove(getSupportFragmentManager().findFragmentById(R.id.event_detail_container)).commit();
                         }
                     }
-
                     EventListFragment eventListFragment = (EventListFragment) getSupportFragmentManager().findFragmentById(R.id.eventListFragment);
                     if (todayCalendar.get(Calendar.DATE) == selectCalendar.get(Calendar.DATE)) {
                         getSupportActionBar().setSubtitle("Today's Events");
@@ -200,13 +190,11 @@ public class EventListActivity extends AppCompatActivity
                     }
                 }
             };
-
             new DatePickerDialog(EventListActivity.this, date, selectCalendar
                     .get(Calendar.YEAR), selectCalendar.get(Calendar.MONTH),
                     selectCalendar.get(Calendar.DAY_OF_MONTH)).show();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -216,7 +204,6 @@ public class EventListActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
         if (id == R.id.nav_date) {
             final Calendar todayCalendar = Calendar.getInstance();
             //Todo fix
@@ -229,13 +216,11 @@ public class EventListActivity extends AppCompatActivity
             String shareSub = getResources().getString(R.string.share_message);
             shareIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
             shareIntent.putExtra(Intent.EXTRA_SUBJECT, shareSub);
-
             try {
                 startActivity(Intent.createChooser(shareIntent, "Share Using"));
             } catch (android.content.ActivityNotFoundException ex) {
                 Toast.makeText(EventListActivity.this, "Error Sharing Content", Toast.LENGTH_SHORT).show();
             }
-
         } else if (id == R.id.nav_sign_out) {
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                 @Override
@@ -268,23 +253,20 @@ public class EventListActivity extends AppCompatActivity
             Intent intent = new Intent(this, FacebookPageListActivity.class);
             startActivity(intent);
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-
     @Override
     public void onFragmentInteraction(Uri uri) {
-        //required for ad fragement
+        //required forfragements
     }
 
     @Override
     public void onCoverRetrieved(String uri) {
         // Required - do nothing here
     }
-
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {

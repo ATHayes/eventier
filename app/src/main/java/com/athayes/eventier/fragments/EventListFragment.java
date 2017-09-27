@@ -52,14 +52,11 @@ public class EventListFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
     private OnFragmentInteractionListener mListener;
     private Boolean mTwoPane = false;
-
     private View recyclerView;
     private View emptyView;
     private ProgressBar progressBar;
-
 
     //Logging
     private static final String TAG = "EventListFragment";
@@ -248,7 +245,6 @@ public class EventListFragment extends Fragment {
         recyclerView.swapAdapter(new EventListFragment.SimpleItemRecyclerViewAdapter(ITEMS), false);
     }
 
-
     public void getEventsFromFacebook(Calendar dateCalendar) {
         getEventsFromFacebook(dateCalendar, dateCalendar);
     }
@@ -360,5 +356,4 @@ public class EventListFragment extends Fragment {
         );
         return request;
     }
-
 }

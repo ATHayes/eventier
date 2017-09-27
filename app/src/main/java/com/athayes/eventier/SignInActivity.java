@@ -119,17 +119,14 @@ public class SignInActivity extends AppCompatActivity {
                             Toast.makeText(SignInActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
-                        // ...
                     }
                 });
     }
-
 
     public void startListActivity(){
         Intent intent = new Intent(this, EventListActivity.class);
         startActivity(intent);
     }
-
 
     // Register the listener for Firebase authentication state
     @Override

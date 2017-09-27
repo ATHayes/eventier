@@ -127,9 +127,9 @@ public class GlobalVariables extends Application {
 //        facebookPages.add(new FacebookPage("Medical Society", "ucc.medsoc"));
 //        facebookPages.add(new FacebookPage("Medieval And Renaissance Society", "UCCMedRen"));
 //        facebookPages.add(new FacebookPage("Musical Society", "uccmusicalsociety"));
-        //facebookPages.add(new FacebookPage("Mythology Society", "UccMythology"));
+        facebookPages.add(new FacebookPage("Mythology Society", "UccMythology"));
         facebookPages.add(new FacebookPage("Networking Gaming and Technology Society", "UCCNetsoc"));
-        facebookPages.add(new FacebookPage("Nursing And Midwifery Society", "UCCnursmidsoc"));
+        //facebookPages.add(new FacebookPage("Nursing And Midwifery Society", "UCCnursmidsoc"));
 //        facebookPages.add(new FacebookPage("Orchestra Society", "OrchestraUCC"));
 //        facebookPages.add(new FacebookPage("Pharmacy Society", "pharmsoc.ucc"));
 //        facebookPages.add(new FacebookPage("Philosophical Society", "uccphilosoph"));
