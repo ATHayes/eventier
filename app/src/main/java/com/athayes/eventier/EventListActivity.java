@@ -1,6 +1,7 @@
 package com.athayes.eventier;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -88,9 +89,10 @@ public class EventListActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
-        // Action bar title
-        setTitle("Home");
-
+        //TODO - set to the value in the sharedPreference on onResume or something...
+        if (getTitle() == "") {
+            setTitle("Home");
+        }
         // Drawer (side menu)
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -278,6 +280,14 @@ public class EventListActivity extends AppCompatActivity
         // be available.
         Log.d(TAG, "onConnectionFailed:" + connectionResult);
         Toast.makeText(this, "Google Play Services error.", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        SharedPreferences sharedPref = getBaseContext().getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        setTitle(sharedPref.getString(getString(R.string.preference_file_key), ""));
     }
 
 

@@ -9,6 +9,8 @@ import com.facebook.appevents.AppEventsLogger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 
 // Facebook API
@@ -28,6 +30,9 @@ public class GlobalVariables extends Application {
     }
 
     private ArrayList<FacebookPage> facebookPages;
+    ArrayList<FacebookPage> uccPages;
+    ArrayList<FacebookPage> torontoPages;
+
     String myFormat = "dd/MM/yy"; // from strings
 
     private GlobalVariables() {
@@ -52,145 +57,153 @@ public class GlobalVariables extends Application {
         calDayAfterTomorrow.add(Calendar.DATE, 1);
         dayAfterTomorrow = calDayAfterTomorrow.getTime();
 
+        uccPages = new ArrayList<>();
         facebookPages = new ArrayList<>();
+        torontoPages = new ArrayList<>();
+
 
         // UCC Societies
-        facebookPages.add(new FacebookPage("Accounting And Finance Society", "uccaccfin"));
-        facebookPages.add(new FacebookPage("Africa Society", "uccafrica"));
-        facebookPages.add(new FacebookPage("Amnesty Society", "UCCAmnesty"));
-        facebookPages.add(new FacebookPage("An Chuallact", "anchuallachtucc"));
-        facebookPages.add(new FacebookPage("Animal Welfare Society", "AniWelUCC"));
-        facebookPages.add(new FacebookPage("Archaeological Society", "UCCArchSoc"));
-        facebookPages.add(new FacebookPage("Art Society", "uccart.soc"));
-        facebookPages.add(new FacebookPage("Barnardos Society", "UCCBarnardos"));
-        facebookPages.add(new FacebookPage("Biology Society", "uccbiosoc"));
-        facebookPages.add(new FacebookPage("BIS Society", "BisSociety"));
-        facebookPages.add(new FacebookPage("Cancer Society", "ucc.cancersociety"));
-        facebookPages.add(new FacebookPage("CCAE Architecture Society", "ccaearchitecturesociety"));
-        facebookPages.add(new FacebookPage("Chemical Society", "236000773224765"));
-        facebookPages.add(new FacebookPage("Chinese Society", "UccChineseSociety"));
-        facebookPages.add(new FacebookPage("Choral Society", "UCCChoral"));
-        facebookPages.add(new FacebookPage("Christian Union Society", "UCCChristianUnionSociety"));
-        facebookPages.add(new FacebookPage("Clinical Therapies Society", "UccClinicalTherapiesSociety"));
-        facebookPages.add(new FacebookPage("Comedy Society", "ucccomedy"));
-        facebookPages.add(new FacebookPage("Commerce Society", "commsoc.ucc"));
-        facebookPages.add(new FacebookPage("Dentist Society", "dentsocucc"));
-        facebookPages.add(new FacebookPage("Disability Activism & Awareness Society", "uccdaasoc"));
-        facebookPages.add(new FacebookPage("DJ Society", "djsocucc"));
-        facebookPages.add(new FacebookPage("Dramat", "UCCDramat"));
-        facebookPages.add(new FacebookPage("Economics Society", "ucceconomics"));
-        facebookPages.add(new FacebookPage("Engineering Society", "UCCEngSoc"));
-        facebookPages.add(new FacebookPage("Engineers Without Borders Society", "EngineerswithoutbordersUCC"));
-        facebookPages.add(new FacebookPage("English Society", "1528413287397046"));
-        facebookPages.add(new FacebookPage("Entrepreneurial and Social Society", "261747967180908"));
-        facebookPages.add(new FacebookPage("Environment Society", "UCCEnvirosoc"));
-        facebookPages.add(new FacebookPage("Europa Society", "ucceuropa"));
-        facebookPages.add(new FacebookPage("Fashion Society", "155068187434"));
-        facebookPages.add(new FacebookPage("Feminist Society", "UCCFemSoc"));
-        facebookPages.add(new FacebookPage("Gaisce Society", "GaisceUCC"));
-        facebookPages.add(new FacebookPage("Friends Of MSF Society", "uccfomsf"));
-        facebookPages.add(new FacebookPage("Fine Gael Society", "uccyoungfinegael"));
-        facebookPages.add(new FacebookPage("FLAC Society", "293165574222535"));
-        facebookPages.add(new FacebookPage("Film Society", "uccfilm"));
-        facebookPages.add(new FacebookPage("Fianna Fail Society", "UccFFSoc"));
-        facebookPages.add(new FacebookPage("Foodies", "373486662727603"));
-        facebookPages.add(new FacebookPage("French Society", "uccfrenchsoc"));
-        facebookPages.add(new FacebookPage("Genetics Society", "uccgensoc"));
-        facebookPages.add(new FacebookPage("Geological Society", "UccGeological"));
-        facebookPages.add(new FacebookPage("German Society", "uccgermansociety"));
-        facebookPages.add(new FacebookPage("Government And Politics Society", "216465755054445"));
-        facebookPages.add(new FacebookPage("Greens Society", "ucc.greens"));
-        facebookPages.add(new FacebookPage("Harry Potter Society", "HPSocietyUCC"));
-        facebookPages.add(new FacebookPage("Health Society", "466162393565838"));
-        facebookPages.add(new FacebookPage("Hispanic Society", "142908783322"));
-        facebookPages.add(new FacebookPage("Historical Society", "276841219006188"));
-        facebookPages.add(new FacebookPage("Hope Foundation Society", "UccHopeFoundation"));
-        facebookPages.add(new FacebookPage("Horse Racing Society", "281964401864450"));
-        facebookPages.add(new FacebookPage("Hot Beverages Society", "UCCHotBevs"));
-        facebookPages.add(new FacebookPage("Indian Society", "ucc.indians"));
-        facebookPages.add(new FacebookPage("International Development Society", "UCCIntDevSoc"));
-        facebookPages.add(new FacebookPage("International Relations Society", "uccirsoc"));
-        facebookPages.add(new FacebookPage("International Students Society", "ucc.internationals"));
-        facebookPages.add(new FacebookPage("Islamic Society", "UCCIslamicSociety"));
-        facebookPages.add(new FacebookPage("Italian Society", "UCCItalianSociety"));
-        facebookPages.add(new FacebookPage("Japanese Society", "uccjapansoc"));
-        facebookPages.add(new FacebookPage("Journalism Society", "UCCJournalismSociety"));
-        facebookPages.add(new FacebookPage("Knitting Society", "UCCKnitSoc"));
-        facebookPages.add(new FacebookPage("Korean Society", "ucckoreansociety"));
-        facebookPages.add(new FacebookPage("Labour Society", "ucclabour"));
-        facebookPages.add(new FacebookPage("Law Society", "ucclawsociety"));
-        facebookPages.add(new FacebookPage("LGBT Society", "ucclgbt"));
-        facebookPages.add(new FacebookPage("Macra Na Feirme", "uccmacra"));
-        facebookPages.add(new FacebookPage("Management And Marketing Society", "MnMSocUCC"));
-        facebookPages.add(new FacebookPage("Math Society", "uccmathsoc"));
-        facebookPages.add(new FacebookPage("Mature Students Society", "UCCMSS"));
-        facebookPages.add(new FacebookPage("Medical Society", "ucc.medsoc"));
-        facebookPages.add(new FacebookPage("Medieval And Renaissance Society", "UCCMedRen"));
-        facebookPages.add(new FacebookPage("Musical Society", "uccmusicalsociety"));
-        facebookPages.add(new FacebookPage("Mythology Society", "UccMythology"));
-        facebookPages.add(new FacebookPage("Networking Gaming and Technology Society", "UCCNetsoc"));
-        facebookPages.add(new FacebookPage("Nursing And Midwifery Society", "UCCnursmidsoc"));
-        facebookPages.add(new FacebookPage("Orchestra Society", "OrchestraUCC"));
-        facebookPages.add(new FacebookPage("Pharmacy Society", "pharmsoc.ucc"));
-        facebookPages.add(new FacebookPage("Philosophical Society", "uccphilosoph"));
-        facebookPages.add(new FacebookPage("Photography Society", "uccphoto"));
-        facebookPages.add(new FacebookPage("Physics And Astronomy Society", "uccphysoc"));
-        facebookPages.add(new FacebookPage("Planning Society", "uccplanning"));
-        facebookPages.add(new FacebookPage("Poker Society", "uccpokersociety"));
-        facebookPages.add(new FacebookPage("Politics Society", "PolSocUCC"));
-        facebookPages.add(new FacebookPage("Psychology Society", "110003839018417"));
-        facebookPages.add(new FacebookPage("SAMH Society", "uccsamhsoc"));
-        facebookPages.add(new FacebookPage("Science Society", "uccsciencesociety"));
-        facebookPages.add(new FacebookPage("Scifi Society", "uccscifi"));
-        facebookPages.add(new FacebookPage("Simon Society", "Uccsimonsociety"));
-        facebookPages.add(new FacebookPage("Sinn Fein Society", "uccsinnfein"));
-        facebookPages.add(new FacebookPage("Slainte Society", "184958275298"));
-        facebookPages.add(new FacebookPage("Social Science Society", "uccsocsci"));
-        facebookPages.add(new FacebookPage("Socialist Society", "uccsocialistyouth"));
-        facebookPages.add(new FacebookPage("Sophia Society", "uccsophia"));
-        facebookPages.add(new FacebookPage("South East Asia Society", "526366970861527"));
-        facebookPages.add(new FacebookPage("SSDP Society", "UCCSSDP"));
-        facebookPages.add(new FacebookPage("St. Vincent De Paul Society", "SVPUCC"));
-        facebookPages.add(new FacebookPage("Suas Society", "uccsuas"));
-        facebookPages.add(new FacebookPage("Surgeon Noonan Society", "1650501751859811"));
-        facebookPages.add(new FacebookPage("Surgeon Society", "surgsoc"));
-        facebookPages.add(new FacebookPage("Traditional Music Society", "ucctradsoc"));
-        facebookPages.add(new FacebookPage("WARPS", "ucc.warps"));
+        uccPages.add(new FacebookPage("Accounting And Finance Society", "uccaccfin"));
+        uccPages.add(new FacebookPage("Africa Society", "uccafrica"));
+        uccPages.add(new FacebookPage("Amnesty Society", "UCCAmnesty"));
+        uccPages.add(new FacebookPage("An Chuallact", "anchuallachtucc"));
+        uccPages.add(new FacebookPage("Animal Welfare Society", "AniWelUCC"));
+        uccPages.add(new FacebookPage("Archaeological Society", "UCCArchSoc"));
+        uccPages.add(new FacebookPage("Art Society", "uccart.soc"));
+        uccPages.add(new FacebookPage("Barnardos Society", "UCCBarnardos"));
+        uccPages.add(new FacebookPage("Biology Society", "uccbiosoc"));
+        uccPages.add(new FacebookPage("BIS Society", "BisSociety"));
+        uccPages.add(new FacebookPage("Cancer Society", "ucc.cancersociety"));
+        uccPages.add(new FacebookPage("CCAE Architecture Society", "ccaearchitecturesociety"));
+        uccPages.add(new FacebookPage("Chemical Society", "236000773224765"));
+        uccPages.add(new FacebookPage("Chinese Society", "UccChineseSociety"));
+        uccPages.add(new FacebookPage("Choral Society", "UCCChoral"));
+        uccPages.add(new FacebookPage("Christian Union Society", "UCCChristianUnionSociety"));
+        uccPages.add(new FacebookPage("Clinical Therapies Society", "UccClinicalTherapiesSociety"));
+        uccPages.add(new FacebookPage("Comedy Society", "ucccomedy"));
+        uccPages.add(new FacebookPage("Commerce Society", "commsoc.ucc"));
+        uccPages.add(new FacebookPage("Dentist Society", "dentsocucc"));
+        uccPages.add(new FacebookPage("Disability Activism & Awareness Society", "uccdaasoc"));
+        uccPages.add(new FacebookPage("DJ Society", "djsocucc"));
+        uccPages.add(new FacebookPage("Dramat", "UCCDramat"));
+        uccPages.add(new FacebookPage("Economics Society", "ucceconomics"));
+        uccPages.add(new FacebookPage("Engineering Society", "UCCEngSoc"));
+        uccPages.add(new FacebookPage("Engineers Without Borders Society", "EngineerswithoutbordersUCC"));
+        uccPages.add(new FacebookPage("English Society", "1528413287397046"));
+        uccPages.add(new FacebookPage("Entrepreneurial and Social Society", "261747967180908"));
+        uccPages.add(new FacebookPage("Environment Society", "UCCEnvirosoc"));
+        uccPages.add(new FacebookPage("Europa Society", "ucceuropa"));
+        uccPages.add(new FacebookPage("Fashion Society", "155068187434"));
+        uccPages.add(new FacebookPage("Feminist Society", "UCCFemSoc"));
+        uccPages.add(new FacebookPage("Gaisce Society", "GaisceUCC"));
+        uccPages.add(new FacebookPage("Friends Of MSF Society", "uccfomsf"));
+        uccPages.add(new FacebookPage("Fine Gael Society", "uccyoungfinegael"));
+        uccPages.add(new FacebookPage("FLAC Society", "293165574222535"));
+        uccPages.add(new FacebookPage("Film Society", "uccfilm"));
+        uccPages.add(new FacebookPage("Fianna Fail Society", "UccFFSoc"));
+        uccPages.add(new FacebookPage("Foodies", "373486662727603"));
+        uccPages.add(new FacebookPage("French Society", "uccfrenchsoc"));
+        uccPages.add(new FacebookPage("Genetics Society", "uccgensoc"));
+        uccPages.add(new FacebookPage("Geological Society", "UccGeological"));
+        uccPages.add(new FacebookPage("German Society", "uccgermansociety"));
+        uccPages.add(new FacebookPage("Government And Politics Society", "216465755054445"));
+        uccPages.add(new FacebookPage("Greens Society", "ucc.greens"));
+        uccPages.add(new FacebookPage("Harry Potter Society", "HPSocietyUCC"));
+        uccPages.add(new FacebookPage("Health Society", "466162393565838"));
+        uccPages.add(new FacebookPage("Hispanic Society", "142908783322"));
+        uccPages.add(new FacebookPage("Historical Society", "276841219006188"));
+        uccPages.add(new FacebookPage("Hope Foundation Society", "UccHopeFoundation"));
+        uccPages.add(new FacebookPage("Horse Racing Society", "281964401864450"));
+        uccPages.add(new FacebookPage("Hot Beverages Society", "UCCHotBevs"));
+        uccPages.add(new FacebookPage("Indian Society", "ucc.indians"));
+        uccPages.add(new FacebookPage("International Development Society", "UCCIntDevSoc"));
+        uccPages.add(new FacebookPage("International Relations Society", "uccirsoc"));
+        uccPages.add(new FacebookPage("International Students Society", "ucc.internationals"));
+        uccPages.add(new FacebookPage("Islamic Society", "UCCIslamicSociety"));
+        uccPages.add(new FacebookPage("Italian Society", "UCCItalianSociety"));
+        uccPages.add(new FacebookPage("Japanese Society", "uccjapansoc"));
+        uccPages.add(new FacebookPage("Journalism Society", "UCCJournalismSociety"));
+        uccPages.add(new FacebookPage("Knitting Society", "UCCKnitSoc"));
+        uccPages.add(new FacebookPage("Korean Society", "ucckoreansociety"));
+        uccPages.add(new FacebookPage("Labour Society", "ucclabour"));
+        uccPages.add(new FacebookPage("Law Society", "ucclawsociety"));
+        uccPages.add(new FacebookPage("LGBT Society", "ucclgbt"));
+        uccPages.add(new FacebookPage("Macra Na Feirme", "uccmacra"));
+        uccPages.add(new FacebookPage("Management And Marketing Society", "MnMSocUCC"));
+        uccPages.add(new FacebookPage("Math Society", "uccmathsoc"));
+        uccPages.add(new FacebookPage("Mature Students Society", "UCCMSS"));
+        uccPages.add(new FacebookPage("Medical Society", "ucc.medsoc"));
+        uccPages.add(new FacebookPage("Medieval And Renaissance Society", "UCCMedRen"));
+        uccPages.add(new FacebookPage("Musical Society", "uccmusicalsociety"));
+        uccPages.add(new FacebookPage("Mythology Society", "UccMythology"));
+        uccPages.add(new FacebookPage("Networking Gaming and Technology Society", "UCCNetsoc"));
+        uccPages.add(new FacebookPage("Nursing And Midwifery Society", "UCCnursmidsoc"));
+        uccPages.add(new FacebookPage("Orchestra Society", "OrchestraUCC"));
+        uccPages.add(new FacebookPage("Pharmacy Society", "pharmsoc.ucc"));
+        uccPages.add(new FacebookPage("Philosophical Society", "uccphilosoph"));
+        uccPages.add(new FacebookPage("Photography Society", "uccphoto"));
+        uccPages.add(new FacebookPage("Physics And Astronomy Society", "uccphysoc"));
+        uccPages.add(new FacebookPage("Planning Society", "uccplanning"));
+        uccPages.add(new FacebookPage("Poker Society", "uccpokersociety"));
+        uccPages.add(new FacebookPage("Politics Society", "PolSocUCC"));
+        uccPages.add(new FacebookPage("Psychology Society", "110003839018417"));
+        uccPages.add(new FacebookPage("SAMH Society", "uccsamhsoc"));
+        uccPages.add(new FacebookPage("Science Society", "uccsciencesociety"));
+        uccPages.add(new FacebookPage("Scifi Society", "uccscifi"));
+        uccPages.add(new FacebookPage("Simon Society", "Uccsimonsociety"));
+        uccPages.add(new FacebookPage("Sinn Fein Society", "uccsinnfein"));
+        uccPages.add(new FacebookPage("Slainte Society", "184958275298"));
+        uccPages.add(new FacebookPage("Social Science Society", "uccsocsci"));
+        uccPages.add(new FacebookPage("Socialist Society", "uccsocialistyouth"));
+        uccPages.add(new FacebookPage("Sophia Society", "uccsophia"));
+        uccPages.add(new FacebookPage("South East Asia Society", "526366970861527"));
+        uccPages.add(new FacebookPage("SSDP Society", "UCCSSDP"));
+        uccPages.add(new FacebookPage("St. Vincent De Paul Society", "SVPUCC"));
+        uccPages.add(new FacebookPage("Suas Society", "uccsuas"));
+        uccPages.add(new FacebookPage("Surgeon Noonan Society", "1650501751859811"));
+        uccPages.add(new FacebookPage("Surgeon Society", "surgsoc"));
+        uccPages.add(new FacebookPage("Traditional Music Society", "ucctradsoc"));
+        uccPages.add(new FacebookPage("WARPS", "ucc.warps"));
 
         // Pubs / Clubs
-        facebookPages.add(new FacebookPage("Franciscan Well Brew Pub", "121375577958143"));
-        facebookPages.add(new FacebookPage("Electric", "ElectricCork"));
-        facebookPages.add(new FacebookPage("Sober Lane", "91646667265"));
-        facebookPages.add(new FacebookPage("Crane Lane", "cranelane"));
-        facebookPages.add(new FacebookPage("The Bodega", "BodegaCork"));
-        facebookPages.add(new FacebookPage("The Pav", "ThePavCork"));
-        facebookPages.add(new FacebookPage("The Secret Garden, Cork", "TheSecretGardenCork"));
+        uccPages.add(new FacebookPage("Franciscan Well Brew Pub", "121375577958143"));
+        uccPages.add(new FacebookPage("Electric", "ElectricCork"));
+        uccPages.add(new FacebookPage("Sober Lane", "91646667265"));
+        uccPages.add(new FacebookPage("Crane Lane", "cranelane"));
+        uccPages.add(new FacebookPage("The Bodega", "BodegaCork"));
+        uccPages.add(new FacebookPage("The Pav", "ThePavCork"));
+        uccPages.add(new FacebookPage("The Secret Garden, Cork", "TheSecretGardenCork"));
 
         // Cinema
-        facebookPages.add(new FacebookPage("Triskel Arts Centre", "148849978463380"));
-        facebookPages.add(new FacebookPage("Gate Cinema Cork", "GateCinemasCork"));
+        uccPages.add(new FacebookPage("Triskel Arts Centre", "148849978463380"));
+        uccPages.add(new FacebookPage("Gate Cinema Cork", "GateCinemasCork"));
 
         // Art
-        facebookPages.add(new FacebookPage("Crawford Art Gallery", "192247684119097"));
-        facebookPages.add(new FacebookPage("The Glucksman", "51529118892"));
+        uccPages.add(new FacebookPage("Crawford Art Gallery", "192247684119097"));
+        uccPages.add(new FacebookPage("The Glucksman", "51529118892"));
 
         // Gaming
-        facebookPages.add(new FacebookPage("Cork Fighting Game Community", "243557759182283"));
+        uccPages.add(new FacebookPage("Cork Fighting Game Community", "243557759182283"));
 
         // Academic
-        facebookPages.add(new FacebookPage("UCC College of Business and Law", "115489451872851"));
+        uccPages.add(new FacebookPage("UCC College of Business and Law", "115489451872851"));
 
         // Music
-        facebookPages.add(new FacebookPage("Live at St. Luke's", "538711329601290"));
+        uccPages.add(new FacebookPage("Live at St. Luke's", "538711329601290"));
 
         // Theatre
-        facebookPages.add(new FacebookPage("Everyman Theatre", "80651236688"));
-        facebookPages.add(new FacebookPage("Granary Theatre", "175256179251424"));
-        facebookPages.add(new FacebookPage("Cork Opera House", "357268343449"));
+        uccPages.add(new FacebookPage("Everyman Theatre", "80651236688"));
+        uccPages.add(new FacebookPage("Granary Theatre", "175256179251424"));
+        uccPages.add(new FacebookPage("Cork Opera House", "357268343449"));
 
         // Literature
-        facebookPages.add(new FacebookPage("Waterstone's Bookstore, Cork", "corkwaterstones"));
+        uccPages.add(new FacebookPage("Waterstone's Bookstore, Cork", "corkwaterstones"));
+        facebookPages.addAll(uccPages);
 
+
+        // -- Toronto Pages --
+        torontoPages.add(new FacebookPage("Mythology Society", "UccMythology"));
+        torontoPages.add(new FacebookPage("Networking Gaming and Technology Society", "UCCNetsoc"));
     }
 
     private static GlobalVariables instance;
@@ -214,8 +227,13 @@ public class GlobalVariables extends Application {
 
     //TODO I think this needs to be adapted to singelton
     public void setPageCollection(String pageCollection) {
-        facebookPages = new ArrayList<>();
-        facebookPages.add(new FacebookPage("Mythology Society", "UccMythology"));
-        facebookPages.add(new FacebookPage("Networking Gaming and Technology Society", "UCCNetsoc"));
+        if (pageCollection == "Toronto"){
+            facebookPages.clear();
+            facebookPages.addAll(torontoPages);
+        }else{
+            facebookPages.clear();
+           facebookPages.addAll(uccPages);
+
+        }
     }
 }

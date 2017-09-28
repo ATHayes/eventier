@@ -48,9 +48,10 @@ public class SelectLocationActivity extends AppCompatActivity {
                         getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
                 SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putString(getString(R.string.preference_file_key), "Toronto");
+                editor.putString(getString(R.string.preference_file_key), locationSpinner.getSelectedItem().toString());
                 editor.commit();
                 System.out.println("-------------" + sharedPref.getString(getString(R.string.preference_file_key), ""));
+                GlobalVariables.getInstance().setPageCollection(locationSpinner.getSelectedItem().toString());
 
                 Intent intent = new Intent(getBaseContext(), EventListActivity.class);
                 startActivity(intent);
