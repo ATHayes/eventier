@@ -64,7 +64,6 @@ public class FacebookPageListAdapter extends RecyclerView.Adapter<FacebookPageLi
         public final View mView;
         public final TextView mNameView;
         public FacebookPage mItem;
-
         public ViewHolder(View view) {
             super(view);
             mView = view;
@@ -95,10 +94,8 @@ public class FacebookPageListAdapter extends RecyclerView.Adapter<FacebookPageLi
                 } else {
                     filteredResults = getFilteredResults(constraint.toString().toLowerCase());
                 }
-
                 FilterResults results = new FilterResults();
                 results.values = filteredResults;
-
                 return results;
             }
         };
@@ -106,7 +103,6 @@ public class FacebookPageListAdapter extends RecyclerView.Adapter<FacebookPageLi
 
     protected List<FacebookPage> getFilteredResults(String constraint) {
         List<FacebookPage> results = new ArrayList<>();
-
         for (FacebookPage page : originalList) {
             if (page.getName().toLowerCase().contains(constraint)) {
                 results.add(page);

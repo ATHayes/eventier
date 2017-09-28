@@ -194,7 +194,6 @@ public class GlobalVariables extends Application {
     }
 
     private static GlobalVariables instance;
-
     public static GlobalVariables getInstance() {
         if (instance == null) instance = new GlobalVariables();
         return instance;
@@ -211,5 +210,12 @@ public class GlobalVariables extends Application {
             }
         }
         return null;
+    }
+
+    //TODO I think this needs to be adapted to singelton
+    public void setPageCollection(String pageCollection) {
+        facebookPages = new ArrayList<>();
+        facebookPages.add(new FacebookPage("Mythology Society", "UccMythology"));
+        facebookPages.add(new FacebookPage("Networking Gaming and Technology Society", "UCCNetsoc"));
     }
 }

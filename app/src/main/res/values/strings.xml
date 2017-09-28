@@ -23,7 +23,7 @@
         completions."
     </string>
 
-<string name="play_store_url">https://play.google.com/store/apps/details?id=com.athayes.eventier
+    <string name="play_store_url">https://play.google.com/store/apps/details?id=com.athayes.eventier
     </string>
     <string name="share_message">See what\'s happening in Cork with Eventier!
     </string>
@@ -37,7 +37,9 @@
         ca-app-pub-7581972583339154/9262466228</string>
     <string name="title_facebookpage_list">FacebookPages</string>
     <string name="title_facebookpage_detail">FacebookPage Detail</string>
+    <string name="title_activity_select_location">SelectLocation</string>
 
 
-
+    <!--Preference key file-->
+    <string name="preference_file_key">com.athayes.eventier.location</string>
 </resources>

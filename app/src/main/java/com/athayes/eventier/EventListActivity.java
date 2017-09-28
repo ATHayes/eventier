@@ -252,7 +252,11 @@ public class EventListActivity extends AppCompatActivity
         } else if (id == R.id.nav_search_host) {
             Intent intent = new Intent(this, FacebookPageListActivity.class);
             startActivity(intent);
+        } else if (id == R.id.nav_set_location) {
+            Intent intent = new Intent(this, SelectLocationActivity.class);
+            startActivity(intent);
         }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

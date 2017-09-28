@@ -2,6 +2,7 @@ package com.athayes.eventier.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -250,14 +251,25 @@ public class EventListFragment extends Fragment {
     }
 
     public void getEventsFromFacebook(Calendar sinceCalendar, Calendar untilCalendar) {
-
         recyclerView.setVisibility(View.GONE);
         emptyView.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
-
         allEvents.clear();
 
-        ArrayList<FacebookPage> facebookPages = GlobalVariables.getInstance().getFacebookPages();
+        // When selecting from global variables, check shared preferences
+        // if shared preferences is null, use ucc
+        // if "Toronto", use new fb pages
+        SharedPreferences sharedPref = this.getActivity().getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
+        String location = getResources().getString(R.string.preference_file_key);
+
+        if (location.toUpperCase() == "Toronto".toUpperCase()) {
+            GlobalVariables.getInstance().setPageCollection("Toronto");
+            System.out.println("Toronto!!!!!!!!!");
+        }
+        ArrayList<FacebookPage> facebookPages  = GlobalVariables.getInstance().getFacebookPages();
+
         ArrayList<GraphRequestBatch> requestBatchList = new ArrayList<>();
 
         int numberOfPages = facebookPages.size();
