@@ -226,14 +226,23 @@ public class GlobalVariables extends Application {
     }
 
     //TODO I think this needs to be adapted to singelton
-    public void setPageCollection(String pageCollection) {
-        if (pageCollection == "Toronto"){
-            facebookPages.clear();
-            facebookPages.addAll(torontoPages);
-        }else{
-            facebookPages.clear();
-           facebookPages.addAll(uccPages);
 
+    //todo Associate each object with a string, and just set the fbpages to that string? There has to be a cleaner way to do this...
+    // key/value pair list and string key
+    public void setPageCollection(String pageCollection) {
+        switch (pageCollection){
+            case "Toronto":
+                facebookPages.clear();
+                facebookPages.addAll(torontoPages);
+                break;
+            case "Cork (UCC)":
+                facebookPages.clear();
+                facebookPages.addAll(uccPages);
+                break;
+            default:
+                facebookPages.clear();
+                facebookPages.addAll(uccPages);
+                break;
         }
     }
 }

@@ -23,14 +23,6 @@ public class SelectLocationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_select_location);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
         this.arraySpinner = new String[] {
                 "Cork (UCC)", "Toronto"
         };
@@ -44,15 +36,14 @@ public class SelectLocationActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                // Save to shared preferences
                 SharedPreferences sharedPref = getBaseContext().getSharedPreferences(
                         getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putString(getString(R.string.preference_file_key), locationSpinner.getSelectedItem().toString());
                 editor.commit();
-                System.out.println("-------------" + sharedPref.getString(getString(R.string.preference_file_key), ""));
+                // Update Global variables and start new activity
                 GlobalVariables.getInstance().setPageCollection(locationSpinner.getSelectedItem().toString());
-
                 Intent intent = new Intent(getBaseContext(), EventListActivity.class);
                 startActivity(intent);
             }
