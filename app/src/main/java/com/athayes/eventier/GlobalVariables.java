@@ -1,6 +1,8 @@
 package com.athayes.eventier;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.athayes.eventier.models.FacebookPage;
 import com.facebook.FacebookSdk;
@@ -198,12 +200,28 @@ public class GlobalVariables extends Application {
 
         // Literature
         uccPages.add(new FacebookPage("Waterstone's Bookstore, Cork", "corkwaterstones"));
-        facebookPages.addAll(uccPages);
+
 
 
         // -- Toronto Pages --
-        torontoPages.add(new FacebookPage("Mythology Society", "UccMythology"));
-        torontoPages.add(new FacebookPage("Networking Gaming and Technology Society", "UCCNetsoc"));
+        torontoPages.add(new FacebookPage("Toronto Archery", "torontoarchery"));
+        torontoPages.add(new FacebookPage("Things to do in Toronto", "659751204108400"));
+
+        // Sport
+        torontoPages.add(new FacebookPage("Toronto Dodgeball", "170383002982639"));
+
+        // Drinking
+        torontoPages.add(new FacebookPage("The Porch Toronto", "ThePorchToronto"));
+        torontoPages.add(new FacebookPage("Toronto Ocktoberfest", "TorontoOktoberfest"));
+
+        // Music
+        torontoPages.add(new FacebookPage("Niteowl Toronto", "nightowltoronto"));
+        torontoPages.add(new FacebookPage("The Hideout Torotno", ""));
+
+        // Film
+        torontoPages.add(new FacebookPage("Toronto Film School", "TorontoFilmSchool"));
+        torontoPages.add(new FacebookPage("The Royal Cinema - Toronto", "TheRoyalCinema"));
+
     }
 
     private static GlobalVariables instance;

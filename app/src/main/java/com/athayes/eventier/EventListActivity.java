@@ -78,7 +78,14 @@ public class EventListActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Update location selection from sharedPreference
+        SharedPreferences sharedPref = getBaseContext().getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        GlobalVariables.getInstance().setPageCollection(sharedPref.getString((getString(R.string.preference_file_key)), ""));
+
         setContentView(R.layout.activity_event_list);
+        //Fragment onCreateView starts now
+
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         // Initialize Firebase Auth
@@ -133,6 +140,9 @@ public class EventListActivity extends AppCompatActivity
         }
 
         getSupportActionBar().setSubtitle("Today's Events");
+
+
+
     }
 
     // Event handler for back button
@@ -285,10 +295,11 @@ public class EventListActivity extends AppCompatActivity
     @Override
     public void onResume(){
         super.onResume();
+        // Update location and title bar from sharedPreference
         SharedPreferences sharedPref = getBaseContext().getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         setTitle(sharedPref.getString(getString(R.string.preference_file_key), ""));
+        GlobalVariables.getInstance().setPageCollection(sharedPref.getString((getString(R.string.preference_file_key)), ""));
     }
-
 
 }

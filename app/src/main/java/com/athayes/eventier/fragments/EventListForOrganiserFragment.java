@@ -2,6 +2,7 @@ package com.athayes.eventier.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -116,6 +117,7 @@ public class EventListForOrganiserFragment extends Fragment {
         final Calendar todayCalendar = Calendar.getInstance();
 
         untilCalendar.add(Calendar.WEEK_OF_YEAR, 3);
+
         getEventsFromFacebook(todayCalendar, untilCalendar);
 
         if (rootView.findViewById(R.id.event_detail_container) != null) {
