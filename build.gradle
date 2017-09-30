@@ -17,7 +17,7 @@ buildscript {
         / https://console.firebase.google.com
         / This modifies the classpath to use the plugin.
         */
-        classpath 'com.google.gms:google-services:3.0.0'
+        classpath 'com.google.gms:google-services:3.1.0'
     }
 }
 

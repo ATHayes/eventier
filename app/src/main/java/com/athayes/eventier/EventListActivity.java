@@ -116,7 +116,6 @@ public class EventListActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View headerView = navigationView.getHeaderView(0);
-        TextView userName = (TextView) headerView.findViewById(R.id.userName);
 
         // Check if user is signed in
         if (mFirebaseUser == null) {
@@ -128,7 +127,6 @@ public class EventListActivity extends AppCompatActivity
             if (mFirebaseUser.getPhotoUrl() != null) {
                 mPhotoUrl = mFirebaseUser.getPhotoUrl().toString();
             }
-            userName.setText(mUsername);
         }
 
         if (findViewById(R.id.event_detail_container) != null) {
