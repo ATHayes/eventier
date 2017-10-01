@@ -14,14 +14,6 @@ public class FacebookPage implements Comparable<FacebookPage> {
         this.photoUrl = photoUrl;
     }
 
-    public String getPhotoUrl() {
-        return photoUrl;
-    }
-
-    public void setPhotoUrl(String photoUrl) {
-        this.photoUrl = photoUrl;
-    }
-
     private String photoUrl;
 
     public FacebookPage(String name, String facebookID) {
@@ -29,23 +21,13 @@ public class FacebookPage implements Comparable<FacebookPage> {
         this.name = name;
     }
 
-    public String getFacebookID() {
-        return facebookID;
-    }
+    public String getFacebookID() { return facebookID; }
+    public String getPhotoUrl() { return photoUrl; }
+    public String getName() { return name; }
 
-    public void setFacebookID(String facebookID) {
-        this.facebookID = facebookID;
-    }
-
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
+    public void setPhotoUrl(String photoUrl) { this.photoUrl = photoUrl; }
+    public void setFacebookID(String facebookID) {this.facebookID = facebookID; }
+    public void setName(String name) { this.name = name; }
 
     @Override
     public int compareTo(FacebookPage o) {

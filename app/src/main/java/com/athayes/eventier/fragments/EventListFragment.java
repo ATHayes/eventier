@@ -15,6 +15,7 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.athayes.eventier.EventDetailActivity;
 import com.athayes.eventier.GlobalVariables;
@@ -23,6 +24,7 @@ import com.athayes.eventier.converters.EventConverter;
 import com.athayes.eventier.models.Event;
 import com.athayes.eventier.models.FacebookPage;
 import com.athayes.eventier.utils.ISO8601;
+import com.athayes.eventier.utils.NetworkTest;
 import com.athayes.eventier.utils.SpacingItemDecoration;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
@@ -144,6 +146,13 @@ public class EventListFragment extends Fragment {
         }
     }
 
+
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        System.out.println("-------Starting----------");
+//    }
+
     @Override
     public void onDetach() {
         super.onDetach();
@@ -169,6 +178,7 @@ public class EventListFragment extends Fragment {
             extends RecyclerView.Adapter<EventListFragment.SimpleItemRecyclerViewAdapter.ViewHolder> {
 
         private final List<Event> mValues;
+
         public SimpleItemRecyclerViewAdapter(List<Event> items) {
             mValues = items;
         }
@@ -216,7 +226,7 @@ public class EventListFragment extends Fragment {
             });
             try {
                 Picasso.with(getActivity()).load(mValues.get(position).coverUrl).into(holder.mCoverPhoto);
-            } catch(Exception ex){
+            } catch (Exception ex) {
                 ex.printStackTrace();
             }
         }
@@ -274,7 +284,7 @@ public class EventListFragment extends Fragment {
         String location = getResources().getString(R.string.preference_file_key);
         // Todo - break out into a method somewhere external the the activity
         // Todo - also consider if all these checks should only happen in the activity
-        switch (location){
+        switch (location) {
             case "Toronto":
                 GlobalVariables.getInstance().setPageCollection("Toronto");
                 break;
@@ -285,7 +295,7 @@ public class EventListFragment extends Fragment {
                 break;
         }
 
-        ArrayList<FacebookPage> facebookPages  = GlobalVariables.getInstance().getFacebookPages();
+        ArrayList<FacebookPage> facebookPages = GlobalVariables.getInstance().getFacebookPages();
         ArrayList<GraphRequestBatch> requestBatchList = new ArrayList<>();
 
         int numberOfPages = facebookPages.size();
@@ -313,33 +323,38 @@ public class EventListFragment extends Fragment {
                     sinceCalendar,
                     untilCalendar));
 
-            requestBatchList.get(i).addCallback(new GraphRequestBatch.Callback() {
-                                                    @Override
-                                                    public void onBatchCompleted(GraphRequestBatch batch) {
-                                                        batchesProcessed += 1;
-                                                        if (batchesProcessed >= totalBatches) {
+            requestBatchList.get(i).addCallback(
+                    new GraphRequestBatch.Callback() {
+                        @Override
+                        public void onBatchCompleted(GraphRequestBatch batch) {
+                            batchesProcessed += 1;
+                            if (batchesProcessed >= totalBatches) {
 
-                                                            // Reset counters
-                                                            totalBatches = 0;
-                                                            batchesProcessed = 0;
+                                // Reset counters
+                                totalBatches = 0;
+                                batchesProcessed = 0;
 
-                                                            Collections.sort(allEvents);
+                                Collections.sort(allEvents);
 
-                                                            assert recyclerView != null;
-                                                            if (!allEvents.isEmpty()) {
-                                                                progressBar.setVisibility(View.GONE);
-                                                                emptyView.setVisibility(View.GONE);
-                                                                recyclerView.setVisibility(View.VISIBLE);
-                                                                setupRecyclerView((RecyclerView) recyclerView, allEvents);
-                                                            } else {
-                                                                // No data found
-                                                                progressBar.setVisibility(View.GONE);
-                                                                recyclerView.setVisibility(View.GONE);
-                                                                emptyView.setVisibility(View.VISIBLE);
-                                                            }
-                                                        }
-                                                    }
-                                                }
+                                assert recyclerView != null;
+                                if (!allEvents.isEmpty()) {
+                                    progressBar.setVisibility(View.GONE);
+                                    emptyView.setVisibility(View.GONE);
+                                    recyclerView.setVisibility(View.VISIBLE);
+                                    setupRecyclerView((RecyclerView) recyclerView, allEvents);
+                                } else {
+                                    // No data found
+                                    progressBar.setVisibility(View.GONE);
+                                    recyclerView.setVisibility(View.GONE);
+                                    emptyView.setVisibility(View.VISIBLE);
+                                    NetworkTest networkTest = new NetworkTest(getActivity().getBaseContext());
+                                    if (!networkTest.isNetworkAvailable()) {
+                                        Toast.makeText(getActivity().getBaseContext(), "Events not found: No internet connection.", Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            }
+                        }
+                    }
             );
         }
 

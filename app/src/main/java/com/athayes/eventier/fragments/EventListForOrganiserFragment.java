@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.athayes.eventier.EventDetailActivity;
 import com.athayes.eventier.EventListForOrganiserActivity;
@@ -21,6 +22,7 @@ import com.athayes.eventier.converters.EventConverter;
 import com.athayes.eventier.models.Event;
 import com.athayes.eventier.models.FacebookPage;
 import com.athayes.eventier.utils.ISO8601;
+import com.athayes.eventier.utils.NetworkTest;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphRequestBatch;
@@ -346,6 +348,13 @@ public class EventListForOrganiserFragment extends Fragment {
                             }
                         } catch (Exception ex) {
                             ex.printStackTrace();
+                            // Remove Progress Bar
+                            progressBar.setVisibility(View.GONE);
+                            // Check network connection
+                            NetworkTest networkTest = new NetworkTest(getActivity().getBaseContext());
+                            if (!networkTest.isNetworkAvailable()) {
+                                Toast.makeText(getActivity().getBaseContext(), "Events not found: No internet connection.", Toast.LENGTH_LONG).show();
+                            }
                         }
                     }
                 }

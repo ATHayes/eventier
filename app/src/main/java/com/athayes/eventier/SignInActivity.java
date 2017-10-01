@@ -24,11 +24,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.athayes.eventier.utils.NetworkTest;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -74,7 +74,6 @@ public class SignInActivity extends AppCompatActivity {
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                System.out.println("callback success");
                 handleFacebookAccessToken(loginResult.getAccessToken());
             }
 
@@ -85,10 +84,12 @@ public class SignInActivity extends AppCompatActivity {
 
             @Override
             public void onError(FacebookException exception) {
-                // App code
+                NetworkTest networkTest = new NetworkTest(getBaseContext());
+                if (!networkTest.isNetworkAvailable()){
+                    Toast.makeText(getBaseContext(), "Sign in failed: No internet connection.",Toast.LENGTH_LONG).show();
+                }
             }
         });
-
     }
 
     @Override

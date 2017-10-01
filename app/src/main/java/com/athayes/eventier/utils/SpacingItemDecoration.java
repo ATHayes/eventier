@@ -9,6 +9,7 @@ import android.view.View;
 
 /**
  * Created by anthonyhayes on 01/10/2017.
+ * Allows for custom spacing between RecyclerView items without adding space at the top or the bottom of the list
  */
 
 public class SpacingItemDecoration extends RecyclerView.ItemDecoration {

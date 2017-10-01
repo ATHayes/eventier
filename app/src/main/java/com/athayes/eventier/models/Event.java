@@ -59,8 +59,6 @@ public class Event implements Comparable<Event> {
         return title;
     }
 
-
-
     @Override
     public int compareTo(Event o) {
         Calendar thisCalendar = Calendar.getInstance();
