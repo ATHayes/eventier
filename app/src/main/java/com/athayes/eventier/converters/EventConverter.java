@@ -1,5 +1,7 @@
 package com.athayes.eventier.converters;
 
+import android.util.Log;
+
 import com.athayes.eventier.models.Event;
 
 import org.json.JSONArray;
@@ -44,7 +46,6 @@ public class EventConverter {
         String city = "No city specified";
         String street = "No street specified";
         String placeName = "No place name specified";
-//        String photoUrl = "No photo url";
         String title = "No title";
         String description = "No description";
         String id = "";
@@ -57,21 +58,22 @@ public class EventConverter {
             id = event.getString("id");
             description = event.getString("description");
         } catch (Exception ex) {
-            ex.printStackTrace();
+            Log.d("Graph_API", "No title/id/description for "+ host + " event: " + title);
         }
 
         try {
             //Event start time
             startTime = event.getString("start_time");
         } catch (Exception ex) {
-            ex.printStackTrace();
+            Log.d("Graph_API", "No start time for "+ host + " event: " + title);
         }
 
         try {
             //Event end time
             endTime = event.getString("end_time");
         } catch (Exception ex) {
-            ex.printStackTrace();
+            Log.d("Graph_API", "No end time for "+ host + " event: " + title);
+
         }
 
         //Formats
@@ -83,7 +85,7 @@ public class EventConverter {
             JSONObject place = event.getJSONObject("place");
             placeName = place.getString("name");
         } catch (Exception ex) {
-            //System.out.println("place error");
+            Log.d("Graph_API", "No placeName for "+ host + " event: " + title);
         }
 
         // Location node (JSON Object) /optional
@@ -93,7 +95,8 @@ public class EventConverter {
             city = location.getString("city");
             street = location.getString("street");
         } catch (Exception ex) {
-            //System.out.println("location error");
+            Log.d("Graph_API", "No location for "+ host + " event: " + title);
+
         }
 
         try{
@@ -101,8 +104,7 @@ public class EventConverter {
             coverUrl = cover.getString("source");
         }
         catch (Exception ex){
-            System.out.println("--Cover fail");
-            ex.printStackTrace();
+            Log.d("Graph_API", "No cover url for "+ host + " event: " + title);
         }
 
         Event event1 = new Event(

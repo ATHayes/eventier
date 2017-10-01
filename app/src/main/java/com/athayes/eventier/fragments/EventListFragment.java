@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -146,13 +147,6 @@ public class EventListFragment extends Fragment {
         }
     }
 
-
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        System.out.println("-------Starting----------");
-//    }
-
     @Override
     public void onDetach() {
         super.onDetach();
@@ -225,9 +219,14 @@ public class EventListFragment extends Fragment {
                 }
             });
             try {
-                Picasso.with(getActivity()).load(mValues.get(position).coverUrl).into(holder.mCoverPhoto);
+                Picasso.with(getActivity())
+                        .load(mValues.get(position).coverUrl)
+                        .into(holder.mCoverPhoto);
+                Log.d("Picasso", "Loaded cover for " + mValues.get(position).host);
             } catch (Exception ex) {
-                ex.printStackTrace();
+                // Set the image - has to be done in code rather than a default in xml - see https://stackoverflow.com/questions/26359608/picasso-loads-into-wrong-imageview-when-using-view-holder-pattern
+                holder.mCoverPhoto.setImageResource(R.drawable.placeholder);
+                Log.d("Picasso", "Failed to load cover url for " + mValues.get(position).host);
             }
         }
 
@@ -376,10 +375,10 @@ public class EventListFragment extends Fragment {
     }
 
     // Get events since x until y
-    public GraphRequest getEvents(String facebookID, final String hostName, Calendar sinceCalendar, Calendar untilCalendar) {
+    public GraphRequest getEvents(final String facebookID, final String hostName, Calendar sinceCalendar, Calendar untilCalendar) {
         SimpleDateFormat apiFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String sinceAPIString = apiFormat.format(sinceCalendar.getTime());
-        String untilAPIString = apiFormat.format(untilCalendar.getTime());
+        final String sinceAPIString = apiFormat.format(sinceCalendar.getTime());
+        final String untilAPIString = apiFormat.format(untilCalendar.getTime());
         GraphRequest request = new GraphRequest(
                 AccessToken.getCurrentAccessToken(),
                 "/" + facebookID + "/events?fields=description,end_time,name,place,start_time,id,cover&since=" + sinceAPIString + "T00:00:00&until=" + untilAPIString + "T23:59:59",
@@ -394,7 +393,7 @@ public class EventListFragment extends Fragment {
                             List<Event> ITEMS = EventConverter.getFromJSONArray(events, hostName);
                             addToList(ITEMS);
                         } catch (Exception ex) {
-                            ex.printStackTrace();
+                            Log.d("Graph_API", "Events for Facebook Page: "+ hostName + " since: " + sinceAPIString + " until: " + untilAPIString + " not found");
                         }
                     }
                 }

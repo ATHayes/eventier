@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,8 +65,6 @@ public class EventDetailFragment extends Fragment {
 
         if (getArguments().containsKey(ARG_ITEM_ID)) {
             eventID = getArguments().get(ARG_ITEM_ID).toString();
-            //System.out.println("ARG_ITEM_ID=" + eventID);
-            Activity activity = this.getActivity();
         }
     }
 
@@ -136,7 +135,7 @@ public class EventDetailFragment extends Fragment {
             // Facebook API call
             getEventFromFacebook(eventID, rootView);
         } else {
-            System.out.println("Event id null");
+            Log.d("EventDetailFragment", "Failed to load event: " +event.getTitle());
         }
         return rootView;
     }
