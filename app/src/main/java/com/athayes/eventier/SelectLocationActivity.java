@@ -27,7 +27,7 @@ public class SelectLocationActivity extends AppCompatActivity {
                 "Cork (UCC)", "Toronto"
         };
         locationSpinner = (Spinner) findViewById(R.id.locationSpinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, arraySpinner);
         locationSpinner.setAdapter(adapter);
         Button btnLocation = (Button) findViewById(R.id.btnLocation);

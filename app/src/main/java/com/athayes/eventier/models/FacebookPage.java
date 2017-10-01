@@ -34,7 +34,7 @@ public class FacebookPage implements Comparable<FacebookPage> {
     }
 
     public void setFacebookID(String facebookID) {
-        facebookID = facebookID;
+        this.facebookID = facebookID;
     }
 
 

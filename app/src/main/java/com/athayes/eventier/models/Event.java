@@ -70,13 +70,13 @@ public class Event implements Comparable<Event> {
 
         try {
             thisCalendar = ISO8601.toCalendar(getStartTime());
-        } catch (ParseException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         try {
             compareCalendar = ISO8601.toCalendar(o.getStartTime());
-        } catch (ParseException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

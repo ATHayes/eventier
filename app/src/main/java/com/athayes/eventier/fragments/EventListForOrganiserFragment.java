@@ -196,7 +196,7 @@ public class EventListForOrganiserFragment extends Fragment {
             Calendar startTimeCal = null;
             try {
                 startTimeCal = ISO8601.toCalendar(mValues.get(position).startTime);
-            } catch (ParseException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 

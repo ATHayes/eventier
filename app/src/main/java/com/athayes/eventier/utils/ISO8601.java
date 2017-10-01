@@ -53,8 +53,7 @@ public final class ISO8601 {
     /**
      * Transform ISO 8601 string to Calendar.
      */
-    public static Calendar toCalendar(final String iso8601string)
-            throws ParseException {
+    public static Calendar toCalendar(final String iso8601string) {
         Calendar calendar;
         DateTimeFormatter parser2 = ISODateTimeFormat.dateTimeNoMillis();
         DateTime dateTime = parser2.parseDateTime(iso8601string);

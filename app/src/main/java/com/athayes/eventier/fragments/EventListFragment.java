@@ -187,7 +187,7 @@ public class EventListFragment extends Fragment {
             try {
                 Calendar startTimeCal = ISO8601.toCalendar(mValues.get(position).startTime);
                 holder.mTimeView.setText(timeFormat.format(startTimeCal.getTime()));
-            } catch (ParseException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
         }
 
@@ -298,7 +298,7 @@ public class EventListFragment extends Fragment {
                 endIndex = numberOfPages;
             }
 
-            ArrayList<FacebookPage> sublistPages = new ArrayList<FacebookPage>(facebookPages.subList(startIndex, endIndex));
+            ArrayList<FacebookPage> sublistPages = new ArrayList<>(facebookPages.subList(startIndex, endIndex));
 
             requestBatchList.add(facebookPageRequestBatch(
                     sublistPages,

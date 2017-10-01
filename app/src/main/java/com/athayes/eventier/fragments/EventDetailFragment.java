@@ -101,13 +101,15 @@ public class EventDetailFragment extends Fragment {
                 Calendar endTimeCal = null;
                 try {
                     startTimeCal = ISO8601.toCalendar(event.getStartTime());
-                } catch (ParseException e) {
+                }
+                // Todo replace these with better exception handling
+                catch (Exception e) {
                     e.printStackTrace();
                 }
 
                 try {
                     endTimeCal = ISO8601.toCalendar(event.getEndTime());
-                } catch (ParseException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
@@ -193,7 +195,7 @@ public class EventDetailFragment extends Fragment {
         Calendar startTimeCal = null;
         try {
             startTimeCal = ISO8601.toCalendar(thisEvent.startTime);
-        } catch (ParseException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
