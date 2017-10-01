@@ -49,7 +49,6 @@ public class SignInActivity extends AppCompatActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_sign_in); //Moved up here to resolve NPE
 
         // Initialize Firebase Auth
