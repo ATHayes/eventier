@@ -11,6 +11,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -21,11 +23,13 @@ import com.athayes.eventier.converters.EventConverter;
 import com.athayes.eventier.models.Event;
 import com.athayes.eventier.models.FacebookPage;
 import com.athayes.eventier.utils.ISO8601;
+import com.athayes.eventier.utils.SpacingItemDecoration;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphRequestBatch;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 
@@ -55,7 +59,7 @@ public class EventListFragment extends Fragment {
     private String mParam2;
     private OnFragmentInteractionListener mListener;
     private Boolean mTwoPane = false;
-    private View recyclerView;
+    private RecyclerView recyclerView;
     private View emptyView;
     private ProgressBar progressBar;
 
@@ -105,8 +109,8 @@ public class EventListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_event_list, container, false);
-
-        recyclerView = rootView.findViewById(R.id.event_recycler_view);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.event_recycler_view);
+        recyclerView.addItemDecoration(new SpacingItemDecoration(getActivity(), 16));
         emptyView = rootView.findViewById(R.id.empty_view);
         progressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar);
         final Calendar todayCalendar = Calendar.getInstance();
@@ -165,7 +169,6 @@ public class EventListFragment extends Fragment {
             extends RecyclerView.Adapter<EventListFragment.SimpleItemRecyclerViewAdapter.ViewHolder> {
 
         private final List<Event> mValues;
-
         public SimpleItemRecyclerViewAdapter(List<Event> items) {
             mValues = items;
         }
@@ -189,11 +192,9 @@ public class EventListFragment extends Fragment {
                 holder.mTimeView.setText(timeFormat.format(startTimeCal.getTime()));
             } catch (Exception e) {
                 e.printStackTrace();
-        }
+            }
 
             holder.mLocationView.setText(mValues.get(position).location);
-            //holder.mDateView.setText(mValues.get(position).date);
-
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -213,6 +214,11 @@ public class EventListFragment extends Fragment {
                     }
                 }
             });
+            try {
+                Picasso.with(getActivity()).load(mValues.get(position).coverUrl).into(holder.mCoverPhoto);
+            } catch(Exception ex){
+                ex.printStackTrace();
+            }
         }
 
         @Override
@@ -224,6 +230,7 @@ public class EventListFragment extends Fragment {
             public final View mView;
             public final TextView mIdView, mTitleView, mTimeView, mLocationView;
             public Event mItem;
+            public ImageView mCoverPhoto;
 
             public ViewHolder(View view) {
                 super(view);
@@ -232,6 +239,7 @@ public class EventListFragment extends Fragment {
                 mTitleView = (TextView) view.findViewById(R.id.titleValueLabel);
                 mTimeView = (TextView) view.findViewById(R.id.timeValueLabel);
                 mLocationView = (TextView) view.findViewById(R.id.locationValueLabel);
+                mCoverPhoto = (ImageView) view.findViewById(R.id.cover_photo);
             }
 
             @Override
@@ -359,7 +367,7 @@ public class EventListFragment extends Fragment {
         String untilAPIString = apiFormat.format(untilCalendar.getTime());
         GraphRequest request = new GraphRequest(
                 AccessToken.getCurrentAccessToken(),
-                "/" + facebookID + "/events?since=" + sinceAPIString + "T00:00:00&until=" + untilAPIString + "T23:59:59",
+                "/" + facebookID + "/events?fields=description,end_time,name,place,start_time,id,cover&since=" + sinceAPIString + "T00:00:00&until=" + untilAPIString + "T23:59:59",
                 null,
                 HttpMethod.GET,
                 new GraphRequest.Callback() {

@@ -21,7 +21,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.athayes.eventier.fragments.EventDetailFragment;
@@ -139,8 +138,6 @@ public class EventListActivity extends AppCompatActivity
 
         getSupportActionBar().setSubtitle("Today's Events");
 
-
-
     }
 
     // Event handler for back button
@@ -217,8 +214,6 @@ public class EventListActivity extends AppCompatActivity
         if (id == R.id.nav_date) {
             final Calendar todayCalendar = Calendar.getInstance();
             //Todo fix
-            //getEventsFromFacebook(todayCalendar);
-            getSupportActionBar().setSubtitle("Today's Events");
         } else if (id == R.id.nav_share) {
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("text/plain");
@@ -274,7 +269,7 @@ public class EventListActivity extends AppCompatActivity
 
     @Override
     public void onFragmentInteraction(Uri uri) {
-        //required forfragements
+        //required for fragments
     }
 
     @Override

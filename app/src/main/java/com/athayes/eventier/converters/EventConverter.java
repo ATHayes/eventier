@@ -17,7 +17,7 @@ import java.util.List;
 
 
 public class EventConverter {
-
+    // Todo - break event down to different objects to match JSON
     public static List<Event> getFromJSONArray(JSONArray events, String host) {
         // List
         List<Event> ITEMS = new ArrayList<>();
@@ -50,6 +50,7 @@ public class EventConverter {
         String id = "";
         String startTime = "";
         String endTime = "";
+        String coverUrl = "";
 
         try {
             title = event.getString("name");
@@ -95,6 +96,15 @@ public class EventConverter {
             //System.out.println("location error");
         }
 
+        try{
+            JSONObject cover = event.getJSONObject("cover");
+            coverUrl = cover.getString("source");
+        }
+        catch (Exception ex){
+            System.out.println("--Cover fail");
+            ex.printStackTrace();
+        }
+
         Event event1 = new Event(
                 id,
                 title,
@@ -102,7 +112,8 @@ public class EventConverter {
                 host,
                 placeName,
                 startTime,
-                endTime);
+                endTime,
+                coverUrl);
         return event1;
     }
 }

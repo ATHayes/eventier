@@ -87,6 +87,5 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
     public void onCoverRetrieved(String uri) {
         final ImageView imageView = (ImageView) findViewById(R.id.cover_photo);
         Picasso.with(this).load(uri).into(imageView);
-
     }
 }

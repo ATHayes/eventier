@@ -41,18 +41,9 @@ public class FacebookPageListActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
         View recyclerView = findViewById(R.id.facebookpage_list);
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
-
-        if (findViewById(R.id.facebookpage_detail_container) != null) {
-            // The detail container view will be present only in the
-            // large-screen layouts (res/values-w900dp).
-            // If this view is present, then the
-            // activity should be in two-pane mode.
-            mTwoPane = true;
-        }
         setTitle("Search...");
     }
 
@@ -82,4 +73,7 @@ public class FacebookPageListActivity extends AppCompatActivity {
         facebookPageListAdapter = new FacebookPageListAdapter(pages, this);
         recyclerView.setAdapter(facebookPageListAdapter);
     }
+
+    // Left transition when going back, finish activity
+
 }
