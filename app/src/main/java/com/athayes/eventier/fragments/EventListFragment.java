@@ -262,14 +262,22 @@ public class EventListFragment extends Fragment {
         SharedPreferences sharedPref = this.getActivity().getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
+        // Check location in sharedPreferences
         String location = getResources().getString(R.string.preference_file_key);
-
-        if (location.toUpperCase() == "Toronto".toUpperCase()) {
-            GlobalVariables.getInstance().setPageCollection("Toronto");
-            System.out.println("Toronto!!!!!!!!!");
+        // Todo - break out into a method somewhere external the the activity
+        // Todo - also consider if all these checks should only happen in the activity
+        switch (location){
+            case "Toronto":
+                GlobalVariables.getInstance().setPageCollection("Toronto");
+                break;
+            case "Cork (UCC)":
+                GlobalVariables.getInstance().setPageCollection("Cork (UCC)");
+                break;
+            default:
+                break;
         }
-        ArrayList<FacebookPage> facebookPages  = GlobalVariables.getInstance().getFacebookPages();
 
+        ArrayList<FacebookPage> facebookPages  = GlobalVariables.getInstance().getFacebookPages();
         ArrayList<GraphRequestBatch> requestBatchList = new ArrayList<>();
 
         int numberOfPages = facebookPages.size();
@@ -285,13 +293,15 @@ public class EventListFragment extends Fragment {
             int startIndex = (i * pagesPerBatch);
             int endIndex = 49 + (i * pagesPerBatch);
 
-            // Avoid overflow error (Removed the -1 as of Sep 26th)
+            // Avoid overflow error
             if (endIndex >= numberOfPages) {
                 endIndex = numberOfPages;
             }
 
+            ArrayList<FacebookPage> sublistPages = new ArrayList<FacebookPage>(facebookPages.subList(startIndex, endIndex));
+
             requestBatchList.add(facebookPageRequestBatch(
-                    new ArrayList<FacebookPage>(facebookPages.subList(startIndex, endIndex)),
+                    sublistPages,
                     sinceCalendar,
                     untilCalendar));
 
